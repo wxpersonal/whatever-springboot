@@ -1,0 +1,57 @@
+spring:
+  profiles: default
+
+server:
+  port: 8090
+
+jdbc:
+  readSize: 2
+  type: com.alibaba.druid.pool.DruidDataSource
+  master:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+    databaseId: mysql
+    username: root
+    password: root
+  slave1:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+    databaseId: mysql
+    username: root
+    password: root
+  slave1:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+    databaseId: mysql
+    username: root
+    password: root
+
+# MyBatis
+mybatis:
+    typeAliasesPackage: com.wx.whatever.pojo
+    mapperLocations: classpath:/com/weix/**/mapper/*.xml
+    configLocation: classpath:/mybatis-config.xml
+
+#swagger
+swagger:
+  version: 0.0.1
+  host:
+  basePath: /system/rest
+  description: Logic Solutions System Server.
+  title: System Server
+  licence:
+  licenceUrl:
+  contact:
+  termsOfServiceUrl:
+  resourcePackage: com.logic.system.ws,com.logic.landseaserver.ws
+
+file:
+  #/usr/share/nginx/html/uploads
+  #D://uploads
+  path:
+    dipositPath: dipositPdf
+    contract_path: contract_pdf
+    local: /usr/share/nginx/html/uploads
+    #如果是本地必须配置本地ip不能使用localhost，他人访问会导致图片查询地址不对从而显示不出。
+    remote: http://192.168.42.77:8080/image
+
