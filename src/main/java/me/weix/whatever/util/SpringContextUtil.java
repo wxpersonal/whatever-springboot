@@ -13,8 +13,9 @@ public class SpringContextUtil {
 
 	private static ApplicationContext context = null;
 
-	private SpringContextUtil() {
-		super();
+	//获取上下文
+	public static ApplicationContext getApplicationContext(ApplicationContext applicationContext) {
+		return applicationContext;
 	}
 
 	public static void setApplicationContext(ApplicationContext applicationContext) throws BeansException {

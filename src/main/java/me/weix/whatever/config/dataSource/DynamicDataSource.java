@@ -1,12 +1,6 @@
-package me.weix.config.dataSource;
+package me.weix.whatever.config.dataSource;
 
-import me.weix.config.common.CONST;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by wxper on 2017/6/25.

@@ -2,19 +2,21 @@ package me.weix.whatever.rest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import me.weix.config.quartz.QuartzJobFactory;
-import me.weix.config.quartz.ScheduleJob;
+import me.weix.whatever.config.quartz.QuartzJobFactory;
+import me.weix.whatever.config.quartz.ScheduleJob;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
 import java.util.Map;
 
-@Api(description = "任务调度")
+@Api(value="QuartzRest")
 @Path("quartz")
 public class QuartzRest {
 
@@ -29,8 +31,10 @@ public class QuartzRest {
 
     @ApiOperation(value = "添加一个任务")
     @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path(value = "add")
-    public String add(HttpServletRequest request) {
+    public String add() {
         System.out.println("----------------");
         ScheduleJob job = new ScheduleJob();
         job.setJobId("10001");
@@ -60,13 +64,5 @@ public class QuartzRest {
         return "is ok";
     }
 
-    /**
-     * 添加任务
-     *
-     * @param scheduleJob
-     */
-    public static void addJob(ScheduleJob scheduleJob) {
-        jobMap.put(scheduleJob.getJobGroup() + "_" + scheduleJob.getJobName(), scheduleJob);
-    }
 
 }

@@ -1,4 +1,4 @@
-package me.weix.config.common;
+package me.weix.whatever.config.common;
 
 /**
  * Created by wxper on 2017/6/25.

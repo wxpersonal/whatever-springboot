@@ -1,4 +1,4 @@
-package me.weix.config.quartz;
+package me.weix.whatever.config.quartz;
 
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;

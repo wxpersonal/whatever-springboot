@@ -1,13 +1,7 @@
-package me.weix.config;
+package me.weix.whatever.config;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-
-import javax.sql.DataSource;
-
-import me.weix.config.dataSource.DataSourceType;
-import me.weix.config.dataSource.DynamicDataSource;
+import me.weix.whatever.config.dataSource.DataSourceType;
+import me.weix.whatever.config.dataSource.DynamicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -20,7 +14,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
-import com.alibaba.druid.pool.DruidDataSourceFactory;
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -41,8 +37,8 @@ public class MyBatisConfig {
     @Bean
     @Primary
     public DynamicDataSource dataSource(@Qualifier("masterDataSource") DataSource masterDataSource,
-                                         @Qualifier("slaveDataSource1") DataSource slaveDataSource1,
-                                         @Qualifier("slaveDataSource2") DataSource slaveDataSource2) {
+                                        @Qualifier("slaveDataSource1") DataSource slaveDataSource1,
+                                        @Qualifier("slaveDataSource2") DataSource slaveDataSource2) {
 
         Map<Object, Object> map = new HashMap<>();
         map.put(DataSourceType.master.getName(), masterDataSource);

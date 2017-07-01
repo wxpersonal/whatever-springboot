@@ -1,4 +1,4 @@
-package me.weix.config.quartz;
+package me.weix.whatever.config.quartz;
 
 /**
  * Created by Administrator on 2017/6/27.

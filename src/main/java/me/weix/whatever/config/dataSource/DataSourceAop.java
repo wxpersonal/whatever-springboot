@@ -1,6 +1,6 @@
-package me.weix.config.dataSource;
+package me.weix.whatever.config.dataSource;
 
-import me.weix.config.common.CONST;
+import me.weix.whatever.config.common.CONST;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.aspectj.lang.annotation.Before;

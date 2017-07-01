@@ -1,21 +1,15 @@
 package me.weix.whatever.rest;
 
-import me.weix.whatever.pojo.User;
-import me.weix.whatever.service.IUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import me.weix.whatever.pojo.User;
+import me.weix.whatever.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-@Api(description = "user相关操作")
+@Api(value="user")
 @Path("user")
 public class UserRest {
 
@@ -25,14 +19,17 @@ public class UserRest {
 
     @ApiOperation(value = "根据id获取user")
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path(value = "id/{id}")
-    public User getUserById(@PathVariable Integer id) {
+    public User getUserById(@PathParam("id") Integer id) {
         return userService.getById(id);
     }
 
     @ApiOperation(value = "添加user")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path(value = "addUser")
     public Integer addUser(User u) {
 

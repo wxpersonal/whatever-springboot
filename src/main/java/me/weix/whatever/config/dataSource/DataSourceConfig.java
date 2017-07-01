@@ -1,7 +1,4 @@
-package me.weix.config.dataSource;
-
-import java.util.ArrayList;
-import java.util.List;
+package me.weix.whatever.config.dataSource;
 
 import javax.sql.DataSource;
 
