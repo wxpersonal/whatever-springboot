@@ -2,7 +2,7 @@ spring:
   profiles: default
 
 server:
-  port: 8090
+  port: 8888
 
 jdbc:
   readSize: 2
@@ -12,38 +12,38 @@ jdbc:
     url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
     databaseId: mysql
     username: root
-    password: root
+    password: xiang123
   slave1:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
     databaseId: mysql
     username: root
-    password: root
-  slave1:
+    password: xiang123
+  slave2:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
     databaseId: mysql
     username: root
-    password: root
+    password: xiang123
 
 # MyBatis
 mybatis:
-    typeAliasesPackage: com.wx.whatever.pojo
-    mapperLocations: classpath:/com/weix/**/mapper/*.xml
-    configLocation: classpath:/mybatis-config.xml
+    typeAliasesPackage: me.weix.whatever.pojo
+    mapperLocations: classpath:/mybatis/mapper/**/*.xml
+#    configLocation: classpath:/mybatis-config.xml
 
 #swagger
 swagger:
   version: 0.0.1
   host:
-  basePath: /system/rest
+  basePath: /whatever/rest
   description: Logic Solutions System Server.
   title: System Server
   licence:
   licenceUrl:
   contact:
   termsOfServiceUrl:
-  resourcePackage: com.logic.system.ws,com.logic.landseaserver.ws
+  resourcePackage: me.weix.whatever.rest
 
 file:
   #/usr/share/nginx/html/uploads

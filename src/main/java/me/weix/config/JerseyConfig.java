@@ -34,7 +34,6 @@ public class JerseyConfig extends ResourceConfig implements EnvironmentAware {
     register(RequestContextFilter.class);
     register(WadlResource.class);
 
-    //配置restful package.
     //packages("me.weix.whatever.rest","com.logic.landseaserver.ws");
     packages("me.weix.whatever.rest");
   }

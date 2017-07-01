@@ -14,9 +14,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class DynamicDataSource extends AbstractRoutingDataSource {
 
-    private static Log log = LogFactory.getLog(DynamicDataSource.class);
-    private AtomicInteger count = new AtomicInteger(0);
-
     @Override
     protected Object determineCurrentLookupKey() {
         return DataSourceContextHolder.getDataSource();

@@ -29,9 +29,7 @@
 
     <logger name="java.sql" additivity="false" level="DEBUG"/>
 
-    <logger name="org.springframework" level="info" additivity="false"/>
-
-    <logger name="springfox.documentation" level="info" additivity="false"/>
+    <logger name="org.springframework" level="DEBUG"/>
 
     <!-- project default level -->
     <logger name="com.wx" level="DEBUG" />

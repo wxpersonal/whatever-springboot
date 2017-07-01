@@ -28,7 +28,7 @@ import com.alibaba.druid.pool.DruidDataSourceFactory;
  * 2）创建SqlSessionFactory 3）配置事务管理器，除非需要使用事务，否则不用配置
  */
 @Configuration // 该注解类似于spring配置文件
-@MapperScan(basePackages = "com.xxx.firstboot.mapper")
+@MapperScan(basePackages = "me.weix.whatever.mapper")
 public class MyBatisConfig {
 
     @Autowired
@@ -40,8 +40,16 @@ public class MyBatisConfig {
      */
     @Bean
     @Primary
-    public DynamicDataSource dataSource() {
+    public DynamicDataSource dataSource(@Qualifier("masterDataSource") DataSource masterDataSource,
+                                         @Qualifier("slaveDataSource1") DataSource slaveDataSource1,
+                                         @Qualifier("slaveDataSource2") DataSource slaveDataSource2) {
+
+        Map<Object, Object> map = new HashMap<>();
+        map.put(DataSourceType.master.getName(), masterDataSource);
+        map.put(DataSourceType.slave1.getName(), slaveDataSource1);
+        map.put(DataSourceType.slave2.getName(), slaveDataSource2);
         DynamicDataSource dataSource = new DynamicDataSource();
+        dataSource.setTargetDataSources(map);
         return dataSource;
     }
 
