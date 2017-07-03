@@ -145,7 +145,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.0</version>
+            <version>1.2.33</version>
         </dependency>
 
         <!-- shiro -->
@@ -159,11 +159,6 @@
             <artifactId>shiro-web</artifactId>
             <version>${shiro.version}</version>
         </dependency>
-        <!--<dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-quartz</artifactId>
-            <version>${shiro.version}</version>
-        </dependency>-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>

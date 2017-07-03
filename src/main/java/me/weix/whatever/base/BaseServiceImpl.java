@@ -22,7 +22,6 @@ public abstract class BaseServiceImpl<T, V> implements IBaseService<V> {
 
     /**
      * 将在spring启动完成后统一调用
-     * @see me.weix.whatever.listener.ApplicationContextListener
      */
     @Override
     public void initMapper() {

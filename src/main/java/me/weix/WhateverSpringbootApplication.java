@@ -16,17 +16,7 @@ import java.util.Map;
 public class WhateverSpringbootApplication {
 
 	public static void main(String[] args) {
-        ConfigurableApplicationContext run = SpringApplication.run(WhateverSpringbootApplication.class, args);
-        SpringContextUtil.setApplicationContext(run);
 
-        Map<String, Object> services = run.getBeansWithAnnotation(org.springframework.stereotype.Service.class);
-        for(Object service : services.values()) {
-            try {
-                Method initMapper = service.getClass().getMethod("initMapper");
-                initMapper.invoke(service);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        SpringApplication.run(WhateverSpringbootApplication.class, args);
     }
 }

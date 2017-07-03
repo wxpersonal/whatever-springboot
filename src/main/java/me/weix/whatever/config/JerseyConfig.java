@@ -1,5 +1,6 @@
 package me.weix.whatever.config;
 
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.listing.ApiListingResource;
 import io.swagger.jaxrs.listing.SwaggerSerializers;
@@ -20,7 +21,7 @@ import javax.ws.rs.ApplicationPath;
 public class JerseyConfig extends ResourceConfig implements EnvironmentAware {
 
 
-  private static final String ENV_SWAGGER = "logic.swagger.";
+  private static final String ENV_SWAGGER = "swagger.";
 
 
   private final Logger log = LoggerFactory.getLogger(JerseyConfig.class);
@@ -30,6 +31,9 @@ public class JerseyConfig extends ResourceConfig implements EnvironmentAware {
   public JerseyConfig() {
     log.info("Jersey configuration");
     register(WadlResource.class);
+    register(ObjectMapperProvider.class);
+    //register(JacksonJsonProvider.class);
+    //register(FastJsonProvider.class);
     //packages("me.weix.whatever.rest","com.logic.landseaserver.ws");
     packages("me.weix.whatever.rest");
   }
@@ -41,19 +45,19 @@ public class JerseyConfig extends ResourceConfig implements EnvironmentAware {
 
 
   private void configureSwagger() {
-    this.register(ApiListingResource.class);
-    this.register(SwaggerSerializers.class);
+    register(ApiListingResource.class);
+    register(SwaggerSerializers.class);
 
     BeanConfig config = new BeanConfig();
-    config.setTitle("POC - Restful API by Spring Boot, Jersey, Swagger");
-    config.setVersion("v1");
-    config.setContact("Bright Zheng");
+    config.setTitle("whatever restful api");
+    config.setContact("WeiXiang");
     config.setSchemes(new String[] { "http", "https" });
     config.setBasePath("/api");
     config.setResourcePackage("me.weix.whatever.rest");
     config.setPrettyPrint(true);
     config.setScan(true);
   }
+
   @Override
   public void setEnvironment(Environment environment) {
     relaxedPropertyResolver = new RelaxedPropertyResolver(environment, ENV_SWAGGER);

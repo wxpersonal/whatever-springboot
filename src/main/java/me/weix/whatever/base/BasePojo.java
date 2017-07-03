@@ -1,5 +1,7 @@
 package me.weix.whatever.base;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,12 +15,14 @@ public class BasePojo implements Serializable {
     private Integer createBy;
 
     //创建时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     //修改人
     private Integer updateBy;
 
     //修改时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     //有效状态
