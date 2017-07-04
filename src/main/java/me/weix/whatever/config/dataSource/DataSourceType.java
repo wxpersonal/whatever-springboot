@@ -7,6 +7,7 @@ public enum DataSourceType {
     master("master", "主库"),
     slave1("slave1", "从库1"),
     slave2("slave2", "从库2");
+
     private String type;
     private String name;
 

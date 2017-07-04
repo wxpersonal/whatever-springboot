@@ -28,9 +28,20 @@ jdbc:
 
 # MyBatis
 mybatis:
-    typeAliasesPackage: me.weix.whatever.pojo
-    mapperLocations: classpath:/mybatis/mapper/**/*.xml
-#    configLocation: classpath:/mybatis-config.xml
+  typeAliasesPackage: me.weix.whatever.pojo
+  mapperLocations: classpath:/mybatis/mapper/**/*.xml
+# configLocation: classpath:/mybatis-config.xml
+
+redis:
+  host: 127.0.0.1
+  password:
+  port: 6379
+  pool:
+    max-idle: 8
+    min-idle: 0
+    max-active: 8
+    max-wait: -1
+
 
 #swagger
 swagger:

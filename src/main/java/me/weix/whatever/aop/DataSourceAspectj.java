@@ -28,7 +28,7 @@ public class DataSourceAspectj {
 
 	private Logger log = LoggerFactory.getLogger(DataSourceAspectj.class);
 	
-	//定义通用切点，以便下面4个通知使用
+	//定义通用切点
 	
 	@Pointcut("execution(* me.weix.whatever.service.impl.*ServiceImpl.get*(..)) ||" +
               "execution(* me.weix.whatever.service.impl.*ServiceImpl.query*(..)) ||" +
