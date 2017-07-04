@@ -1,4 +1,4 @@
-package me.weix.whatever.base;
+package me.weix.whatever.service;
 
 import java.util.List;
 

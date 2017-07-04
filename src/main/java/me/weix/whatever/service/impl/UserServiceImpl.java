@@ -1,6 +1,5 @@
 package me.weix.whatever.service.impl;
 
-import me.weix.whatever.base.BaseServiceImpl;
 import me.weix.whatever.mapper.PermissionMapper;
 import me.weix.whatever.mapper.RoleMapper;
 import me.weix.whatever.mapper.UserMapper;

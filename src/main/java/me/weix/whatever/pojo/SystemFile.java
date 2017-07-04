@@ -1,8 +1,6 @@
 package me.weix.whatever.pojo;
 
 
-import me.weix.whatever.base.BasePojo;
-
 public class SystemFile extends BasePojo {
     private Integer id;
 

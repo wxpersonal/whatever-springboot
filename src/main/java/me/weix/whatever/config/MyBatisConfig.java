@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -17,6 +18,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
@@ -30,6 +32,8 @@ public class MyBatisConfig {
     @Autowired
     private Environment env;
 
+    private AtomicInteger count = new AtomicInteger(0);
+
     /**
      * @Primary 该注解表示在同一个接口有多个实现类可以注入的时候，默认选择哪一个，而不是让@autowire注解报错
      * @Qualifier 根据名称进行注入，通常是在具有相同的多个类型的实例的一个注入（例如有多个DataSource类型的实例）
@@ -37,8 +41,8 @@ public class MyBatisConfig {
     @Bean
     @Primary
     public DynamicDataSource dataSource(@Qualifier("masterDataSource") DataSource masterDataSource,
-                                        @Qualifier("slaveDataSource1") DataSource slaveDataSource1,
-                                        @Qualifier("slaveDataSource2") DataSource slaveDataSource2) {
+                                         @Qualifier("slaveDataSource1") DataSource slaveDataSource1,
+                                         @Qualifier("slaveDataSource2") DataSource slaveDataSource2) {
 
         Map<Object, Object> map = new HashMap<>();
         map.put(DataSourceType.master.getName(), masterDataSource);

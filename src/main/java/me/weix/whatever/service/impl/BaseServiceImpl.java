@@ -1,5 +1,7 @@
-package me.weix.whatever.base;
+package me.weix.whatever.service.impl;
 
+import me.weix.whatever.service.IBaseService;
+import me.weix.whatever.util.ReflectUtil;
 import me.weix.whatever.util.SpringContextUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -31,7 +33,7 @@ public abstract class BaseServiceImpl<T, V> implements IBaseService<V> {
     @Override
     public Integer insert(V pojo) {
         try {
-            log.info("====================>>>添加"+getPojoClass());
+            log.debug("====================>>>添加"+getPojoClass());
             Method insertSelective = mapper.getClass().getDeclaredMethod("insertSelective", pojo.getClass());
             Object result = insertSelective.invoke(mapper, pojo);
             return Integer.parseInt(String.valueOf(result));
@@ -47,7 +49,7 @@ public abstract class BaseServiceImpl<T, V> implements IBaseService<V> {
         try {
             Method selectByPrimaryKey = mapper.getClass().getDeclaredMethod("selectByPrimaryKey",id.getClass());
             Object result = selectByPrimaryKey.invoke(mapper, id);
-            log.info("====================>>>根据id查询"+getPojoClass() );
+            log.debug("====================>>>根据id查询"+getPojoClass() );
             return (V) result;
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,7 +60,7 @@ public abstract class BaseServiceImpl<T, V> implements IBaseService<V> {
     @Override
     public Integer update(V pojo) {
         try {
-            log.info("====================>>>更新"+getPojoClass() );
+            log.debug("====================>>>更新"+getPojoClass() );
             Method selectByPrimaryKey = mapper.getClass().getDeclaredMethod("updateByPrimaryKeySelective",pojo.getClass());
             Object result = selectByPrimaryKey.invoke(mapper, pojo);
             return Integer.parseInt(String.valueOf(result));
@@ -72,7 +74,7 @@ public abstract class BaseServiceImpl<T, V> implements IBaseService<V> {
     @Transactional
     public Integer delete(String ids) {
         try {
-            log.info("====================>>>删除"+getPojoClass() );
+            log.debug("====================>>>删除"+getPojoClass() );
             Integer count = 0;
             Method deleteByPrimaryKey = mapper.getClass().getDeclaredMethod("deleteByPrimaryKey",ids.getClass());
             String[] idArr = StringUtils.split(ids, ",");
@@ -98,11 +100,12 @@ public abstract class BaseServiceImpl<T, V> implements IBaseService<V> {
      */
     @SuppressWarnings("unchecked")
     private Class<T> getMapperClass(){
-        return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        return (Class<T>) ReflectUtil.getClassGenricType(getClass(), 0);
     }
 
     @SuppressWarnings("unchecked")
     private Class<V> getPojoClass(){
-        return (Class<V>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+        return (Class<V>) ReflectUtil.getClassGenricType(getClass(), 1);
     }
+
 }

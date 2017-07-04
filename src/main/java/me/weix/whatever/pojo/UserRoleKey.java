@@ -1,7 +1,5 @@
 package me.weix.whatever.pojo;
 
-import me.weix.whatever.base.BasePojo;
-
 public class UserRoleKey extends BasePojo {
     private Integer userId;
 

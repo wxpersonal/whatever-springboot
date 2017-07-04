@@ -1,7 +1,5 @@
 package me.weix.whatever.pojo;
 
-import me.weix.whatever.base.BasePojo;
-
 import java.util.Date;
 
 public class User extends BasePojo {
