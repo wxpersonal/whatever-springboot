@@ -12,7 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -46,49 +49,25 @@ public class BaseFieldAspectj {
             logger.debug("-------------->aop填充通用字段");
             for(Object o : args) {
                 //参数为list类型
-                if(o instanceof java.util.List) {
-                    List list = (List) o;
+                if(o instanceof java.util.List || o.getClass().isArray()) {
+
+                    List<Object> list = new ArrayList<>();
+                    if(o.getClass().isArray()) {
+                        list = Arrays.asList(o);
+                    }
+                    if(o instanceof java.util.List) {
+                        list = (List) o;
+                    }
                     for(Object o1 : list) {
                         if(o1 instanceof BasePojo) {
-                            //基础getXxx()方法
-                            Method getCreateBy = ReflectUtil.getAccessibleMethod(o1, "getCreateBy", null);
-                            Method getCreateTime = ReflectUtil.getAccessibleMethod(o1, "getCreateTime", null);
-                            Method getUpdateBy = ReflectUtil.getAccessibleMethod(o1, "getUpdateBy", null);
-                            Method getUpdateTime = ReflectUtil.getAccessibleMethod(o1, "getUpdateTime", null);
-                            Method getStatus = ReflectUtil.getAccessibleMethod(o1, "getStatus", null);
-
-                            //基础setXxx()方法
-                            Method setCreateBy = ReflectUtil.getAccessibleMethod(o1, "setCreateBy", Integer.class);
-                            Method setCreateTime = ReflectUtil.getAccessibleMethod(o1, "setCreateTime", Date.class);
-                            Method setUpdateBy = ReflectUtil.getAccessibleMethod(o1, "setUpdateBy", Integer.class);
-                            Method setUpdateTime = ReflectUtil.getAccessibleMethod(o1, "setUpdateTime", Date.class);
-                            Method setStatus = ReflectUtil.getAccessibleMethod(o1, "setStatus", Integer.class);
-
-                            //插入时修改，以后不再修改
-                            if(methodName.startsWith("insert")) {
-                                //todo 暂时没有usertoken功能，先设置为1
-                                if(getCreateBy.invoke(o1, null) == null) {
-                                    setCreateBy.invoke(o1, 1);
-                                }
-
-                                if(getCreateTime.invoke(o1, null) == null) {
-                                    setCreateTime.invoke(o1, new Date());
-                                }
-                                //插入时默认有效
-                                if(getStatus.invoke(o1, null) == null) {
-                                    setStatus.invoke(o1, 1);
-                                }
-                            }
-
-                            if(getUpdateBy.invoke(o1, null) == null) {
-                                setUpdateBy.invoke(o1, 1);
-                            }
-                            if(getUpdateTime.invoke(o1, null) == null) {
-                                setUpdateTime.invoke(o1, new Date());
-                            }
+                            fixBaseFields(methodName, o1);
                         }
                     }
+                }
 
+                //pojo
+                if(o instanceof BasePojo) {
+                    fixBaseFields(methodName, o);
                 }
             }
             jp.proceed();
@@ -99,6 +78,45 @@ public class BaseFieldAspectj {
         }
 //        logger.debug("自定义后置通知After-->{}");
     }
-	
-	
+
+    private void fixBaseFields(String methodName, Object o1) throws IllegalAccessException, InvocationTargetException {
+        //基础getXxx()方法
+        Method getCreateBy = ReflectUtil.getAccessibleMethod(o1, "getCreateBy", null);
+        Method getCreateTime = ReflectUtil.getAccessibleMethod(o1, "getCreateTime", null);
+        Method getUpdateBy = ReflectUtil.getAccessibleMethod(o1, "getUpdateBy", null);
+        Method getUpdateTime = ReflectUtil.getAccessibleMethod(o1, "getUpdateTime", null);
+        Method getStatus = ReflectUtil.getAccessibleMethod(o1, "getStatus", null);
+
+        //基础setXxx()方法
+        Method setCreateBy = ReflectUtil.getAccessibleMethod(o1, "setCreateBy", Integer.class);
+        Method setCreateTime = ReflectUtil.getAccessibleMethod(o1, "setCreateTime", Date.class);
+        Method setUpdateBy = ReflectUtil.getAccessibleMethod(o1, "setUpdateBy", Integer.class);
+        Method setUpdateTime = ReflectUtil.getAccessibleMethod(o1, "setUpdateTime", Date.class);
+        Method setStatus = ReflectUtil.getAccessibleMethod(o1, "setStatus", Integer.class);
+
+        //插入时修改，以后不再修改
+        if(methodName.startsWith("insert")) {
+            //todo 暂时没有usertoken功能，先设置为1
+            if(getCreateBy.invoke(o1, null) == null) {
+                setCreateBy.invoke(o1, 1);
+            }
+
+            if(getCreateTime.invoke(o1, null) == null) {
+                setCreateTime.invoke(o1, new Date());
+            }
+            //插入时默认有效
+            if(getStatus.invoke(o1, null) == null) {
+                setStatus.invoke(o1, 1);
+            }
+        }
+
+        if(getUpdateBy.invoke(o1, null) == null) {
+            setUpdateBy.invoke(o1, 1);
+        }
+        if(getUpdateTime.invoke(o1, null) == null) {
+            setUpdateTime.invoke(o1, new Date());
+        }
+    }
+
+
 }
