@@ -1,4 +1,4 @@
-package me.weix.whatever.shiro.authc;
+package me.weix.whatever.config.shiro.authc;
 
 import org.apache.shiro.authc.UsernamePasswordToken;
 

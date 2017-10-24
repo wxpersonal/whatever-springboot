@@ -1,4 +1,4 @@
-package me.weix.whatever.shiro.listener;
+package me.weix.whatever.config.shiro.listener;
 
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.SessionListener;

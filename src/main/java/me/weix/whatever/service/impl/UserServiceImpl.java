@@ -36,7 +36,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
         List<Permission> permissionList = new ArrayList<Permission>();
         List<Role> roleList = getRolesByUserId(userId);
-        for(Role role : roleList){
+        for (Role role : roleList) {
             List<Permission> permissions = permissionMapper.getPermissionsByRoleId(role.getId());
             permissionList.addAll(permissions);
         }
@@ -51,5 +51,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Override
     public User getUserByMobile(String mobile) {
         return userMapper.getUserByMobile(mobile);
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        return userMapper.getUserByUsername(username);
     }
 }

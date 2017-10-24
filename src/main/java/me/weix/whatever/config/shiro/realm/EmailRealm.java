@@ -1,4 +1,4 @@
-package me.weix.whatever.shiro.realm;
+package me.weix.whatever.config.shiro.realm;
 
 import me.weix.whatever.pojo.Permission;
 import me.weix.whatever.pojo.Role;
@@ -21,7 +21,7 @@ import java.util.Set;
 /**
  * Created by Administrator on 2017/6/19.
  */
-public class MobileRealm extends AuthorizingRealm {
+public class EmailRealm extends AuthorizingRealm {
 
 
     @Autowired
@@ -30,8 +30,8 @@ public class MobileRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
 
-        String Mobile = (String) principalCollection.getPrimaryPrincipal();
-        User user = userService.getUserByMobile(Mobile);
+        String principal = (String) principalCollection.getPrimaryPrincipal();
+        User user = userService.getUserByEmail(principal);
 
         //获取用户所有角色
         List<Role> roleList = userService.getRolesByUserId(user.getId());

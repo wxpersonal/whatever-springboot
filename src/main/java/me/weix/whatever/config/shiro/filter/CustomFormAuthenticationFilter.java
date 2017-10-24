@@ -1,6 +1,6 @@
-package me.weix.whatever.shiro.filter;
+package me.weix.whatever.config.shiro.filter;
 
-import me.weix.whatever.shiro.authc.CustomUsernamepasswordToken;
+import me.weix.whatever.config.shiro.authc.CustomUsernamepasswordToken;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;

@@ -42,7 +42,6 @@ redis:
     max-active: 8
     max-wait: -1
 
-
 #swagger
 swagger:
   version: 0.0.1

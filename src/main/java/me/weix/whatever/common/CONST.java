@@ -12,6 +12,7 @@ public interface CONST {
     interface LOGINTYPE {
         Integer EMAIN = 1;
         Integer MOBILE = 2;
+        Integer USERNAME = 3;
     }
 
     /**

@@ -1,4 +1,4 @@
-package me.weix.whatever.shiro.session;
+package me.weix.whatever.config.shiro.session;
 
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.SessionContext;

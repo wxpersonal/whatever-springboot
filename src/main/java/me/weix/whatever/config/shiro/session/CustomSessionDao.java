@@ -1,5 +1,5 @@
-package me.weix.whatever.shiro.session;/*
-package me.weix.whatever.shiro.session;
+package me.weix.whatever.config.shiro.session;/*
+package me.weix.whatever.config.shiro.session;
 
 
 import com.wx.util.RedisUtil;
