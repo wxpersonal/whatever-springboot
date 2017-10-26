@@ -1,4 +1,4 @@
-package me.weix.whatever.util;
+package me.weix.whatever.common.util;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;

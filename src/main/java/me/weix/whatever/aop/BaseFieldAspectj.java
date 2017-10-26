@@ -1,9 +1,8 @@
 package me.weix.whatever.aop;
 
 
-import com.sun.javafx.collections.MappingChange;
 import me.weix.whatever.pojo.BasePojo;
-import me.weix.whatever.util.ReflectUtil;
+import me.weix.whatever.common.util.ReflectUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -47,7 +46,7 @@ public class BaseFieldAspectj {
         try {
             Object[] args = jp.getArgs();
             String methodName = jp.getSignature().getName();
-            logger.debug("-------------->aop填充通用字段");
+            logger.debug("===========>aop fill base field:" + args);
             for(Object o : args) {
                 //参数为list类型
                 if(o instanceof java.util.List || o.getClass().isArray()) {

@@ -1,4 +1,3 @@
-/*
 package me.weix.whatever.aop;
 
 import org.aspectj.lang.JoinPoint;
@@ -9,12 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-*/
-/**
+/*
  * 切面
  * @author weix
- *
- *//*
+ */
+
 
 
 @Order(1)
@@ -35,14 +33,13 @@ public class LogAspectj {
 	public void logBefore(JoinPoint joinpoint){
         String methodName = joinpoint.getSignature().getName();
 
-        log.info("进入方法"+methodName);
+        log.info("========>>进入方法"+methodName);
 	}
 	
-	*/
-/*@AfterReturning("logAop()")
+@AfterReturning("logAop()")
 	public void logAfterReturning(){
 		log.info("返回通知AfterReturning-->{}");
-	}*//*
+	}
 
 	
 	
@@ -58,18 +55,19 @@ public class LogAspectj {
 	}
 	
 	@Around("logAop()")
-	public void logAround(ProceedingJoinPoint jp){
+	public Object logAround(ProceedingJoinPoint jp){
 		try {
 			log.debug("自定义前置通知Before-->{}");
-			jp.proceed();
+			Object obj = jp.proceed();
 			log.debug("自定义返回通知AfterReturning-->{}");
+			return obj;
 		} catch (Throwable throwable) {
 			log.debug("异常处理-->{}");
 			throwable.printStackTrace();
 		}
 		log.debug("自定义后置通知After-->{}");
+		return null;
 	}
 	
 	
 }
-*/

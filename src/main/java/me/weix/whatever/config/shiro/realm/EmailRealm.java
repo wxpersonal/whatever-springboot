@@ -57,7 +57,7 @@ public class EmailRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 
         String principal = (String) authenticationToken.getPrincipal();
-        String credential = (String) authenticationToken.getCredentials();
+        String credential = new String((char[])authenticationToken.getCredentials());
         return new SimpleAuthenticationInfo(principal, credential, this.getName());
     }
 }

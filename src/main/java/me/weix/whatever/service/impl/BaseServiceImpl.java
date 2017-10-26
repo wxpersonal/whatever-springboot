@@ -1,24 +1,23 @@
 package me.weix.whatever.service.impl;
 
 import me.weix.whatever.service.IBaseService;
-import me.weix.whatever.util.ReflectUtil;
-import me.weix.whatever.util.SpringContextUtil;
+import me.weix.whatever.common.util.ReflectUtil;
+import me.weix.whatever.common.util.SpringContextUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 /**
- * T:mapper
- * V:pojo
+ * mapper:mapper
+ * pojo:pojo
  */
-public abstract class BaseServiceImpl<T, V> implements IBaseService<V> {
+public abstract class BaseServiceImpl<mapper, pojo> implements IBaseService<pojo> {
 
-    private T mapper;
+    private mapper mapper;
 
     private Logger log = LoggerFactory.getLogger(BaseServiceImpl.class);
 
@@ -31,7 +30,7 @@ public abstract class BaseServiceImpl<T, V> implements IBaseService<V> {
     }
 
     @Override
-    public Integer insert(V pojo) {
+    public Integer insert(pojo pojo) {
         try {
             log.debug("====================>>>添加"+getPojoClass());
             Method insertSelective = mapper.getClass().getDeclaredMethod("insertSelective", pojo.getClass());
@@ -45,12 +44,12 @@ public abstract class BaseServiceImpl<T, V> implements IBaseService<V> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public V getById(Integer id) {
+    public pojo getById(Integer id) {
         try {
             Method selectByPrimaryKey = mapper.getClass().getDeclaredMethod("selectByPrimaryKey",id.getClass());
             Object result = selectByPrimaryKey.invoke(mapper, id);
             log.debug("====================>>>根据id查询"+getPojoClass() );
-            return (V) result;
+            return (pojo) result;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -58,7 +57,7 @@ public abstract class BaseServiceImpl<T, V> implements IBaseService<V> {
     }
 
     @Override
-    public Integer update(V pojo) {
+    public Integer update(pojo pojo) {
         try {
             log.debug("====================>>>更新"+getPojoClass() );
             Method selectByPrimaryKey = mapper.getClass().getDeclaredMethod("updateByPrimaryKeySelective",pojo.getClass());
@@ -90,7 +89,7 @@ public abstract class BaseServiceImpl<T, V> implements IBaseService<V> {
     }
 
     @Override
-    public List<V> list() {
+    public List<pojo> list() {
         return null;
     }
 
@@ -99,13 +98,13 @@ public abstract class BaseServiceImpl<T, V> implements IBaseService<V> {
      * getGenericSupperclass() 获取带有泛型的父类
      */
     @SuppressWarnings("unchecked")
-    private Class<T> getMapperClass(){
-        return (Class<T>) ReflectUtil.getClassGenricType(getClass(), 0);
+    private Class<mapper> getMapperClass(){
+        return (Class<mapper>) ReflectUtil.getClassGenricType(getClass(), 0);
     }
 
     @SuppressWarnings("unchecked")
-    private Class<V> getPojoClass(){
-        return (Class<V>) ReflectUtil.getClassGenricType(getClass(), 1);
+    private Class<pojo> getPojoClass(){
+        return (Class<pojo>) ReflectUtil.getClassGenricType(getClass(), 1);
     }
 
 }

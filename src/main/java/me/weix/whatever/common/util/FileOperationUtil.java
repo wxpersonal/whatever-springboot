@@ -1,4 +1,4 @@
-package me.weix.whatever.util;
+package me.weix.whatever.common.util;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 

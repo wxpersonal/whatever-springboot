@@ -1,4 +1,4 @@
-package me.weix.whatever.util;
+package me.weix.whatever.common.util;
 
 /**
  * Created by wxper on 2017/4/1.

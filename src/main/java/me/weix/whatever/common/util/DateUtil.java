@@ -1,4 +1,4 @@
-package me.weix.whatever.util;
+package me.weix.whatever.common.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
