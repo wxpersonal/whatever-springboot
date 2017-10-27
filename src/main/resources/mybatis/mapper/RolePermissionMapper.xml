@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="me.weix.whatever.dao.RolePermissionMapper" >
-  <resultMap id="BaseResultMap" type="me.weix.whatever.pojo.RolePermission" >
+<mapper namespace="me.weix.fairy.mapper.RolePermissionMapper" >
+  <resultMap id="BaseResultMap" type="me.weix.fairy.pojo.RolePermission" >
     <id column="role_id" property="roleId" jdbcType="INTEGER" />
     <id column="permission_id" property="permissionId" jdbcType="INTEGER" />
     <result column="create_by" property="createBy" jdbcType="INTEGER" />
@@ -13,28 +13,28 @@
   <sql id="Base_Column_List" >
     role_id, permission_id, create_by, create_time, update_by, update_time, status
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="me.weix.whatever.pojo.RolePermissionKey" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="me.weix.fairy.pojo.RolePermissionKey" >
     select 
     <include refid="Base_Column_List" />
-    from role_permission
+    from t_role_permission
     where role_id = #{roleId,jdbcType=INTEGER}
       and permission_id = #{permissionId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="me.weix.whatever.pojo.RolePermissionKey" >
-    delete from role_permission
+  <delete id="deleteByPrimaryKey" parameterType="me.weix.fairy.pojo.RolePermissionKey" >
+    delete from t_role_permission
     where role_id = #{roleId,jdbcType=INTEGER}
       and permission_id = #{permissionId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="me.weix.whatever.pojo.RolePermission" >
-    insert into role_permission (role_id, permission_id, create_by, 
+  <insert id="insert" parameterType="me.weix.fairy.pojo.RolePermission" >
+    insert into t_role_permission (role_id, permission_id, create_by, 
       create_time, update_by, update_time, 
       status)
     values (#{roleId,jdbcType=INTEGER}, #{permissionId,jdbcType=INTEGER}, #{createBy,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="me.weix.whatever.pojo.RolePermission" >
-    insert into role_permission
+  <insert id="insertSelective" parameterType="me.weix.fairy.pojo.RolePermission" >
+    insert into t_role_permission
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roleId != null" >
         role_id,
@@ -82,8 +82,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="me.weix.whatever.pojo.RolePermission" >
-    update role_permission
+  <update id="updateByPrimaryKeySelective" parameterType="me.weix.fairy.pojo.RolePermission" >
+    update t_role_permission
     <set >
       <if test="createBy != null" >
         create_by = #{createBy,jdbcType=INTEGER},
@@ -104,8 +104,8 @@
     where role_id = #{roleId,jdbcType=INTEGER}
       and permission_id = #{permissionId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="me.weix.whatever.pojo.RolePermission" >
-    update role_permission
+  <update id="updateByPrimaryKey" parameterType="me.weix.fairy.pojo.RolePermission" >
+    update t_role_permission
     set create_by = #{createBy,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_by = #{updateBy,jdbcType=INTEGER},

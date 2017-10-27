@@ -5,14 +5,14 @@
     <select id="getUserByMobile" resultMap="BaseResultMap">
         SELECT 
         <include refid="Base_Column_List"/>
-        FROM user
+        FROM t_user
         WHERE mobile = #{mobile,jdbcType=VARCHAR} AND status = 1
     </select>
 
     <select id="getUserByEmail" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
-        FROM user
+        FROM t_user
         WHERE email = #{email,jdbcType=VARCHAR} AND status = 1
     </select>
 </mapper>

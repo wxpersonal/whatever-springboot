@@ -6,23 +6,22 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface PermissionMapper {
-    int deleteByPrimaryKey(Integer id);
+	int deleteByPrimaryKey(Integer id);
 
-    int insert(Permission record);
+	int insert(Permission record);
 
-    int insertSelective(Permission record);
+	int insertSelective(Permission record);
 
-    Permission selectByPrimaryKey(Integer id);
+	Permission selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Permission record);
+	int updateByPrimaryKeySelective(Permission record);
 
-    int updateByPrimaryKey(Permission record);
+	int updateByPrimaryKey(Permission record);
 
-    /**
-     * 在下面添加自定义方法
-     */
+	/**
+	 * 在下面添加自定义方法
+	 */
 
-    List<Permission> getPermissionsByRoleId(@Param("roleId") Integer roleId);
-
+	List<Permission> getPermissionsByRoleId(@Param("roleId") Integer roleId);
 
 }
