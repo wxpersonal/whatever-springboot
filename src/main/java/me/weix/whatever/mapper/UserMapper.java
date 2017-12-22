@@ -23,5 +23,5 @@ public interface UserMapper {
 
     User getUserByEmail(@Param("email") String email);
 
-    User getUserByUsername(@Param("email") String username);
+    User getUserByUsername(@Param("username") String username);
 }
