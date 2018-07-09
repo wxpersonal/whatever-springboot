@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="me.weix.fairy.mapper.SysCodeMapper" >
-  <resultMap id="BaseResultMap" type="me.weix.fairy.pojo.SysCode" >
+<mapper namespace="me.weix.whatever.mapper.SysCodeMapper" >
+  <resultMap id="BaseResultMap" type="me.weix.whatever.pojo.SysCode" >
     <id column="code" property="code" jdbcType="VARCHAR" />
     <result column="p_code" property="pCode" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
@@ -25,7 +25,7 @@
     delete from t_sys_code
     where code = #{code,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="me.weix.fairy.pojo.SysCode" >
+  <insert id="insert" parameterType="me.weix.whatever.pojo.SysCode" >
     insert into t_sys_code (code, p_code, name, 
       desc, create_by, create_time, 
       updateBy, update_time, status
@@ -35,7 +35,7 @@
       #{updateby,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="me.weix.fairy.pojo.SysCode" >
+  <insert id="insertSelective" parameterType="me.weix.whatever.pojo.SysCode" >
     insert into t_sys_code
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="code != null" >
@@ -96,7 +96,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="me.weix.fairy.pojo.SysCode" >
+  <update id="updateByPrimaryKeySelective" parameterType="me.weix.whatever.pojo.SysCode" >
     update t_sys_code
     <set >
       <if test="pCode != null" >
@@ -126,7 +126,7 @@
     </set>
     where code = #{code,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="me.weix.fairy.pojo.SysCode" >
+  <update id="updateByPrimaryKey" parameterType="me.weix.whatever.pojo.SysCode" >
     update t_sys_code
     set p_code = #{pCode,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},

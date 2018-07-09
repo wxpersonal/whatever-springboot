@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="me.weix.fairy.mapper.MenuMapper" >
-  <resultMap id="BaseResultMap" type="me.weix.fairy.pojo.Menu" >
+<mapper namespace="me.weix.whatever.mapper.MenuMapper" >
+  <resultMap id="BaseResultMap" type="me.weix.whatever.pojo.Menu" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="pid" property="pid" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
@@ -27,7 +27,7 @@
     delete from t_menu
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="me.weix.fairy.pojo.Menu" >
+  <insert id="insert" parameterType="me.weix.whatever.pojo.Menu" >
     insert into t_menu (id, pid, name, 
       kind, url, icon, create_by, 
       create_time, update_by, update_time, 
@@ -37,7 +37,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="me.weix.fairy.pojo.Menu" >
+  <insert id="insertSelective" parameterType="me.weix.whatever.pojo.Menu" >
     insert into t_menu
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -110,7 +110,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="me.weix.fairy.pojo.Menu" >
+  <update id="updateByPrimaryKeySelective" parameterType="me.weix.whatever.pojo.Menu" >
     update t_menu
     <set >
       <if test="pid != null" >
@@ -146,7 +146,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="me.weix.fairy.pojo.Menu" >
+  <update id="updateByPrimaryKey" parameterType="me.weix.whatever.pojo.Menu" >
     update t_menu
     set pid = #{pid,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},

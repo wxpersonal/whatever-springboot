@@ -7,19 +7,19 @@ server:
 jdbc:
   readSize: 2
   type: com.alibaba.druid.pool.DruidDataSource
-  master:
+  write:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
     databaseId: mysql
     username: root
     password: xiang123
-  slave1:
+  read1:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
     databaseId: mysql
     username: root
     password: xiang123
-  slave2:
+  read2:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
     databaseId: mysql

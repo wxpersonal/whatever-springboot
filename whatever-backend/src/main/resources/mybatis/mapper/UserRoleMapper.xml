@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="me.weix.fairy.mapper.UserRoleMapper" >
-  <resultMap id="BaseResultMap" type="me.weix.fairy.pojo.UserRole" >
+<mapper namespace="me.weix.whatever.mapper.UserRoleMapper" >
+  <resultMap id="BaseResultMap" type="me.weix.whatever.pojo.UserRole" >
     <id column="user_id" property="userId" jdbcType="INTEGER" />
     <id column="role_id" property="roleId" jdbcType="INTEGER" />
     <result column="create_by" property="createBy" jdbcType="INTEGER" />
@@ -13,19 +13,19 @@
   <sql id="Base_Column_List" >
     user_id, role_id, create_by, create_time, update_by, update_time, status
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="me.weix.fairy.pojo.UserRoleKey" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="me.weix.whatever.pojo.UserRoleKey" >
     select 
     <include refid="Base_Column_List" />
     from t_user_role
     where user_id = #{userId,jdbcType=INTEGER}
       and role_id = #{roleId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="me.weix.fairy.pojo.UserRoleKey" >
+  <delete id="deleteByPrimaryKey" parameterType="me.weix.whatever.pojo.UserRoleKey" >
     delete from t_user_role
     where user_id = #{userId,jdbcType=INTEGER}
       and role_id = #{roleId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="me.weix.fairy.pojo.UserRole" >
+  <insert id="insert" parameterType="me.weix.whatever.pojo.UserRole" >
     insert into t_user_role (user_id, role_id, create_by, 
       create_time, update_by, update_time, 
       status)
@@ -33,7 +33,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="me.weix.fairy.pojo.UserRole" >
+  <insert id="insertSelective" parameterType="me.weix.whatever.pojo.UserRole" >
     insert into t_user_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
@@ -82,7 +82,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="me.weix.fairy.pojo.UserRole" >
+  <update id="updateByPrimaryKeySelective" parameterType="me.weix.whatever.pojo.UserRole" >
     update t_user_role
     <set >
       <if test="createBy != null" >
@@ -104,7 +104,7 @@
     where user_id = #{userId,jdbcType=INTEGER}
       and role_id = #{roleId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="me.weix.fairy.pojo.UserRole" >
+  <update id="updateByPrimaryKey" parameterType="me.weix.whatever.pojo.UserRole" >
     update t_user_role
     set create_by = #{createBy,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},

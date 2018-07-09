@@ -1,3 +1,4 @@
+/*
 package me.weix.whatever.aop;
 
 import me.weix.whatever.config.common.CONST;
@@ -14,10 +15,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+*/
 /*
  * 切面
  * @author weix
- */
+ *//*
+
 
 
 
@@ -40,7 +43,8 @@ public class DataSourceAspectj {
             "execution(* me.weix.whatever.service.impl.*ServiceImpl.delete*(..))")
     public void writePointcut(){}
 	
-	/*@Before("dataSourceAop()")
+	*/
+/*@Before("dataSourceAop()")
 	public void logBefore(JoinPoint joinpoint){
 	    String methodName = joinpoint.getSignature().getName();
 		log.info("前置通知Before-->{}");
@@ -60,13 +64,16 @@ public class DataSourceAspectj {
 	@AfterThrowing("dataSourceAop()")
 	public void logAfterThrow(){
 		log.info("异常通知AfterThrowing-->{}");
-	}*/
+	}*//*
 
-    /**
+
+    */
+/**
      * 主库切点
      * @param jp
      * @return
-     */
+     *//*
+
 	@Around("readPointcut()")
 	public Object setReadDataSource(ProceedingJoinPoint jp){
 		try {
@@ -100,3 +107,4 @@ public class DataSourceAspectj {
 	
 	
 }
+*/

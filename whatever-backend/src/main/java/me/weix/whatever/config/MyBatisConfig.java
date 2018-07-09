@@ -7,7 +7,6 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -40,14 +39,13 @@ public class MyBatisConfig {
      */
     @Bean
     @Primary
-    public DynamicDataSource dataSource(@Qualifier("masterDataSource") DataSource masterDataSource,
-                                         @Qualifier("slaveDataSource1") DataSource slaveDataSource1,
-                                         @Qualifier("slaveDataSource2") DataSource slaveDataSource2) {
-
+    public DynamicDataSource dataSource(@Qualifier("writeDataSource") DataSource masterDataSource,
+                                         @Qualifier("readDataSource1") DataSource readDataSource1,
+                                         @Qualifier("readDataSource2") DataSource readDataSource2) {
         Map<Object, Object> map = new HashMap<>();
         map.put(DataSourceType.master.getName(), masterDataSource);
-        map.put(DataSourceType.slave1.getName(), slaveDataSource1);
-        map.put(DataSourceType.slave2.getName(), slaveDataSource2);
+        map.put(DataSourceType.slave.getName() + 1, readDataSource1);
+        map.put(DataSourceType.slave.getName() + 2, readDataSource2);
         DynamicDataSource dataSource = new DynamicDataSource();
         dataSource.setTargetDataSources(map);
         return dataSource;
@@ -69,10 +67,10 @@ public class MyBatisConfig {
     }
 
     /**
-     * 配置事务管理器
+     * 配置读写库事务管理器
      */
     @Bean
-    public DataSourceTransactionManager transactionManager(DynamicDataSource dataSource) throws Exception {
-        return new DataSourceTransactionManager(dataSource);
+    public DataSourceTransactionManager transactionManager(@Qualifier("writeDataSource") DataSource writeDataSource) {
+        return new DataSourceTransactionManager(writeDataSource);
     }
 }

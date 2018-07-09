@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="me.weix.fairy.mapper.SysFileMapper">
-  <resultMap id="BaseResultMap" type="me.weix.fairy.pojo.SysFile">
+<mapper namespace="me.weix.whatever.mapper.SysFileMapper">
+  <resultMap id="BaseResultMap" type="me.weix.whatever.pojo.SysFile">
     <id column="code" jdbcType="VARCHAR" property="code" />
     <result column="p_code" jdbcType="VARCHAR" property="pCode" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -25,7 +25,7 @@
     delete from t_sys_code
     where code = #{code,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="me.weix.fairy.pojo.SysFile">
+  <insert id="insert" parameterType="me.weix.whatever.pojo.SysFile">
     insert into t_sys_code (code, p_code, name, 
       desc, create_by, create_time, 
       updateBy, update_time, status
@@ -35,7 +35,7 @@
       #{updateby,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="me.weix.fairy.pojo.SysFile">
+  <insert id="insertSelective" parameterType="me.weix.whatever.pojo.SysFile">
     insert into t_sys_code
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="code != null">
@@ -96,7 +96,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="me.weix.fairy.pojo.SysFile">
+  <update id="updateByPrimaryKeySelective" parameterType="me.weix.whatever.pojo.SysFile">
     update t_sys_code
     <set>
       <if test="pCode != null">
@@ -126,7 +126,7 @@
     </set>
     where code = #{code,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="me.weix.fairy.pojo.SysFile">
+  <update id="updateByPrimaryKey" parameterType="me.weix.whatever.pojo.SysFile">
     update t_sys_code
     set p_code = #{pCode,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
@@ -138,7 +138,7 @@
       status = #{status,jdbcType=INTEGER}
     where code = #{code,jdbcType=VARCHAR}
   </update>
-  <resultMap id="BaseResultMap" type="me.weix.fairy.pojo.SysFile">
+  <resultMap id="BaseResultMap" type="me.weix.whatever.pojo.SysFile">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="objectid" jdbcType="INTEGER" property="objectid" />
     <result column="objecttype" jdbcType="INTEGER" property="objecttype" />
@@ -168,7 +168,7 @@
     delete from t_sys_file
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="me.weix.fairy.pojo.SysFile">
+  <insert id="insert" parameterType="me.weix.whatever.pojo.SysFile">
     insert into t_sys_file (id, objectid, objecttype, 
       type, oldname, newname, 
       size, path, relativepath, 
@@ -180,7 +180,7 @@
       #{createBy,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=INTEGER}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="me.weix.fairy.pojo.SysFile">
+  <insert id="insertSelective" parameterType="me.weix.whatever.pojo.SysFile">
     insert into t_sys_file
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -271,7 +271,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="me.weix.fairy.pojo.SysFile">
+  <update id="updateByPrimaryKeySelective" parameterType="me.weix.whatever.pojo.SysFile">
     update t_sys_file
     <set>
       <if test="objectid != null">
@@ -316,7 +316,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="me.weix.fairy.pojo.SysFile">
+  <update id="updateByPrimaryKey" parameterType="me.weix.whatever.pojo.SysFile">
     update t_sys_file
     set objectid = #{objectid,jdbcType=INTEGER},
       objecttype = #{objecttype,jdbcType=INTEGER},
