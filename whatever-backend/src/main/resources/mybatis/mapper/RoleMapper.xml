@@ -10,16 +10,17 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_by" property="updateBy" jdbcType="INTEGER" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="deleted" property="deleted" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, code, name, desc, create_by, create_time, update_by, update_time, status
+    id, code, name, desc, create_by, create_time, update_by, update_time, status, deleted
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from t_role
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER} and deleted = 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_role
@@ -28,12 +29,12 @@
   <insert id="insert" parameterType="me.weix.whatever.pojo.Role" >
     insert into t_role (id, code, name, 
       desc, create_by, create_time, 
-      update_by, update_time, status
-      )
+      update_by, update_time, status, 
+      deleted)
     values (#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{desc,jdbcType=VARCHAR}, #{createBy,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateBy,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
-      )
+      #{updateBy,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, 
+      #{deleted,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="me.weix.whatever.pojo.Role" >
     insert into t_role
@@ -65,6 +66,9 @@
       <if test="status != null" >
         status,
       </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -92,7 +96,10 @@
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=INTEGER},
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -121,7 +128,10 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=TINYINT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -135,7 +145,21 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_by = #{updateBy,jdbcType=INTEGER},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=INTEGER}
+      status = #{status,jdbcType=TINYINT},
+      deleted = #{deleted,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="deleteLogicByIds" >
+    update t_role set deleted = 1 where id = #{id} 
+  </update>
+  <select id="selectByIds" >
+    select 
+	<include refid="Base_Column_List" />
+	from t_role
+	where id in <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </select>
+  <update id="deleteLogicById" >
+    update t_role set deleted = 1 where id in 
+	<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
   </update>
 </mapper>

@@ -10,7 +10,7 @@ public enum DataSourceType {
     private String name;
     private String desc;
 
-    DataSourceType(String type, String desc) {
+    DataSourceType(String name, String desc) {
         this.name = name;
         this.desc = desc;
     }
@@ -31,7 +31,4 @@ public enum DataSourceType {
         this.desc = desc;
     }
 
-    public static DataSourceType getByName(String name) {
-        return DataSourceType.valueOf(name);
-    }
 }

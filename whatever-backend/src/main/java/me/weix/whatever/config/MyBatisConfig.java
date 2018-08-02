@@ -2,6 +2,9 @@ package me.weix.whatever.config;
 
 import me.weix.whatever.config.dataSource.DataSourceType;
 import me.weix.whatever.config.dataSource.DynamicDataSource;
+import me.weix.whatever.config.dataSource.DynamicDataSourcePlugin;
+import org.apache.ibatis.plugin.Interceptor;
+import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -31,8 +34,6 @@ public class MyBatisConfig {
     @Autowired
     private Environment env;
 
-    private AtomicInteger count = new AtomicInteger(0);
-
     /**
      * @Primary 该注解表示在同一个接口有多个实现类可以注入的时候，默认选择哪一个，而不是让@autowire注解报错
      * @Qualifier 根据名称进行注入，通常是在具有相同的多个类型的实例的一个注入（例如有多个DataSource类型的实例）
@@ -60,9 +61,18 @@ public class MyBatisConfig {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dynamicDataSource);// 指定数据源(这个必须有，否则报错)
         // 下边两句仅仅用于*.xml文件，如果整个持久层操作不需要使用到xml文件的话（只用注解就可以搞定），则不加
+
+
         sqlSessionFactoryBean.setTypeAliasesPackage(env.getProperty("mybatis.typeAliasesPackage"));// 指定基包
         sqlSessionFactoryBean.setMapperLocations(
-                new PathMatchingResourcePatternResolver().getResources(env.getProperty("mybatis.mapperLocations")));//
+                new PathMatchingResourcePatternResolver().getResources(env.getProperty("mybatis.mapperLocations")));
+
+        /**
+         * 数据源切换
+         */
+        Integer readSize = Integer.parseInt(env.getProperty("jdbc.readSize"));
+        DynamicDataSourcePlugin dynamicDataSourcePlugin = new DynamicDataSourcePlugin(readSize);
+        sqlSessionFactoryBean.setPlugins(new Interceptor[] { dynamicDataSourcePlugin });
         return sqlSessionFactoryBean.getObject();
     }
 

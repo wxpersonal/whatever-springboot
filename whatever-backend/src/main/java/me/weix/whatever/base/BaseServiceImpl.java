@@ -1,6 +1,5 @@
-package me.weix.whatever.service.impl;
+package me.weix.whatever.base;
 
-import me.weix.whatever.service.IBaseService;
 import me.weix.whatever.util.ReflectUtil;
 import me.weix.whatever.util.SpringContextUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -9,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 /**

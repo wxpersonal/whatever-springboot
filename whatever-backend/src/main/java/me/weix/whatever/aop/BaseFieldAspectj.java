@@ -1,8 +1,7 @@
 package me.weix.whatever.aop;
 
 
-import com.sun.javafx.collections.MappingChange;
-import me.weix.whatever.pojo.BasePojo;
+import me.weix.whatever.base.BasePojo;
 import me.weix.whatever.util.ReflectUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

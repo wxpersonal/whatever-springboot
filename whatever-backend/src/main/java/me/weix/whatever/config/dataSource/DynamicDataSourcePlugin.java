@@ -11,6 +11,8 @@ import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.util.Locale;
@@ -27,66 +29,68 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 @Intercepts({
         @Signature(type = Executor.class, method = "update", args = {
-                MappedStatement.class, Object.class }),
+                MappedStatement.class, Object.class}),
         @Signature(type = Executor.class, method = "query", args = {
                 MappedStatement.class, Object.class, RowBounds.class,
-                ResultHandler.class }) })
+                ResultHandler.class})})
 public class DynamicDataSourcePlugin implements Interceptor {
 
     protected static final Logger logger = LoggerFactory.getLogger(DynamicDataSourcePlugin.class);
 
     private static final String REGEX = ".*insert\\u0020.*|.*delete\\u0020.*|.*update\\u0020.*";
 
-    private static final Map<String, String> cacheMap = new ConcurrentHashMap<>();
 
     private static AtomicInteger count = new AtomicInteger(0);
 
     /**
-     * 取读库个数
+     * 读库个数
      */
-    @Value("jdbc.readSize")
-    private static int READ_DATASOURCE_SIZE;
+    private int read_dataSource_size;
+
+
+    public DynamicDataSourcePlugin(int read_dataSource_size) {
+        this.read_dataSource_size = read_dataSource_size;
+    }
 
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
 
         boolean synchronizationActive = TransactionSynchronizationManager.isSynchronizationActive();
-        if(!synchronizationActive) {
+        if (!synchronizationActive) {
             Object[] objects = invocation.getArgs();
             MappedStatement ms = (MappedStatement) objects[0];
 
             String dataSourceName;
-            if((dataSourceName = cacheMap.get(ms.getId())) == null) {
-                //读方法
-                if(ms.getSqlCommandType().equals(SqlCommandType.SELECT)) {
-                    //!selectKey 为自增id查询主键(SELECT LAST_INSERT_ID() )方法，使用主库
-                    if(ms.getId().contains(SelectKeyGenerator.SELECT_KEY_SUFFIX)) {
+            //读方法
+            if (ms.getSqlCommandType().equals(SqlCommandType.SELECT)) {
+                //!selectKey 为自增id查询主键(SELECT LAST_INSERT_ID() )方法，使用主库
+                if (ms.getId().contains(SelectKeyGenerator.SELECT_KEY_SUFFIX)) {
+                    dataSourceName = DataSourceType.master.getName();
+                } else {
+                    BoundSql boundSql = ms.getSqlSource().getBoundSql(objects[1]);
+                    String sql = boundSql.getSql().toLowerCase(Locale.CHINA).replaceAll("[\\t\\n\\r]", " ");
+                    if (sql.matches(REGEX)) {
                         dataSourceName = DataSourceType.master.getName();
                     } else {
-                        BoundSql boundSql = ms.getSqlSource().getBoundSql(objects[1]);
-                        String sql = boundSql.getSql().toLowerCase(Locale.CHINA).replaceAll("[\\t\\n\\r]", " ");
-                        if(sql.matches(REGEX)) {
-                            dataSourceName = DataSourceType.master.getName();
-                        } else {
-                            /**
-                             * 轮询读库
-                             */
-                            int i = count.getAndAdd(1) % READ_DATASOURCE_SIZE;
-                            if(count.get() > 10000) {
-                                count.set(0);
-                            }
-                            dataSourceName = DataSourceType.slave.getName() + i;
+                        /**
+                         * 轮询读库
+                         */
+                        int i = count.getAndAdd(1) % read_dataSource_size;
+                        if (count.get() > 10000) {
+                            count.set(0);
                         }
+                        dataSourceName = DataSourceType.slave.getName() + (i + 1);
                     }
-                }else{
-                    dataSourceName = DataSourceType.master.getName();
                 }
-
-                logger.warn("设置方法[{}] use [{}] Strategy, SqlCommandType [{}]..", ms.getId(), dataSourceName, ms.getSqlCommandType().name());
-                cacheMap.put(ms.getId(), dataSourceName);
+            } else {
+                dataSourceName = DataSourceType.master.getName();
             }
+
+            logger.warn("设置方法[{}] use [{}] Strategy, SqlCommandType [{}]..", ms.getId(), dataSourceName, ms.getSqlCommandType().name());
+
             DataSourceContextHolder.setDataSource(dataSourceName);
+            logger.info("------------------->switch to dataSource :" + dataSourceName);
         }
 
         return invocation.proceed();
@@ -104,5 +108,14 @@ public class DynamicDataSourcePlugin implements Interceptor {
     @Override
     public void setProperties(Properties properties) {
         //
+    }
+
+
+    public int getRead_dataSource_size() {
+        return read_dataSource_size;
+    }
+
+    public void setRead_dataSource_size(int read_dataSource_size) {
+        this.read_dataSource_size = read_dataSource_size;
     }
 }

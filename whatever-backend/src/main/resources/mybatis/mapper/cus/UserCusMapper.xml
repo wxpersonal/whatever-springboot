@@ -6,13 +6,13 @@
         SELECT 
         <include refid="Base_Column_List"/>
         FROM t_user
-        WHERE mobile = #{mobile,jdbcType=VARCHAR} AND status = 1
+        WHERE mobile = #{mobile,jdbcType=VARCHAR} AND status = 1 and deleted = 0
     </select>
 
     <select id="getUserByEmail" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM t_user
-        WHERE email = #{email,jdbcType=VARCHAR} AND status = 1
+        WHERE email = #{email,jdbcType=VARCHAR} AND status = 1 and deleted = 0
     </select>
 </mapper>
