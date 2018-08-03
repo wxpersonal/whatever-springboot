@@ -1,5 +1,6 @@
 package me.weix.whatever.config.dataSource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.keygen.SelectKeyGenerator;
 import org.apache.ibatis.mapping.BoundSql;
@@ -56,42 +57,45 @@ public class DynamicDataSourcePlugin implements Interceptor {
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
 
-        boolean synchronizationActive = TransactionSynchronizationManager.isSynchronizationActive();
-        if (!synchronizationActive) {
-            Object[] objects = invocation.getArgs();
-            MappedStatement ms = (MappedStatement) objects[0];
+        if(StringUtils.isEmpty(DataSourceContextHolder.getDataSource())) {
+            boolean synchronizationActive = TransactionSynchronizationManager.isSynchronizationActive();
+            if (!synchronizationActive) {
+                Object[] objects = invocation.getArgs();
+                MappedStatement ms = (MappedStatement) objects[0];
 
-            String dataSourceName;
-            //读方法
-            if (ms.getSqlCommandType().equals(SqlCommandType.SELECT)) {
-                //!selectKey 为自增id查询主键(SELECT LAST_INSERT_ID() )方法，使用主库
-                if (ms.getId().contains(SelectKeyGenerator.SELECT_KEY_SUFFIX)) {
-                    dataSourceName = DataSourceType.master.getName();
-                } else {
-                    BoundSql boundSql = ms.getSqlSource().getBoundSql(objects[1]);
-                    String sql = boundSql.getSql().toLowerCase(Locale.CHINA).replaceAll("[\\t\\n\\r]", " ");
-                    if (sql.matches(REGEX)) {
+                String dataSourceName;
+                //读方法
+                if (ms.getSqlCommandType().equals(SqlCommandType.SELECT)) {
+                    //!selectKey 为自增id查询主键(SELECT LAST_INSERT_ID() )方法，使用主库
+                    if (ms.getId().contains(SelectKeyGenerator.SELECT_KEY_SUFFIX)) {
                         dataSourceName = DataSourceType.master.getName();
                     } else {
-                        /**
-                         * 轮询读库
-                         */
-                        int i = count.getAndAdd(1) % read_dataSource_size;
-                        if (count.get() > 10000) {
-                            count.set(0);
+                        BoundSql boundSql = ms.getSqlSource().getBoundSql(objects[1]);
+                        String sql = boundSql.getSql().toLowerCase(Locale.CHINA).replaceAll("[\\t\\n\\r]", " ");
+                        if (sql.matches(REGEX)) {
+                            dataSourceName = DataSourceType.master.getName();
+                        } else {
+                            /**
+                             * 轮询读库
+                             */
+                            int i = count.getAndAdd(1) % read_dataSource_size;
+                            if (count.get() > 10000) {
+                                count.set(0);
+                            }
+                            dataSourceName = DataSourceType.slave.getName() + (i + 1);
                         }
-                        dataSourceName = DataSourceType.slave.getName() + (i + 1);
                     }
+                } else {
+                    dataSourceName = DataSourceType.master.getName();
                 }
-            } else {
-                dataSourceName = DataSourceType.master.getName();
+
+                logger.warn("设置方法[{}] use [{}] Strategy, SqlCommandType [{}]..", ms.getId(), dataSourceName, ms.getSqlCommandType().name());
+
+                DataSourceContextHolder.setDataSource(dataSourceName);
+                logger.info("------------------->switch to dataSource :" + dataSourceName);
             }
-
-            logger.warn("设置方法[{}] use [{}] Strategy, SqlCommandType [{}]..", ms.getId(), dataSourceName, ms.getSqlCommandType().name());
-
-            DataSourceContextHolder.setDataSource(dataSourceName);
-            logger.info("------------------->switch to dataSource :" + dataSourceName);
         }
+
 
         return invocation.proceed();
     }
