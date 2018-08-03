@@ -79,6 +79,7 @@ public class MyBatisConfig {
     /**
      * 配置读写库事务管理器
      */
+    //todo 未释放线程资源 treadlocal   可已自定义事务管理器
     @Bean
     public DataSourceTransactionManager transactionManager(DynamicDataSource dynamicDataSource) {
         return new DataSourceTransactionManager(dynamicDataSource);
