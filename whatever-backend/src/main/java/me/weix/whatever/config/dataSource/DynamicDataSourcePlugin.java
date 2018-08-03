@@ -57,7 +57,6 @@ public class DynamicDataSourcePlugin implements Interceptor {
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
 
-        if(StringUtils.isEmpty(DataSourceContextHolder.getDataSource())) {
             boolean synchronizationActive = TransactionSynchronizationManager.isSynchronizationActive();
             if (!synchronizationActive) {
                 Object[] objects = invocation.getArgs();
@@ -94,7 +93,7 @@ public class DynamicDataSourcePlugin implements Interceptor {
                 DataSourceContextHolder.setDataSource(dataSourceName);
                 logger.info("------------------->switch to dataSource :" + dataSourceName);
             }
-        }
+
 
 
         return invocation.proceed();

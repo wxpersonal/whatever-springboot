@@ -27,48 +27,50 @@ public class LogAspectj {
 	//定义通用切点，以便下面4个通知使用
 
 	@Pointcut("execution(* me.weix.whatever.service.impl.*ServiceImpl.*(..)) ||" +
-              "execution(* me.weix.whatever.base.BaseServiceImpl.*(..)) ||" +
-			  "execution(* me.weix.whatever.rest.*Rest.*(..))"
+              "execution(* me.weix.whatever.base.BaseServiceImpl.*(..))"
              )
 	public void logAop(){}
-
-	@Before("logAop()")
-	public void logBefore(JoinPoint joinpoint){
-        String methodName = joinpoint.getSignature().getName();
-
-        log.info("进入方法"+methodName);
-	}
-
-
-    @AfterReturning("logAop()")
-	public void logAfterReturning(){
-		log.info("返回通知AfterReturning-->{}");
-	}
-
-
-
-	@After("logAop()")
-	public void logAfter(JoinPoint joinpoint){
-        String methodName = joinpoint.getSignature().getName();
-		log.info("方法"+ methodName +"结束");
-	}
-
-	@AfterThrowing("logAop()")
-	public void logAfterThrow(){
-		log.info("异常通知AfterThrowing-->{}");
-	}
+//
+//	@Before("logAop()")
+//	public void logBefore(JoinPoint joinpoint){
+//        String methodName = joinpoint.getSignature().getName();
+//
+//        log.info("进入方法"+methodName);
+//	}
+//
+//
+//    @AfterReturning("logAop()")
+//	public void logAfterReturning(){
+//		log.info("返回通知AfterReturning-->{}");
+//	}
+//
+//
+//
+//	@After("logAop()")
+//	public void logAfter(JoinPoint joinpoint){
+//        String methodName = joinpoint.getSignature().getName();
+//		log.info("方法"+ methodName +"结束");
+//	}
+//
+//	@AfterThrowing("logAop()")
+//	public void logAfterThrow(){
+//		log.info("异常通知AfterThrowing-->{}");
+//	}
 
 	@Around("logAop()")
-	public void logAround(ProceedingJoinPoint jp){
+	public Object logAround(ProceedingJoinPoint jp){
 		try {
 			log.debug("自定义前置通知Before-->{}");
-			jp.proceed();
+			Object obj = jp.proceed();
 			log.debug("自定义返回通知AfterReturning-->{}");
+			return obj;
 		} catch (Throwable throwable) {
 			log.debug("异常处理-->{}");
 			throwable.printStackTrace();
 		}
 		log.debug("自定义后置通知After-->{}");
+
+		return null;
 	}
 
 

@@ -80,7 +80,7 @@ public class MyBatisConfig {
      * 配置读写库事务管理器
      */
     @Bean
-    public DataSourceTransactionManager transactionManager(@Qualifier("writeDataSource") DataSource writeDataSource) {
-        return new DataSourceTransactionManager(writeDataSource);
+    public DataSourceTransactionManager transactionManager(DynamicDataSource dynamicDataSource) {
+        return new DataSourceTransactionManager(dynamicDataSource);
     }
 }

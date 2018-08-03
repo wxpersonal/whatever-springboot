@@ -48,15 +48,15 @@ public class DataSourceAspectj {
 				log.debug("switch datasource ------------>" + DataSourceType.master.getName());
 			}
             Object obj = jp.proceed();
-
-            DataSourceContextHolder.clearDataSource();
-            return obj;
+			return obj;
         } catch (Throwable throwable) {
             throwable.printStackTrace();
+        } finally {
+            DataSourceContextHolder.clearDataSource();
         }
         return null;
     }
-	
-	
+
+
 }
 
