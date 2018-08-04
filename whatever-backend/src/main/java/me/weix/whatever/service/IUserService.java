@@ -1,5 +1,6 @@
 package me.weix.whatever.service;
 
+import me.weix.whatever.base.IBaseService;
 import me.weix.whatever.pojo.Permission;
 import me.weix.whatever.pojo.Role;
 import me.weix.whatever.pojo.User;
@@ -17,5 +18,7 @@ public interface IUserService extends IBaseService<User> {
     User getUserByMobile(String mobile);
 
     User getUserByUsername(String username);
+
+    String testTransaction();
 
 }

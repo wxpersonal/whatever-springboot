@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="me.weix.fairy.mapper.SysCodeMapper" >
-  <resultMap id="BaseResultMap" type="me.weix.fairy.pojo.SysCode" >
+<mapper namespace="me.weix.whatever.mapper.SysCodeMapper" >
+  <resultMap id="BaseResultMap" type="me.weix.whatever.pojo.SysCode" >
     <id column="code" property="code" jdbcType="VARCHAR" />
     <result column="p_code" property="pCode" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
@@ -10,32 +10,34 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="updateBy" property="updateby" jdbcType="INTEGER" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="deleted" property="deleted" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
-    code, p_code, name, desc, create_by, create_time, updateBy, update_time, status
+    code, p_code, name, desc, create_by, create_time, updateBy, update_time, status, 
+    deleted
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from t_sys_code
-    where code = #{code,jdbcType=VARCHAR}
+    where code = #{code,jdbcType=VARCHAR} and deleted = 0
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from t_sys_code
     where code = #{code,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="me.weix.fairy.pojo.SysCode" >
+  <insert id="insert" parameterType="me.weix.whatever.pojo.SysCode" >
     insert into t_sys_code (code, p_code, name, 
       desc, create_by, create_time, 
-      updateBy, update_time, status
-      )
+      updateBy, update_time, status, 
+      deleted)
     values (#{code,jdbcType=VARCHAR}, #{pCode,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{desc,jdbcType=VARCHAR}, #{createBy,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateby,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
-      )
+      #{updateby,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, 
+      #{deleted,jdbcType=TINYINT})
   </insert>
-  <insert id="insertSelective" parameterType="me.weix.fairy.pojo.SysCode" >
+  <insert id="insertSelective" parameterType="me.weix.whatever.pojo.SysCode" >
     insert into t_sys_code
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="code != null" >
@@ -65,6 +67,9 @@
       <if test="status != null" >
         status,
       </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="code != null" >
@@ -92,11 +97,14 @@
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=INTEGER},
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="me.weix.fairy.pojo.SysCode" >
+  <update id="updateByPrimaryKeySelective" parameterType="me.weix.whatever.pojo.SysCode" >
     update t_sys_code
     <set >
       <if test="pCode != null" >
@@ -121,12 +129,15 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=TINYINT},
       </if>
     </set>
     where code = #{code,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="me.weix.fairy.pojo.SysCode" >
+  <update id="updateByPrimaryKey" parameterType="me.weix.whatever.pojo.SysCode" >
     update t_sys_code
     set p_code = #{pCode,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
@@ -135,7 +146,21 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       updateBy = #{updateby,jdbcType=INTEGER},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=INTEGER}
+      status = #{status,jdbcType=TINYINT},
+      deleted = #{deleted,jdbcType=TINYINT}
     where code = #{code,jdbcType=VARCHAR}
+  </update>
+  <update id="deleteLogicByIds" >
+    update t_sys_code set deleted = 1 where id = #{id} 
+  </update>
+  <select id="selectByIds" >
+    select 
+	<include refid="Base_Column_List" />
+	from t_sys_code
+	where id in <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
+  </select>
+  <update id="deleteLogicById" >
+    update t_sys_code set deleted = 1 where id in 
+	<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
   </update>
 </mapper>

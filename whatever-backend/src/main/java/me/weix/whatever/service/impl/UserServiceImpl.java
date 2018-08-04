@@ -1,5 +1,6 @@
 package me.weix.whatever.service.impl;
 
+import me.weix.whatever.base.BaseServiceImpl;
 import me.weix.whatever.mapper.PermissionMapper;
 import me.weix.whatever.mapper.RoleMapper;
 import me.weix.whatever.mapper.UserMapper;
@@ -8,6 +9,7 @@ import me.weix.whatever.pojo.Role;
 import me.weix.whatever.pojo.User;
 import me.weix.whatever.service.IUserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -56,5 +58,19 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Override
     public User getUserByUsername(String username) {
         return userMapper.getUserByUsername(username);
+    }
+
+    @Override
+    @Transactional
+    public String testTransaction() {
+
+        User user = userMapper.selectByPrimaryKey(1);
+        user.setStatus((user.getStatus() + 1) % 5);
+
+        userMapper.updateByPrimaryKey(user);
+
+        int i = 3 / 0;
+        return  "111111111";
+
     }
 }

@@ -25,7 +25,6 @@ public class UserRest {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path(value = "id/{id}")
     public User getUserById(@PathParam("id") Integer id) {
-        DataSourceContextHolder.setDataSource(DataSourceType.master.getName());
         return userService.getById(id);
     }
 
@@ -40,4 +39,14 @@ public class UserRest {
         return 111;//userService.insert(u);
     }
 
+    @ApiOperation(value = "事务测试")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path(value = "testTransaction")
+    public String testTransaction() {
+
+
+        return userService.testTransaction();//userService.insert(u);
+    }
 }

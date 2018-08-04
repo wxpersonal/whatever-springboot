@@ -1,3 +1,8 @@
+/*
+*
+* PermissionMapper.java
+* @date 2018-08-02
+*/
 package me.weix.whatever.mapper;
 
 import me.weix.whatever.pojo.Permission;
@@ -5,23 +10,31 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+* Created by Mybatis Generator 2018/08/02
+*/
 public interface PermissionMapper {
-	int deleteByPrimaryKey(Integer id);
+    int selectByIds(@Param("ids") Integer[] ids);
 
-	int insert(Permission record);
+    int deleteLogicById(Integer id);
 
-	int insertSelective(Permission record);
+    int deleteLogicByIds(@Param("ids") Integer[] ids);
 
-	Permission selectByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Integer id);
 
-	int updateByPrimaryKeySelective(Permission record);
+    int insert(Permission record);
 
-	int updateByPrimaryKey(Permission record);
+    int insertSelective(Permission record);
 
-	/**
-	 * 在下面添加自定义方法
-	 */
+    Permission selectByPrimaryKey(Integer id);
 
-	List<Permission> getPermissionsByRoleId(@Param("roleId") Integer roleId);
+    int updateByPrimaryKeySelective(Permission record);
 
+    int updateByPrimaryKey(Permission record);
+
+    /**
+     * 在下面添加自定义方法
+     */
+
+    List<Permission> getPermissionsByRoleId(@Param("roleId") Integer roleId);
 }

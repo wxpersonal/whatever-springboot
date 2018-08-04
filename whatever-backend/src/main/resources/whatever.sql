@@ -30,7 +30,8 @@ CREATE TABLE `t_menu` (
   `create_time` datetime DEFAULT NULL,
   `update_by` int(11) DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
-  `status` int(11) DEFAULT NULL COMMENT '0无效 1有效',
+  `status` tinyint(4) DEFAULT '1',
+  `deleted` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -54,14 +55,15 @@ CREATE TABLE `t_permission` (
   `create_time` datetime DEFAULT NULL,
   `update_by` int(11) DEFAULT '0',
   `update_time` datetime DEFAULT NULL,
-  `status` int(11) DEFAULT '1',
+  `status` tinyint(4) DEFAULT '1',
+  `deleted` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_permission
 -- ----------------------------
-INSERT INTO `t_permission` VALUES ('1', '0', '1', 'whatever', '系统管理', 'whatever', '1', '0', '2017-06-20 00:00:00', '0', '2017-06-20 00:00:00', '1');
+INSERT INTO `t_permission` VALUES ('1', '0', '1', 'whatever', '系统管理', 'whatever', '1', '0', '2017-06-20 00:00:00', '0', '2017-06-20 00:00:00', '1','0');
 
 -- ----------------------------
 -- Table structure for t_role
@@ -76,15 +78,16 @@ CREATE TABLE `t_role` (
   `create_time` datetime DEFAULT NULL,
   `update_by` int(11) DEFAULT '0',
   `update_time` datetime DEFAULT NULL,
-  `status` int(11) DEFAULT '1',
+  `status` tinyint(4) DEFAULT '1',
+  `deleted` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_role
 -- ----------------------------
-INSERT INTO `t_role` VALUES ('1', 'ROLE_ADMIN', '管理员', '拥有除权限管理系统外的所有权限', null, '2017-06-20 00:00:00', null, '2017-06-20 00:00:00', '1');
-INSERT INTO `t_role` VALUES ('2', 'ROLE_SADMIN', '超级管理员', '拥有所有权限', null, '2017-06-20 00:00:00', null, '2017-06-20 00:00:00', '1');
+INSERT INTO `t_role` VALUES ('1', 'ROLE_ADMIN', '管理员', '拥有除权限管理系统外的所有权限', null, '2017-06-20 00:00:00', null, '2017-06-20 00:00:00', '1','0');
+INSERT INTO `t_role` VALUES ('2', 'ROLE_SADMIN', '超级管理员', '拥有所有权限', null, '2017-06-20 00:00:00', null, '2017-06-20 00:00:00', '1','0');
 
 -- ----------------------------
 -- Table structure for t_role_permission
@@ -97,14 +100,15 @@ CREATE TABLE `t_role_permission` (
   `create_time` datetime DEFAULT NULL,
   `update_by` int(11) DEFAULT '0',
   `update_time` datetime DEFAULT NULL,
-  `status` int(11) DEFAULT '1',
+  `status` tinyint(4) DEFAULT '1',
+  `deleted` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`role_id`,`permission_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_role_permission
 -- ----------------------------
-INSERT INTO `t_role_permission` VALUES ('1', '1', '0', '2017-06-20 00:00:00', '0', '2017-06-20 00:00:00', '1');
+INSERT INTO `t_role_permission` VALUES ('1', '1', '0', '2017-06-20 00:00:00', '0', '2017-06-20 00:00:00', '1','0');
 
 -- ----------------------------
 -- Table structure for t_sys_code
@@ -119,15 +123,16 @@ CREATE TABLE `t_sys_code` (
   `create_time` datetime DEFAULT NULL,
   `updateBy` int(11) DEFAULT '0',
   `update_time` datetime DEFAULT NULL,
-  `status` int(11) DEFAULT '1',
+  `status` tinyint(4) DEFAULT '1',
+  `deleted` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_sys_code
 -- ----------------------------
-INSERT INTO `t_sys_code` VALUES ('_PERMISSiON', null, '权限', null, '0', '2017-06-20 00:00:00', '0', '2017-06-20 00:00:00', '1');
-INSERT INTO `t_sys_code` VALUES ('_ROLE', null, '角色', null, '0', '2017-06-20 00:00:00', '0', '2017-06-20 00:00:00', '1');
+INSERT INTO `t_sys_code` VALUES ('_PERMISSiON', null, '权限', null, '0', '2017-06-20 00:00:00', '0', '2017-06-20 00:00:00', '1','0');
+INSERT INTO `t_sys_code` VALUES ('_ROLE', null, '角色', null, '0', '2017-06-20 00:00:00', '0', '2017-06-20 00:00:00', '1','0');
 
 -- ----------------------------
 -- Table structure for t_sys_file
@@ -147,7 +152,8 @@ CREATE TABLE `t_sys_file` (
   `create_time` datetime DEFAULT NULL,
   `update_by` int(11) DEFAULT '0',
   `update_time` datetime DEFAULT NULL,
-  `status` int(11) DEFAULT '1' COMMENT '状态',
+  `status` tinyint(4) DEFAULT '1',
+  `deleted` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='附件表';
 
@@ -173,15 +179,16 @@ CREATE TABLE `t_user` (
   `create_time` datetime DEFAULT NULL,
   `update_by` int(11) DEFAULT '0',
   `update_time` datetime DEFAULT NULL,
-  `status` int(20) DEFAULT '1' COMMENT '状态',
+  `status` tinyint(4) DEFAULT '1',
+  `deleted` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
-INSERT INTO `t_user` VALUES ('1', 'admin', 'abc123', '0', '18205256689', '2017-06-16 00:00:00', 'wxpersonal@163.com', '0', '0', '0', '2017-06-16 00:00:00', '0', '2017-06-16 00:00:00', '1');
-INSERT INTO `t_user` VALUES ('2', 'weix', 'xiang123', '0', '18205256689', '2017-06-20 00:00:00', 'wxpersonal@163.com', '0', '0', '0', '2017-06-20 00:00:00', '0', '2017-06-20 00:00:00', '1');
+INSERT INTO `t_user` VALUES ('1', 'admin', 'abc123', '0', '18205256689', '2017-06-16 00:00:00', 'wxpersonal@163.com', '0', '0', '0', '2017-06-16 00:00:00', '0', '2017-06-16 00:00:00', '1','0');
+INSERT INTO `t_user` VALUES ('2', 'weix', 'xiang123', '0', '18205256689', '2017-06-20 00:00:00', 'wxpersonal@163.com', '0', '0', '0', '2017-06-20 00:00:00', '0', '2017-06-20 00:00:00', '1','0');
 
 -- ----------------------------
 -- Table structure for t_user_role
@@ -194,7 +201,8 @@ CREATE TABLE `t_user_role` (
   `create_time` datetime DEFAULT NULL,
   `update_by` int(11) DEFAULT '0',
   `update_time` datetime DEFAULT NULL,
-  `status` int(11) DEFAULT '1',
+  `status` tinyint(4) DEFAULT '1',
+  `deleted` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`user_id`,`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

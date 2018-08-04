@@ -27,40 +27,40 @@ public class DataSourceConfig implements EnvironmentAware {
         this.propertyResolver = new RelaxedPropertyResolver(env, "jdbc.");
     }
 
-    @Bean(name = "masterDataSource", destroyMethod = "close", initMethod = "init")
+    @Bean(name = "writeDataSource")
     @Primary
-    public DataSource masterDataSource() {
+    public DataSource writeDataSource() {
 
-        log.debug("----------------masterDataSource init------------------");
+        log.debug("----------------writeDataSource init------------------");
         DruidDataSource datasource = new DruidDataSource();
-        datasource.setUrl(propertyResolver.getProperty("master.url"));
-        datasource.setDriverClassName(propertyResolver.getProperty("master.driverClassName"));
-        datasource.setUsername(propertyResolver.getProperty("master.username"));
-        datasource.setPassword(propertyResolver.getProperty("master.password"));
+        datasource.setUrl(propertyResolver.getProperty("write.url"));
+        datasource.setDriverClassName(propertyResolver.getProperty("write.driverClassName"));
+        datasource.setUsername(propertyResolver.getProperty("write.username"));
+        datasource.setPassword(propertyResolver.getProperty("write.password"));
         return datasource;
     }
 
-    @Bean(name = "slaveDataSource1", destroyMethod = "close", initMethod = "init")
-    public DataSource slaveDataSource1() {
+    @Bean(name = "readDataSource1")
+    public DataSource readDataSource1() {
 
-        log.debug("----------------slaveDataSource1 init------------------");
+        log.debug("----------------readDataSource1 init------------------");
         DruidDataSource datasource = new DruidDataSource();
-        datasource.setUrl(propertyResolver.getProperty("slave1.url"));
-        datasource.setDriverClassName(propertyResolver.getProperty("slave1.driverClassName"));
-        datasource.setUsername(propertyResolver.getProperty("slave1.username"));
-        datasource.setPassword(propertyResolver.getProperty("slave1.password"));
+        datasource.setUrl(propertyResolver.getProperty("read1.url"));
+        datasource.setDriverClassName(propertyResolver.getProperty("read1.driverClassName"));
+        datasource.setUsername(propertyResolver.getProperty("read1.username"));
+        datasource.setPassword(propertyResolver.getProperty("read1.password"));
         return datasource;
     }
 
-    @Bean(name = "slaveDataSource2", destroyMethod = "close", initMethod = "init")
-    public DataSource slaveDataSource2() {
+    @Bean(name = "readDataSource2")
+    public DataSource readDataSource2() {
 
-        log.debug("----------------slaveDataSource2 init------------------");
+        log.debug("----------------readDataSource2 init------------------");
         DruidDataSource datasource = new DruidDataSource();
-        datasource.setUrl(propertyResolver.getProperty("slave2.url"));
-        datasource.setDriverClassName(propertyResolver.getProperty("slave2.driverClassName"));
-        datasource.setUsername(propertyResolver.getProperty("slave2.username"));
-        datasource.setPassword(propertyResolver.getProperty("slave2.password"));
+        datasource.setUrl(propertyResolver.getProperty("read2.url"));
+        datasource.setDriverClassName(propertyResolver.getProperty("read2.driverClassName"));
+        datasource.setUsername(propertyResolver.getProperty("read2.username"));
+        datasource.setPassword(propertyResolver.getProperty("read2.password"));
         return datasource;
     }
 

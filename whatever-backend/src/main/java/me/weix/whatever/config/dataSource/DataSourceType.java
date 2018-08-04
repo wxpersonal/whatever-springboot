@@ -4,24 +4,15 @@ package me.weix.whatever.config.dataSource;
  * Created by wxper on 2017/6/24.
  */
 public enum DataSourceType {
-    master("master", "主库"),
-    slave1("slave1", "从库1"),
-    slave2("slave2", "从库2");
+    master("write", "读写库"),
+    slave("read", "只读库");
 
-    private String type;
     private String name;
+    private String desc;
 
-    DataSourceType(String type, String name) {
-        this.type = type;
+    DataSourceType(String name, String desc) {
         this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+        this.desc = desc;
     }
 
     public String getName() {
@@ -31,4 +22,13 @@ public enum DataSourceType {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
 }
