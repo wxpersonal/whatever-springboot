@@ -125,16 +125,16 @@
     where role_id = #{roleId,jdbcType=INTEGER}
       and permission_id = #{permissionId,jdbcType=INTEGER}
   </update>
-  <update id="deleteLogicByIds" >
+  <update id="deleteLogicById" parameterType="Integer" >
     update t_role_permission set deleted = 1 where id = #{id} 
   </update>
-  <select id="selectByIds" >
+  <select id="selectByIds" resultMap="BaseResultMap">
     select 
 	<include refid="Base_Column_List" />
 	from t_role_permission
 	where id in <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
   </select>
-  <update id="deleteLogicById" >
+  <update id="deleteLogicById">
     update t_role_permission set deleted = 1 where id in 
 	<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
   </update>

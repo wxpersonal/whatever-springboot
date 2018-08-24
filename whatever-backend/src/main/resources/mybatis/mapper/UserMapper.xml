@@ -209,16 +209,16 @@
       deleted = #{deleted,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="deleteLogicByIds" >
+  <update id="deleteLogicById" parameterType="Integer" >
     update t_user set deleted = 1 where id = #{id} 
   </update>
-  <select id="selectByIds" >
+  <select id="selectByIds" resultMap="BaseResultMap">
     select 
 	<include refid="Base_Column_List" />
 	from t_user
 	where id in <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
   </select>
-  <update id="deleteLogicById" >
+  <update id="deleteLogicByIds" >
     update t_user set deleted = 1 where id in 
 	<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
   </update>
