@@ -6,11 +6,12 @@
 package me.weix.whatever.pojo;
 
 import lombok.Data;
-import me.weix.whatever.base.BasePojo;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
 @Data
+@EqualsAndHashCode(callSuper=true)
 public class User extends BasePojo {
     /**
      * 用户id

@@ -6,9 +6,10 @@
 package me.weix.whatever.pojo;
 
 import lombok.Data;
-import me.weix.whatever.base.BasePojo;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper=true)
 public class Menu extends BasePojo {
     private Integer id;
 

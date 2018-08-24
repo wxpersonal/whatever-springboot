@@ -1,4 +1,6 @@
-package me.weix.whatever.base;
+package me.weix.whatever.pojo;
+
+import com.baomidou.mybatisplus.annotations.TableLogic;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -36,6 +38,8 @@ public class BasePojo implements Serializable {
     /**
      * 删除标记
      */
+
+    @TableLogic
     private Integer deleted;
 
 
