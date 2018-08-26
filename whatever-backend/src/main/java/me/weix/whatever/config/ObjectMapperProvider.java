@@ -24,7 +24,7 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
         //设置null转换""
         objectMapper.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object>() {
             @Override
-            public void serialize(Object value, JsonGenerator jg, SerializerProvider sp) throws IOException, JsonProcessingException {
+            public void serialize(Object value, JsonGenerator jg, SerializerProvider sp) throws IOException {
                 jg.writeString("");
             }
         });
