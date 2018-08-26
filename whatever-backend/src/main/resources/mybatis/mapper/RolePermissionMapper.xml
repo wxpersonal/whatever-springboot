@@ -134,7 +134,7 @@
 	from t_role_permission
 	where id in <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
   </select>
-  <update id="deleteLogicById">
+  <update id="deleteLogicByIds">
     update t_role_permission set deleted = 1 where id in 
 	<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
   </update>
