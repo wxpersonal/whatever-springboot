@@ -36,7 +36,7 @@ jdbc:
 # configLocation: classpath:/mybatis-config.xml
 
 mybatis-plus:
-  mapper-locations: classpath:/mybatis/mapper/**/*.xml
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
   #实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: me.weix.whatever.pojo
   typeEnumsPackage: com.baomidou.springboot.entity.enums
@@ -53,10 +53,10 @@ mybatis-plus:
     #capital-mode: true
     #序列接口实现类配置
     #key-generator: com.baomidou.springboot.xxx
-    #逻辑删除配置（下面3个配置）
-    logic-delete-value: 0
-    logic-not-delete-value: 1
-    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+#    #逻辑删除配置（下面3个配置）
+#    logic-delete-value: 1
+#    logic-not-delete-value: 0
+#    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
     #自定义填充策略接口实现
     #meta-object-handler: com.baomidou.springboot.xxx
     #自定义SQL注入器
@@ -69,6 +69,7 @@ redis:
   host: 127.0.0.1
   password:
   port: 6379
+  timeout: 200
   pool:
     max-idle: 8
     min-idle: 0

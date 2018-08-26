@@ -1,17 +1,14 @@
 package me.weix.whatever.config.dataSource;
 
-import javax.sql.DataSource;
-
+import com.alibaba.druid.pool.DruidDataSource;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.alibaba.druid.pool.DruidDataSource;
+import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement

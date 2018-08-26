@@ -2,6 +2,9 @@ package me.weix.whatever.pojo;
 
 //import com.baomidou.mybatisplus.annotations.TableLogic;
 
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableLogic;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,21 +16,25 @@ public class BasePojo implements Serializable {
     /**
      * 创建人
      */
+    @TableField("create_by")
     private Integer createBy;
 
     /**
      * 创建时间
      */
+    @TableField("create_time")
     private Date createTime;
 
     /**
      * 修改人
      */
+    @TableField("update_by")
     private Integer updateBy;
 
     /**
      * 修改时间
      */
+    @TableField("update_time")
     private Date updateTime;
 
     /**
@@ -39,7 +46,7 @@ public class BasePojo implements Serializable {
      * 删除标记
      */
 
-//    @TableLogic
+    @TableLogic
     private Integer deleted;
 
 

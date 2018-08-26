@@ -5,6 +5,8 @@
 */
 package me.weix.whatever.pojo;
 
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,6 +14,7 @@ import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper=true)
+@TableName("t_user")
 public class User extends BasePojo {
     /**
      * 用户id
@@ -48,11 +51,13 @@ public class User extends BasePojo {
      */
     private String email;
 
+    @TableField("address_id")
     private Integer addressId;
 
     /**
      * 照片附件
      */
+    @TableField("photo_id")
     private Integer photoId;
 
 }

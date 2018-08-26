@@ -46,7 +46,8 @@ public class UserRest {
     @Path(value = "testTransaction")
     public String testTransaction() {
 
-
-        return userService.testTransaction();//userService.insert(u);
+        userService.deleteById(1);
+        return  "1";
+//        return userService.testTransaction();//userService.insert(u);
     }
 }
