@@ -25,7 +25,7 @@ public class UserRest {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path(value = "id/{id}")
     public User getUserById(@PathParam("id") Integer id) {
-        return userService.getById(id);
+        return userService.selectById(id);
     }
 
     @ApiOperation(value = "添加user")
