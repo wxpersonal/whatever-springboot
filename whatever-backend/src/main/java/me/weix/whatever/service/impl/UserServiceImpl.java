@@ -1,5 +1,6 @@
 package me.weix.whatever.service.impl;
 
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import me.weix.whatever.base.BaseServiceImpl;
 import me.weix.whatever.mapper.PermissionMapper;
 import me.weix.whatever.mapper.RoleMapper;
@@ -17,7 +18,7 @@ import java.util.List;
 
 
 @Service
-public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements IUserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
     @Resource
     private RoleMapper roleMapper;
@@ -64,10 +65,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Transactional
     public String testTransaction() {
 
-        User user = userMapper.selectByPrimaryKey(1);
+        User user = userMapper.selectById(1);
         user.setStatus((user.getStatus() + 1) % 5);
-
-        userMapper.updateByPrimaryKey(user);
+        userMapper.updateById(user);
 
         int i = 3 / 0;
         return  "111111111";

@@ -1,68 +1,65 @@
 package me.weix.whatever.config;
 
-import com.alibaba.fastjson.serializer.JSONSerializableSerializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.bind.RelaxedPropertyResolver;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cache.annotation.CachingConfigurerSupport;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.EnvironmentAware;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
-import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisPassword;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import redis.clients.jedis.JedisPoolConfig;
+
+import java.time.Duration;
 
 /**
  * Created by Administrator on 2017/7/4.
  */
 
 @Configuration
-@ConfigurationProperties(prefix = "redis")
-public class RedisConfig implements EnvironmentAware {
+public class RedisConfig {
 
-
-    private final Logger log = LoggerFactory.getLogger(JerseyConfig.class);
-
-    private static RelaxedPropertyResolver relaxedPropertyResolver;
-
-    private static final String ENV_REDIS = "redis.";
+    @Value("${redis.host}")
+    private String host;
+    @Value("${redis.password}")
+    private String password;
+    @Value("${redis.port}")
+    private int port;
+    @Value("${redis.timeout}")
+    private int timeout;
+    @Value("${redis.pool.max-idle}")
+    private int maxIdle;
+    @Value("${redis.pool.min-idle}")
+    private int minIdle;
+    @Value("${redis.pool.max-wait}")
+    private long maxWaitMillis;
+    @Value("${redis.pool.max-active}")
+    private int maxActive;
 
     @Bean
     public JedisPoolConfig getRedisConfig() {
         JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxIdle(Integer.parseInt(relaxedPropertyResolver.getProperty("pool.max-idle")));
-        config.setMinIdle(Integer.parseInt(relaxedPropertyResolver.getProperty("pool.min-idle")));
-        config.setMaxWaitMillis(Long.parseLong(relaxedPropertyResolver.getProperty("pool.max-wait")));
-        config.setMaxTotal(Integer.parseInt(relaxedPropertyResolver.getProperty("pool.max-active")));
+        config.setMaxIdle(maxIdle);
+        config.setMinIdle(minIdle);
+        config.setMaxWaitMillis(maxWaitMillis);
+        config.setMaxTotal(maxActive);
         return config;
     }
 
     @Bean
-
-    public JedisConnectionFactory getConnectionFactory() {
-        JedisConnectionFactory factory = new JedisConnectionFactory();
-        factory.setHostName(relaxedPropertyResolver.getProperty("host"));
-        factory.setPassword(relaxedPropertyResolver.getProperty("password"));
-        factory.setPort(Integer.parseInt(relaxedPropertyResolver.getProperty("port")));
-        factory.setUsePool(true);
-        JedisPoolConfig config = getRedisConfig();
-        factory.setPoolConfig(config);
+    JedisConnectionFactory jedisConnectionFactory(RedisStandaloneConfiguration redisStandaloneConfiguration) {
+        JedisClientConfiguration.JedisClientConfigurationBuilder jedisClientConfiguration = JedisClientConfiguration.builder();
+        jedisClientConfiguration.connectTimeout(Duration.ofMillis(0));//  connection timeout
+        JedisConnectionFactory factory = new JedisConnectionFactory(redisStandaloneConfiguration,
+                jedisClientConfiguration.build());
         return factory;
     }
 
-    @Bean
-    public RedisTemplate<?, ?> getRedisTemplate() {
-        RedisTemplate<?, ?> template = new StringRedisTemplate(getConnectionFactory());
-        return template;
-    }
 
-    @Override
-    public void setEnvironment(Environment environment) {
-        relaxedPropertyResolver = new RelaxedPropertyResolver(environment, ENV_REDIS);
+    @Bean
+    public RedisStandaloneConfiguration redisStandaloneConfiguration() {
+        RedisStandaloneConfiguration configuration =
+                new RedisStandaloneConfiguration(host, port);
+        configuration.setPassword(RedisPassword.of(password));
+        return configuration;
     }
 }

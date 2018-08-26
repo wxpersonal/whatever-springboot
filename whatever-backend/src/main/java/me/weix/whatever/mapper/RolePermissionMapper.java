@@ -5,6 +5,7 @@
 */
 package me.weix.whatever.mapper;
 
+import me.weix.whatever.SuperMapper;
 import me.weix.whatever.pojo.RolePermission;
 import me.weix.whatever.pojo.RolePermissionKey;
 import org.apache.ibatis.annotations.Param;
@@ -12,22 +13,6 @@ import org.apache.ibatis.annotations.Param;
 /**
 * Created by Mybatis Generator 2018/08/02
 */
-public interface RolePermissionMapper {
-    int selectByIds(@Param("ids") Integer[] ids);
+public interface RolePermissionMapper extends SuperMapper<RolePermission> {
 
-    int deleteLogicById(Integer id);
-
-    int deleteLogicByIds(@Param("ids") Integer[] ids);
-
-    int deleteByPrimaryKey(RolePermissionKey key);
-
-    int insert(RolePermission record);
-
-    int insertSelective(RolePermission record);
-
-    RolePermission selectByPrimaryKey(RolePermissionKey key);
-
-    int updateByPrimaryKeySelective(RolePermission record);
-
-    int updateByPrimaryKey(RolePermission record);
 }

@@ -25,7 +25,8 @@ import java.util.*;
 @Configuration
 public class ShiroConfig {
 
-    @Bean(name = "shiroFilter")
+    @Bean(name = "" +
+            "shiroFilter")
     public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") DefaultWebSecurityManager manager) {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(manager);

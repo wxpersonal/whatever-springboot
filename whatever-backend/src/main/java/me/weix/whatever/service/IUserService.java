@@ -1,13 +1,13 @@
 package me.weix.whatever.service;
 
-import me.weix.whatever.base.IBaseService;
+import com.baomidou.mybatisplus.service.IService;
 import me.weix.whatever.pojo.Permission;
 import me.weix.whatever.pojo.Role;
 import me.weix.whatever.pojo.User;
 
 import java.util.List;
 
-public interface IUserService extends IBaseService<User> {
+public interface IUserService extends IService<User> {
 
     List<Role> getRolesByUserId(Integer userId);
 

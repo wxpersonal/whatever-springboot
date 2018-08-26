@@ -2,30 +2,57 @@ package me.weix.whatever.config.dataSource;
 
 import javax.sql.DataSource;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.bind.RelaxedPropertyResolver;
-import org.springframework.context.EnvironmentAware;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.env.Environment;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.alibaba.druid.pool.DruidDataSource;
 
 @Configuration
 @EnableTransactionManagement
-public class DataSourceConfig implements EnvironmentAware {
+@Slf4j
+public class DataSourceConfig {
 
-    private RelaxedPropertyResolver propertyResolver;
+    @Value("${jdbc.write.url}")
+    private String writeUrl;
 
-    private static Logger log = LoggerFactory.getLogger(DataSourceConfig.class);
+    @Value("${jdbc.write.driverClassName}")
+    private String writeDriverClassName;
 
-    @Override
-    public void setEnvironment(Environment env) {
-        this.propertyResolver = new RelaxedPropertyResolver(env, "jdbc.");
-    }
+    @Value("${jdbc.write.username}")
+    private String writeUserName;
+
+    @Value("${jdbc.write.password}")
+    private String writePassword;
+
+    @Value("${jdbc.read1.url}")
+    private String read1Url;
+
+    @Value("${jdbc.read1.driverClassName}")
+    private String read1DriverClassName;
+
+    @Value("${jdbc.read1.username}")
+    private String read1UserName;
+
+    @Value("${jdbc.read1.password}")
+    private String read1Password;
+
+    @Value("${jdbc.read2.url}")
+    private String read2Url;
+
+    @Value("${jdbc.read2.driverClassName}")
+    private String read2DriverClassName;
+
+    @Value("${jdbc.read2.username}")
+    private String read2UserName;
+
+    @Value("${jdbc.read2.password}")
+    private String read2Password;
 
     @Bean(name = "writeDataSource")
     @Primary
@@ -33,10 +60,10 @@ public class DataSourceConfig implements EnvironmentAware {
 
         log.debug("----------------writeDataSource init------------------");
         DruidDataSource datasource = new DruidDataSource();
-        datasource.setUrl(propertyResolver.getProperty("write.url"));
-        datasource.setDriverClassName(propertyResolver.getProperty("write.driverClassName"));
-        datasource.setUsername(propertyResolver.getProperty("write.username"));
-        datasource.setPassword(propertyResolver.getProperty("write.password"));
+        datasource.setUrl(writeUrl);
+        datasource.setDriverClassName(writeDriverClassName);
+        datasource.setUsername(writeUserName);
+        datasource.setPassword(writePassword);
         return datasource;
     }
 
@@ -45,10 +72,10 @@ public class DataSourceConfig implements EnvironmentAware {
 
         log.debug("----------------readDataSource1 init------------------");
         DruidDataSource datasource = new DruidDataSource();
-        datasource.setUrl(propertyResolver.getProperty("read1.url"));
-        datasource.setDriverClassName(propertyResolver.getProperty("read1.driverClassName"));
-        datasource.setUsername(propertyResolver.getProperty("read1.username"));
-        datasource.setPassword(propertyResolver.getProperty("read1.password"));
+        datasource.setUrl(read1Url);
+        datasource.setDriverClassName(read1DriverClassName);
+        datasource.setUsername(read1UserName);
+        datasource.setPassword(read1Password);
         return datasource;
     }
 
@@ -57,10 +84,10 @@ public class DataSourceConfig implements EnvironmentAware {
 
         log.debug("----------------readDataSource2 init------------------");
         DruidDataSource datasource = new DruidDataSource();
-        datasource.setUrl(propertyResolver.getProperty("read2.url"));
-        datasource.setDriverClassName(propertyResolver.getProperty("read2.driverClassName"));
-        datasource.setUsername(propertyResolver.getProperty("read2.username"));
-        datasource.setPassword(propertyResolver.getProperty("read2.password"));
+        datasource.setUrl(read2Url);
+        datasource.setDriverClassName(read2DriverClassName);
+        datasource.setUsername(read2UserName);
+        datasource.setPassword(read2Password);
         return datasource;
     }
 
