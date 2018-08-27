@@ -1,28 +1,22 @@
 /*
 *
-* Role.java
+* SysCode.java
 * @date 2018-08-02
 */
-package me.weix.whatever.pojo;
+package me.weix.whatever.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper=true)
-public class Role extends BasePojo {
-    private Integer id;
-
-    /**
-     * 权限编码
-     */
+public class SysCode extends BaseEntity {
     private String code;
+
+    private String pCode;
 
     private String name;
 
-    /**
-     * 权限说明
-     */
     private String desc;
 
 }

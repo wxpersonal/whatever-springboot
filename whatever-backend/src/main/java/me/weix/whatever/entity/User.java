@@ -3,7 +3,7 @@
 * User.java
 * @date 2018-08-02
 */
-package me.weix.whatever.pojo;
+package me.weix.whatever.entity;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -15,7 +15,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper=true)
 @TableName("t_user")
-public class User extends BasePojo {
+public class User extends BaseEntity {
     /**
      * 用户id
      */
@@ -25,6 +25,7 @@ public class User extends BasePojo {
      * 用户名
      */
     private String username;
+
 
     /**
      * 密码

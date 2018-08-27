@@ -2,9 +2,7 @@ package me.weix.whatever.rest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import me.weix.whatever.config.dataSource.DataSourceContextHolder;
-import me.weix.whatever.config.dataSource.DataSourceType;
-import me.weix.whatever.pojo.User;
+import me.weix.whatever.entity.User;
 import me.weix.whatever.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 

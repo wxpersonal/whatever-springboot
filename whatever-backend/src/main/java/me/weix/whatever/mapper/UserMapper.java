@@ -5,14 +5,14 @@
 */
 package me.weix.whatever.mapper;
 
-import me.weix.whatever.SuperMapper;
-import me.weix.whatever.pojo.User;
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+import me.weix.whatever.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 /**
 * Created by Mybatis Generator 2018/08/02
 */
-public interface UserMapper extends SuperMapper<User> {
+public interface UserMapper extends BaseMapper<User> {
 
     User getUserByMobile(@Param("mobile") String mobile);
 

@@ -1,5 +1,7 @@
 package me.weix.whatever.config;
 
+import com.alibaba.fastjson.support.jaxrs.FastJsonProvider;
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.listing.ApiListingResource;
 import io.swagger.jaxrs.listing.SwaggerSerializers;
@@ -24,8 +26,9 @@ public class JerseyConfig extends ResourceConfig  {
     log.info("Jersey configuration");
     register(WadlResource.class);
     register(ObjectMapperProvider.class);
-    //register(JacksonJsonProvider.class);
-    //register(FastJsonProvider.class);
+    register(JacksonJsonProvider.class);
+
+//    register(FastJsonProvider.class);
     //packages("me.weix.whatever.rest","com.logic.landseaserver.ws");
     packages("me.weix.whatever.rest");
   }

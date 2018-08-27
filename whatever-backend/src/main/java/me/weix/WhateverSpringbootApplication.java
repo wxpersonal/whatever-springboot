@@ -12,4 +12,5 @@ public class WhateverSpringbootApplication {
 	public static void main(String[] args) {
         SpringApplication.run(WhateverSpringbootApplication.class, args);
     }
+
 }

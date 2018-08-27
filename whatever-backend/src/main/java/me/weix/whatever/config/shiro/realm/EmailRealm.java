@@ -1,8 +1,8 @@
 package me.weix.whatever.config.shiro.realm;
 
-import me.weix.whatever.pojo.Permission;
-import me.weix.whatever.pojo.Role;
-import me.weix.whatever.pojo.User;
+import me.weix.whatever.entity.Permission;
+import me.weix.whatever.entity.Role;
+import me.weix.whatever.entity.User;
 import me.weix.whatever.service.IUserService;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;

@@ -1,9 +1,9 @@
 package me.weix.whatever.service;
 
 import com.baomidou.mybatisplus.service.IService;
-import me.weix.whatever.pojo.Permission;
-import me.weix.whatever.pojo.Role;
-import me.weix.whatever.pojo.User;
+import me.weix.whatever.entity.Permission;
+import me.weix.whatever.entity.Role;
+import me.weix.whatever.entity.User;
 
 import java.util.List;
 

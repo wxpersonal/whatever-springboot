@@ -1,13 +1,12 @@
 package me.weix.whatever.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import me.weix.whatever.base.BaseServiceImpl;
 import me.weix.whatever.mapper.PermissionMapper;
 import me.weix.whatever.mapper.RoleMapper;
 import me.weix.whatever.mapper.UserMapper;
-import me.weix.whatever.pojo.Permission;
-import me.weix.whatever.pojo.Role;
-import me.weix.whatever.pojo.User;
+import me.weix.whatever.entity.Permission;
+import me.weix.whatever.entity.Role;
+import me.weix.whatever.entity.User;
 import me.weix.whatever.service.IUserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

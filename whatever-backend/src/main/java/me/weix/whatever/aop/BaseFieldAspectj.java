@@ -1,7 +1,7 @@
 //package me.weix.whatever.aop;
 //
 //
-//import me.weix.whatever.pojo.BasePojo;
+//import me.weix.whatever.entity.BaseEntity;
 //import me.weix.whatever.util.ReflectUtil;
 //import org.aspectj.lang.ProceedingJoinPoint;
 //import org.aspectj.lang.annotation.Around;
@@ -59,14 +59,14 @@
 //                        list = (List) o;
 //                    }
 //                    for(Object o1 : list) {
-//                        if(o1 instanceof BasePojo) {
+//                        if(o1 instanceof BaseEntity) {
 //                            fixBaseFields(methodName, o1);
 //                        }
 //                    }
 //                }
 //
-//                //pojo
-//                if(o instanceof BasePojo) {
+//                //entity
+//                if(o instanceof BaseEntity) {
 //                    fixBaseFields(methodName, o);
 //                }
 //            }

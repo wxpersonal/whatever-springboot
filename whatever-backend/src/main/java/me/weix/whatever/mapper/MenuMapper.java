@@ -5,12 +5,12 @@
 */
 package me.weix.whatever.mapper;
 
-import me.weix.whatever.SuperMapper;
-import me.weix.whatever.pojo.Menu;
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+import me.weix.whatever.entity.Menu;
 
 /**
 * Created by Mybatis Generator 2018/08/02
 */
-public interface MenuMapper extends SuperMapper<Menu> {
+public interface MenuMapper extends BaseMapper<Menu> {
 
 }

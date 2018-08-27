@@ -1,4 +1,4 @@
-package me.weix.whatever.pojo.vo;
+package me.weix.whatever.entity.vo;
 
 /**
  * @Author: Wells.Wei

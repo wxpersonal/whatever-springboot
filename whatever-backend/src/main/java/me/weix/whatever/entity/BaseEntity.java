@@ -1,4 +1,4 @@
-package me.weix.whatever.pojo;
+package me.weix.whatever.entity;
 
 //import com.baomidou.mybatisplus.annotations.TableLogic;
 
@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * Created by Administrator on 2017/6/15.
  */
-public class BasePojo implements Serializable {
+public class BaseEntity implements Serializable {
 
     /**
      * 创建人
