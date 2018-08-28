@@ -1,5 +1,8 @@
 package me.weix.whatever.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.plugins.pagination.PageHelper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import me.weix.whatever.mapper.PermissionMapper;
 import me.weix.whatever.mapper.RoleMapper;
@@ -36,6 +39,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public List<Permission> getPermissionsByUserId(Integer userId) {
 
+        PageHelper.startPage(1, 10);
         List<Permission> permissionList = new ArrayList<Permission>();
         List<Role> roleList = getRolesByUserId(userId);
         for (Role role : roleList) {

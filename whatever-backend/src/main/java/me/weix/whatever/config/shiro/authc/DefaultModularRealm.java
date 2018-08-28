@@ -69,7 +69,7 @@ public class DefaultModularRealm extends ModularRealmAuthenticator {
         /**
          * 用户名登录
          */
-        if(token.getLoginType() == CONST.LOGINTYPE.USERNAME) {
+        if (token.getLoginType() == CONST.LOGINTYPE.USERNAME) {
             realm = (Realm) this.definedRealms.get("usernameRealm");
         }
         return this.doSingleRealmAuthentication(realm, authenticationToken);

@@ -1,6 +1,5 @@
 package me.weix.whatever.config;
 
-import com.alibaba.fastjson.support.jaxrs.FastJsonProvider;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import io.swagger.jaxrs.config.BeanConfig;
 import io.swagger.jaxrs.listing.ApiListingResource;
