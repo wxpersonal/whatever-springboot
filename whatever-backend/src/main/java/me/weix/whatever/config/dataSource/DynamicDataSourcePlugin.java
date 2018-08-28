@@ -87,9 +87,6 @@ public class DynamicDataSourcePlugin implements Interceptor {
                 } else {
                     dataSourceName = DataSourceType.master.getName();
                 }
-
-                logger.warn("设置方法[{}] use [{}] Strategy, SqlCommandType [{}]..", ms.getId(), dataSourceName, ms.getSqlCommandType().name());
-
                 DataSourceContextHolder.setDataSource(dataSourceName);
                 logger.info("------------------->switch to dataSource :" + dataSourceName);
             }
