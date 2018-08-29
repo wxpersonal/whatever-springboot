@@ -9,10 +9,9 @@ import me.weix.whatever.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import java.util.Map;
 
 @Api(value="redis")
 @Path("redis")
@@ -36,9 +35,9 @@ public class RedisTestRest {
 
     @ApiOperation(value = "存redis")
     @POST
-    @Path(value = "{id}")
-    public void put(@ApiParam(value = "user id") @PathParam("id") String id) {
-        User user = userService.selectById(id);
+    public void put(@FormParam(value = "111")  String id,
+                    @FormParam(value = "222")  String id1) {
+        User user = userService.selectById(1);
         redisTestService.put("user" + user.getId(), user);
     }
 }
