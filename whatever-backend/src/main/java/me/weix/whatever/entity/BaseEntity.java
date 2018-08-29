@@ -1,9 +1,10 @@
 package me.weix.whatever.entity;
 
-//import com.baomidou.mybatisplus.annotations.TableLogic;
-
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableLogic;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -11,35 +12,43 @@ import java.util.Date;
 /**
  * Created by Administrator on 2017/6/15.
  */
+@Data
 public class BaseEntity implements Serializable {
 
     /**
      * 创建人
      */
     @TableField("create_by")
+    @ApiModelProperty(value="创建人id")
     private Integer createBy;
 
     /**
      * 创建时间
      */
     @TableField("create_time")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty(value="创建时间", example = "2018-08-30 12:00:00")
     private Date createTime;
 
     /**
      * 修改人
      */
     @TableField("update_by")
+    @ApiModelProperty(value="修改人id")
     private Integer updateBy;
 
     /**
      * 修改时间
      */
     @TableField("update_time")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty(value="创建时间", example = "2018-08-30 12:00:00")
     private Date updateTime;
 
     /**
      * 有效状态
      */
+    @ApiModelProperty(value="有效状态 1有效 0无效")
     private Integer status;
 
     /**
@@ -47,56 +56,7 @@ public class BaseEntity implements Serializable {
      */
 
     @TableLogic
+    @ApiModelProperty(value="逻辑删除标记 1已删除 0未删除")
     private Integer deleted;
-
-
-    public Integer getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(Integer createBy) {
-        this.createBy = createBy;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Integer getUpdateBy() {
-        return updateBy;
-    }
-
-    public void setUpdateBy(Integer updateBy) {
-        this.updateBy = updateBy;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Integer getDelete() {
-        return deleted;
-    }
-
-    public void setDelete(Integer deleted) {
-        this.deleted = deleted;
-    }
-
 
 }

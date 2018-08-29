@@ -40,8 +40,9 @@ public class MyBatisConfig {
     @Bean
     public GlobalConfiguration globalConfiguration() {
         GlobalConfiguration conf = new GlobalConfiguration(new LogicSqlInjector());
-        conf.setLogicDeleteValue("1");
-        conf.setLogicNotDeleteValue("0");
+        conf.setLogicDeleteValue(env.getProperty("mybatis-plus.global-config.logic-delete-value"));
+        conf.setLogicNotDeleteValue(env.getProperty("mybatis-plus.global-config.logic-not-delete-value"));
+        conf.setIdType(Integer.parseInt(env.getProperty("mybatis-plus.global-config.id-type")));
         return conf;
     }
 
