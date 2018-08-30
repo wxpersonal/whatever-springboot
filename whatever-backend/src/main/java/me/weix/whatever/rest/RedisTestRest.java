@@ -7,11 +7,8 @@ import me.weix.whatever.entity.User;
 import me.weix.whatever.service.IRedisTestService;
 import me.weix.whatever.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import java.util.Map;
 
 @Api(value="redis")
 @Path("redis")

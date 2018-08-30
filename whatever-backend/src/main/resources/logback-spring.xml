@@ -1,42 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-
 	<include resource="org/springframework/boot/logging/logback/base.xml" />
-	<logger name="org.springframework.web" level="INFO" />
-	<logger name="me.weix.whatever.mapper" level="debug"/>
 	<property name="logDir" value="/logs" />
 
+	<!-- 注意这里一定要放到springProfile里, 否则在你本机执行的时候还是会去找相应的文件 -->
+	<appender name="MY_FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--日志文件输出的文件名-->
+			<FileNamePattern>${logDir}/whatever.%d{yyyy-MM-dd}.log</FileNamePattern>
+			<!--日志文件保留天数-->
+			<maxHistory>15</maxHistory>
+			<totalSizeCap>30GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+		</encoder>
+		<!--日志文件最大的大小-->
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>50MB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="MY_FILE" />
+	</root>
+
+	<!-- 测试环境+开发环境. 多个使用逗号隔开. -->
+	<springProfile name="test,dev">
+		<logger name="org.springframework.web" level="INFO">
+			<appender-ref ref="MY_FILE"/>
+		</logger>
+		<logger name="me.weix.whatever.mapper" level="debug" />
+	</springProfile>
+
+	<!-- 生产环境. -->
 	<springProfile name="prod">
-		<!-- 注意这里一定要放到springProfile里, 否则在你本机执行的时候还是会去找相应的文件 -->
-		<appender name="FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
-			<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-				<!--日志文件输出的文件名-->
-				<FileNamePattern>${logDir}/whatever.%d{yyyy-MM-dd}.log</FileNamePattern>
-				<!--日志文件保留天数-->
-				<maxHistory>15</maxHistory>
-				<totalSizeCap>30GB</totalSizeCap>
-			</rollingPolicy>
-			<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-				<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
-			</encoder>
-			<!--日志文件最大的大小-->
-			<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-				<MaxFileSize>10MB</MaxFileSize>
-			</triggeringPolicy>
-		</appender>
-
-		<appender name="asyncFileAppender" class="ch.qos.logback.classic.AsyncAppender">
-			<discardingThreshold>0</discardingThreshold>
-			<queueSize>500</queueSize>
-			<appender-ref ref="FILE" />
-
-		</appender>
+		<logger name="org.springframework.web" level="ERROR">
+			<appender-ref ref="MY_FILE"/>
+		</logger>
+		<logger name="com.example" level="ERROR" />
 	</springProfile>
 
-	<springProfile name="dev">
-		<root level="info">
-		</root>
-	</springProfile>
+
 
 
 </configuration>

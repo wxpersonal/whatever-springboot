@@ -1,5 +1,6 @@
 package me.weix.whatever.rest;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import io.swagger.annotations.*;
 import me.weix.whatever.entity.User;
 import me.weix.whatever.service.IUserService;
@@ -22,6 +23,7 @@ public class UserRest {
     @Path(value = "{id}")
     @ApiImplicitParam(name="id",value="用户id",dataType="integer", paramType = "path")
     public User getUserById(@ApiParam(value = "用户id") @PathParam("id") Integer id) {
+        System.out.println("11111113333");
         return userService.selectById(id);
     }
 

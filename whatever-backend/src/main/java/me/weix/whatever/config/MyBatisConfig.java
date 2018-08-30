@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
 import me.weix.whatever.config.dataSource.DataSourceType;
 import me.weix.whatever.config.dataSource.DynamicDataSource;
 import me.weix.whatever.config.dataSource.DynamicDataSourcePlugin;
+import me.weix.whatever.config.dataSource.DynamicDataSourceTransactionManager;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.annotation.MapperScan;
@@ -117,6 +118,6 @@ public class MyBatisConfig {
     //todo 未释放线程资源 treadlocal   可已自定义事务管理器
     @Bean
     public DataSourceTransactionManager transactionManager(DynamicDataSource dynamicDataSource) {
-        return new DataSourceTransactionManager(dynamicDataSource);
+        return new DynamicDataSourceTransactionManager(dynamicDataSource);
     }
 }
