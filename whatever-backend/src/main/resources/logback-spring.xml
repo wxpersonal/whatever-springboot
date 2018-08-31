@@ -3,7 +3,6 @@
 	<include resource="org/springframework/boot/logging/logback/base.xml" />
 	<property name="logDir" value="/logs" />
 
-	<!-- 注意这里一定要放到springProfile里, 否则在你本机执行的时候还是会去找相应的文件 -->
 	<appender name="MY_FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!--日志文件输出的文件名-->
@@ -21,14 +20,14 @@
 		</triggeringPolicy>
 	</appender>
 
-	<root level="INFO">
+	<root level="info">
 		<appender-ref ref="CONSOLE" />
 		<appender-ref ref="MY_FILE" />
 	</root>
 
 	<!-- 测试环境+开发环境. 多个使用逗号隔开. -->
 	<springProfile name="test,dev">
-		<logger name="org.springframework.web" level="INFO">
+		<logger name="org.springframework" level="INFO">
 			<appender-ref ref="MY_FILE"/>
 		</logger>
 		<logger name="me.weix.whatever.mapper" level="debug" />
@@ -36,7 +35,7 @@
 
 	<!-- 生产环境. -->
 	<springProfile name="prod">
-		<logger name="org.springframework.web" level="ERROR">
+		<logger name="org.springframework" level="ERROR">
 			<appender-ref ref="MY_FILE"/>
 		</logger>
 		<logger name="com.example" level="ERROR" />

@@ -7,6 +7,7 @@ import me.weix.whatever.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 
 @Api(value="user")
 @Path("user")
@@ -21,6 +22,7 @@ public class UserRest {
     @ApiOperation(value = "根据id获取user")
     @GET
     @Path(value = "{id}")
+    @Produces(MediaType.APPLICATION_JSON)
     @ApiImplicitParam(name="id",value="用户id",dataType="integer", paramType = "path")
     public User getUserById(@ApiParam(value = "用户id") @PathParam("id") Integer id) {
         System.out.println("11111113333");
