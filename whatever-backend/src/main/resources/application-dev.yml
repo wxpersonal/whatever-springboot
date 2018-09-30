@@ -1,11 +1,22 @@
-spring:
-  profiles: dev
-
 server:
   port: 8888
 
+spring:
+  profiles: dev
 
-jdbc:
+  redis:
+    host: 127.0.0.1
+    password:
+    port: 6379
+    database: 0
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+
+
+datasource:
   readSize: 2
   type: com.alibaba.druid.pool.DruidDataSource
   write:
@@ -63,16 +74,7 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: false
 
-redis:
-  host: 127.0.0.1
-  password:
-  port: 6379
-  timeout: 200
-  pool:
-    max-idle: 8
-    min-idle: 0
-    max-active: 8
-    max-wait: -1
+
 
 #swagger
 swagger:

@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * 资源文件读取工具
  */
-public class SpringContextUtil {
+public class SpringContextUtil implements ApplicationContextAware {
 
 	private static ApplicationContext context = null;
 
@@ -18,7 +18,7 @@ public class SpringContextUtil {
 		return applicationContext;
 	}
 
-	public static void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		context = applicationContext;
 	}
 

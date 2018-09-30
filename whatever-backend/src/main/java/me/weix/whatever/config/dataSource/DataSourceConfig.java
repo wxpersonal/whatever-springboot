@@ -15,40 +15,40 @@ import javax.sql.DataSource;
 @Slf4j
 public class DataSourceConfig {
 
-    @Value("${jdbc.write.url}")
+    @Value("${datasource.write.url}")
     private String writeUrl;
 
-    @Value("${jdbc.write.driverClassName}")
+    @Value("${datasource.write.driverClassName}")
     private String writeDriverClassName;
 
-    @Value("${jdbc.write.username}")
+    @Value("${datasource.write.username}")
     private String writeUserName;
 
-    @Value("${jdbc.write.password}")
+    @Value("${datasource.write.password}")
     private String writePassword;
 
-    @Value("${jdbc.read1.url}")
+    @Value("${datasource.read1.url}")
     private String read1Url;
 
-    @Value("${jdbc.read1.driverClassName}")
+    @Value("${datasource.read1.driverClassName}")
     private String read1DriverClassName;
 
-    @Value("${jdbc.read1.username}")
+    @Value("${datasource.read1.username}")
     private String read1UserName;
 
-    @Value("${jdbc.read1.password}")
+    @Value("${datasource.read1.password}")
     private String read1Password;
 
-    @Value("${jdbc.read2.url}")
+    @Value("${datasource.read2.url}")
     private String read2Url;
 
-    @Value("${jdbc.read2.driverClassName}")
+    @Value("${datasource.read2.driverClassName}")
     private String read2DriverClassName;
 
-    @Value("${jdbc.read2.username}")
+    @Value("${datasource.read2.username}")
     private String read2UserName;
 
-    @Value("${jdbc.read2.password}")
+    @Value("${datasource.read2.password}")
     private String read2Password;
 
     @Bean(name = "writeDataSource")
