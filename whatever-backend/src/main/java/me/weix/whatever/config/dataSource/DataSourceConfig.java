@@ -15,40 +15,40 @@ import javax.sql.DataSource;
 @Slf4j
 public class DataSourceConfig {
 
-    @Value("${datasource.write.url}")
+    @Value("${dataSource.write.url}")
     private String writeUrl;
 
-    @Value("${datasource.write.driverClassName}")
+    @Value("${dataSource.write.driverClassName}")
     private String writeDriverClassName;
 
-    @Value("${datasource.write.username}")
+    @Value("${dataSource.write.username}")
     private String writeUserName;
 
-    @Value("${datasource.write.password}")
+    @Value("${dataSource.write.password}")
     private String writePassword;
 
-    @Value("${datasource.read1.url}")
+    @Value("${dataSource.read1.url}")
     private String read1Url;
 
-    @Value("${datasource.read1.driverClassName}")
+    @Value("${dataSource.read1.driverClassName}")
     private String read1DriverClassName;
 
-    @Value("${datasource.read1.username}")
+    @Value("${dataSource.read1.username}")
     private String read1UserName;
 
-    @Value("${datasource.read1.password}")
+    @Value("${dataSource.read1.password}")
     private String read1Password;
 
-    @Value("${datasource.read2.url}")
+    @Value("${dataSource.read2.url}")
     private String read2Url;
 
-    @Value("${datasource.read2.driverClassName}")
+    @Value("${dataSource.read2.driverClassName}")
     private String read2DriverClassName;
 
-    @Value("${datasource.read2.username}")
+    @Value("${dataSource.read2.username}")
     private String read2UserName;
 
-    @Value("${datasource.read2.password}")
+    @Value("${dataSource.read2.password}")
     private String read2Password;
 
     @Bean(name = "writeDataSource")
@@ -56,36 +56,36 @@ public class DataSourceConfig {
     public DataSource writeDataSource() {
 
         log.debug("----------------writeDataSource init------------------");
-        DruidDataSource datasource = new DruidDataSource();
-        datasource.setUrl(writeUrl);
-        datasource.setDriverClassName(writeDriverClassName);
-        datasource.setUsername(writeUserName);
-        datasource.setPassword(writePassword);
-        return datasource;
+        DruidDataSource dataSource = new DruidDataSource();
+        dataSource.setUrl(writeUrl);
+        dataSource.setDriverClassName(writeDriverClassName);
+        dataSource.setUsername(writeUserName);
+        dataSource.setPassword(writePassword);
+        return dataSource;
     }
 
     @Bean(name = "readDataSource1")
-    public DataSource readDataSource1() {
+    public DataSource readdataSource1() {
 
         log.debug("----------------readDataSource1 init------------------");
-        DruidDataSource datasource = new DruidDataSource();
-        datasource.setUrl(read1Url);
-        datasource.setDriverClassName(read1DriverClassName);
-        datasource.setUsername(read1UserName);
-        datasource.setPassword(read1Password);
-        return datasource;
+        DruidDataSource dataSource = new DruidDataSource();
+        dataSource.setUrl(read1Url);
+        dataSource.setDriverClassName(read1DriverClassName);
+        dataSource.setUsername(read1UserName);
+        dataSource.setPassword(read1Password);
+        return dataSource;
     }
 
     @Bean(name = "readDataSource2")
     public DataSource readDataSource2() {
 
         log.debug("----------------readDataSource2 init------------------");
-        DruidDataSource datasource = new DruidDataSource();
-        datasource.setUrl(read2Url);
-        datasource.setDriverClassName(read2DriverClassName);
-        datasource.setUsername(read2UserName);
-        datasource.setPassword(read2Password);
-        return datasource;
+        DruidDataSource dataSource = new DruidDataSource();
+        dataSource.setUrl(read2Url);
+        dataSource.setDriverClassName(read2DriverClassName);
+        dataSource.setUsername(read2UserName);
+        dataSource.setPassword(read2Password);
+        return dataSource;
     }
 
 }

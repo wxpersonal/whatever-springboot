@@ -106,7 +106,7 @@ public class MyBatisConfig {
         /**
          * 数据源切换
          */
-        Integer readSize = Integer.parseInt(env.getProperty("jdbc.readSize"));
+        Integer readSize = Integer.parseInt(env.getProperty("dataSource.readSize"));
         DynamicDataSourcePlugin dynamicDataSourcePlugin = new DynamicDataSourcePlugin(readSize);
         sqlSessionFactoryBean.setPlugins(new Interceptor[] { dynamicDataSourcePlugin });
         return sqlSessionFactoryBean.getObject();

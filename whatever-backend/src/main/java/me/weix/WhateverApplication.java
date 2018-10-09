@@ -7,10 +7,10 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @ServletComponentScan
-public class WhateverSpringbootApplication {
+public class WhateverApplication {
 
 	public static void main(String[] args) {
-        SpringApplication.run(WhateverSpringbootApplication.class, args);
+        SpringApplication.run(WhateverApplication.class, args);
     }
 
 }

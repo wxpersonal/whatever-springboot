@@ -1,19 +1,32 @@
-/*
-*
-* SysFile.java
-* @date 2018-08-02
-*/
 package me.weix.whatever.entity;
 
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
+/**
+ * <p>
+ * 附件表
+ * </p>
+ *
+ * @author weix
+ * @since 2018-10-09
+ */
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+@TableName("t_sys_file")
 public class SysFile extends BaseEntity {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 附件id
      */
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
@@ -52,5 +65,6 @@ public class SysFile extends BaseEntity {
      * 相对路径
      */
     private String relativepath;
+
 
 }
