@@ -1,5 +1,5 @@
 server:
-  port: 8889
+  port: 8888
 
 spring:
   profiles: dev
@@ -16,27 +16,67 @@ spring:
         min-idle: 0
 
 
-dataSource:
-  readSize: 2
-  type: com.alibaba.druid.pool.DruidDataSource
-  write:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
-    databaseId: mysql
-    username: root
-    password: xiang123
-  read1:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
-    databaseId: mysql
-    username: root
-    password: xiang123
-  read2:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
-    databaseId: mysql
-    username: root
-    password: xiang123
+
+
+#dataSource:
+#  readSize: 2
+#  type: com.alibaba.druid.pool.DruidDataSource
+#  write:
+#    driverClassName: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+#    databaseId: mysql
+#    username: root
+#    password: xiang123
+#  read1:
+#    driverClassName: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+#    databaseId: mysql
+#    username: root
+#    password: xiang123
+#  read2:
+#    driverClassName: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+#    databaseId: mysql
+#    username: root
+#    password: xiang123
+
+sharding:
+  jdbc:
+    data-sources:
+#      names: ds_master,ds_slave_1,ds_slave_2
+      ds_master:
+#        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+        username: root
+        password: xiang123
+      ds_slave_1:
+#        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+        username: root
+        password: xiang123
+      ds_slave_2:
+#        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+        username: root
+        password: xiang123
+    config:
+      master-slave-rules:
+        load-balance-algorithm-type: round_robin
+        name: ds_ms
+        master-data-source-name: ds_mstaer
+        slave-data-source-names: ds_slave_1,ds_slave_2
+      sharding:
+        props:
+          sql:
+            show: true
+
+
+
+
+
 
 # MyBatis
 #mybatis:
