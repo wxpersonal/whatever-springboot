@@ -62,16 +62,17 @@ sharding:
         jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
         username: root
         password: xiang123
-    config:
-      master-slave-rules:
-        load-balance-algorithm-type: round_robin
-        name: ds_ms
-        master-data-source-name: ds_mstaer
-        slave-data-source-names: ds_slave_1,ds_slave_2
-      sharding:
-        props:
-          sql:
-            show: true
+0
+
+    master-slave-rule:
+      name: ds_ms
+      load-balance-algorithm-type: round_robin
+      master-data-source-name: ds_master
+      slave-data-source-names: ds_slave_1,ds_slave_2
+    sharding:
+      props:
+
+          show: true
 
 
 

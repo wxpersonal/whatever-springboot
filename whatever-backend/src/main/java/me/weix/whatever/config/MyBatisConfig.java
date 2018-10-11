@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.mapper.LogicSqlInjector;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.plugins.PerformanceInterceptor;
 import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
-import io.shardingsphere.core.api.MasterSlaveDataSourceFactory;
+import io.shardingjdbc.core.api.MasterSlaveDataSourceFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.annotation.MapperScan;
@@ -31,7 +31,6 @@ import java.util.Properties;
  */
 @Configuration
 @MapperScan(basePackages = "me.weix.whatever.mapper")
-@ConditionalOnProperty({"sharding.jdbc.data-sources.ds_master.url", "sharding.jdbc.master-slave-rule.master-data-source-name"})
 @Slf4j
 public class MyBatisConfig {
 
@@ -87,17 +86,17 @@ public class MyBatisConfig {
 //        return dataSource;
 //    }
 
-    @Bean(name = "shardingDataSource")
-    @Primary
-    public DataSource dataSource() throws SQLException {
-        Map<String, DataSource> dataSourceMap = new HashMap<>();
-        dataSourceMap.putAll(shardingMastSlaveConfig.getDataSources());
-
-        Properties properties = new Properties();
-        DataSource dataSource = MasterSlaveDataSourceFactory.createDataSource(dataSourceMap, shardingMastSlaveConfig.getMasterSlaveRule(), new HashMap<>(), properties);
-        log.info("masterSlaveDataSource config complete");
-        return dataSource;
-    }
+//    @Bean(name = "shardingDataSource")
+//    @Primary
+//    public DataSource dataSource() throws SQLException {
+//        Map<String, DataSource> dataSourceMap = new HashMap<>();
+//        dataSourceMap.putAll(shardingMastSlaveConfig.getDataSources());
+//
+//        Properties properties = new Properties();
+//        DataSource dataSource = MasterSlaveDataSourceFactory.createDataSource(dataSourceMap, shardingMastSlaveConfig.getMasterSlaveRule(), new HashMap<>());
+//        log.info("masterSlaveDataSource config complete");
+//        return dataSource;
+//    }
 
     /**
      * 根据数据源创建SqlSessionFactory

@@ -1,7 +1,7 @@
 package me.weix.whatever.config;
 
 import com.zaxxer.hikari.HikariDataSource;
-import io.shardingsphere.core.api.config.MasterSlaveRuleConfiguration;
+import io.shardingjdbc.core.api.config.MasterSlaveRuleConfiguration;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
