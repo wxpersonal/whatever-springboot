@@ -1,5 +1,5 @@
 server:
-  port: 8888
+  port: 8889
 
 spring:
   profiles: dev
@@ -43,36 +43,28 @@ spring:
 sharding:
   jdbc:
     data-sources:
-#      names: ds_master,ds_slave_1,ds_slave_2
       ds_master:
-#        type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
         username: root
         password: xiang123
       ds_slave_1:
-#        type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
         username: root
         password: xiang123
       ds_slave_2:
-#        type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
         username: root
         password: xiang123
-0
-
     master-slave-rule:
       name: ds_ms
       load-balance-algorithm-type: round_robin
       master-data-source-name: ds_master
       slave-data-source-names: ds_slave_1,ds_slave_2
-    sharding:
-      props:
-
-          show: true
+    props:
+      show: true
 
 
 
