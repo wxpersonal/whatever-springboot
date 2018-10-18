@@ -27,7 +27,7 @@
 
 	<!-- 测试环境+开发环境. 多个使用逗号隔开. -->
 	<springProfile name="test,dev">
-		<logger name="org.springframework" level="debug">
+		<logger name="org.springframework" level="info">
 			<appender-ref ref="MY_FILE"/>
 		</logger>
 		<logger name="me.weix.whatever.mapper" level="debug" />

@@ -63,7 +63,7 @@ public class MyBatisConfig {
      * 根据数据源创建SqlSessionFactory
      */
     @Bean
-    public SqlSessionFactory sqlSessionFactory(@Qualifier("shardingDataSource") DataSource dataSource) throws Exception {
+    public SqlSessionFactory sqlSessionFactory( DataSource dataSource) throws Exception {
         MybatisSqlSessionFactoryBean sqlSessionFactoryBean = new MybatisSqlSessionFactoryBean();
 
         /**

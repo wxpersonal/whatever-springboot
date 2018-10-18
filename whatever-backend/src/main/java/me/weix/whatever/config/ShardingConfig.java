@@ -1,6 +1,6 @@
 package me.weix.whatever.config;
 
-import io.shardingjdbc.core.api.MasterSlaveDataSourceFactory;
+import io.shardingsphere.core.api.MasterSlaveDataSourceFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -33,7 +33,7 @@ public class ShardingConfig {
         dataSourceMap.putAll(shardingMastSlaveConfig.getDataSources());
 
         Properties properties = new Properties();
-        DataSource dataSource = MasterSlaveDataSourceFactory.createDataSource(dataSourceMap, shardingMastSlaveConfig.getMasterSlaveRule(), new HashMap<>());
+        DataSource dataSource = MasterSlaveDataSourceFactory.createDataSource(dataSourceMap, shardingMastSlaveConfig.getMasterSlaveRule(), new HashMap<>(), shardingMastSlaveConfig.getProps());
         log.info("masterSlaveDataSource config complete");
         return dataSource;
     }
