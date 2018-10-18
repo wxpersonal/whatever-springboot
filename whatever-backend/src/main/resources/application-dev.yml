@@ -1,0 +1,98 @@
+server:
+  port: 8888
+
+spring:
+  profiles: dev
+  redis:
+      host: 127.0.0.1
+      port: 6379
+      lettuce:
+        pool:
+          max-active:  100 # 连接池最大连接数（使用负值表示没有限制）
+          max-idle: 100 # 连接池中的最大空闲连接
+          min-idle: 50 # 连接池中的最小空闲连接
+
+
+
+
+jdbc:
+  readSize: 2
+  type: com.alibaba.druid.pool.DruidDataSource
+  write:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+    databaseId: mysql
+    username: root
+    password: xiang123
+  read1:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+    databaseId: mysql
+    username: root
+    password: xiang123
+  read2:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
+    databaseId: mysql
+    username: root
+    password: xiang123
+
+# MyBatis
+#mybatis:
+#  typeAliasesPackage: me.weix.whatever.entity
+#  mapperLocations: classpath:/mybatis/mapper/**/*.xml
+# configLocation: classpath:/mybatis-config.xml
+
+mybatis-plus:
+  mapper-locations: classpath:mybatis/mapper/**/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: me.weix.whatever.entity
+  typeEnumsPackage: com.baomidou.springboot.entity.enums
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 0
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 2
+    #驼峰下划线转换
+    db-column-underline: true
+    #刷新mapper 调试神器
+    refresh-mapper: true
+    #数据库大写下划线转换
+    #capital-mode: true
+    #序列接口实现类配置
+    #key-generator: com.baomidou.springboot.xxx
+    #逻辑删除配置（下面3个配置）
+    logic-delete-value: 1
+    logic-not-delete-value: 0
+#    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+    #自定义填充策略接口实现
+    meta-object-handler: com.baomidou.springboot.xxx
+    #自定义SQL注入器
+    #sql-injector: com.baomidou.springboot.xxx
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+#swagger
+swagger:
+  version: 0.0.1
+  host:
+  basePath: /whatever/rest
+  description: whatever Server
+  title: whatever Server
+  licence:
+  licenceUrl:
+  contact:
+  termsOfServiceUrl:
+  resourcePackage: me.weix.whatever.rest
+
+file:
+  #/usr/share/nginx/html/uploads
+  #D://uploads
+  path:
+    dipositPath: dipositPdf
+    contract_path: contract_pdf
+    local: /usr/share/nginx/html/uploads
+    #如果是本地必须配置本地ip不能使用localhost，他人访问会导致图片查询地址不对从而显示不出。
+    remote: http://192.168.42.77:8080/image
+

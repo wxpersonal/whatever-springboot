@@ -2,7 +2,7 @@ package me.weix.whatever.common;
 
 /**
  * Created by Administrator on 2017/6/21.
- * 系统常亮
+ * 系统常量
  */
 public interface CONST {
 
@@ -10,7 +10,7 @@ public interface CONST {
      * 登录类型
      */
     interface LOGINTYPE {
-        Integer EMAIN = 1;
+        Integer EMAIL = 1;
         Integer MOBILE = 2;
         Integer USERNAME = 3;
     }

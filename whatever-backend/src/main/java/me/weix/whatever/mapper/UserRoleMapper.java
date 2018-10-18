@@ -5,29 +5,12 @@
 */
 package me.weix.whatever.mapper;
 
-import me.weix.whatever.pojo.UserRole;
-import me.weix.whatever.pojo.UserRoleKey;
-import org.apache.ibatis.annotations.Param;
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+import me.weix.whatever.entity.UserRole;
 
 /**
 * Created by Mybatis Generator 2018/08/02
 */
-public interface UserRoleMapper {
-    int selectByIds(@Param("ids") Integer[] ids);
+public interface UserRoleMapper extends BaseMapper<UserRole> {
 
-    int deleteLogicById(Integer id);
-
-    int deleteLogicByIds(@Param("ids") Integer[] ids);
-
-    int deleteByPrimaryKey(UserRoleKey key);
-
-    int insert(UserRole record);
-
-    int insertSelective(UserRole record);
-
-    UserRole selectByPrimaryKey(UserRoleKey key);
-
-    int updateByPrimaryKeySelective(UserRole record);
-
-    int updateByPrimaryKey(UserRole record);
 }

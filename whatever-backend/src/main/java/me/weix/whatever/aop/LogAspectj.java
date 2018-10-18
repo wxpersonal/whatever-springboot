@@ -26,9 +26,7 @@ public class LogAspectj {
 
 	//定义通用切点，以便下面4个通知使用
 
-	@Pointcut("execution(* me.weix.whatever.service.impl.*ServiceImpl.*(..)) ||" +
-              "execution(* me.weix.whatever.base.BaseServiceImpl.*(..))"
-             )
+	@Pointcut("execution(* me.weix.whatever.service.impl.*ServiceImpl.*(..))")
 	public void logAop(){}
 //
 //	@Before("logAop()")

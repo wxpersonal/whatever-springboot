@@ -1,12 +1,13 @@
 package me.weix.whatever.service.impl;
 
-import me.weix.whatever.base.BaseServiceImpl;
+import com.baomidou.mybatisplus.plugins.pagination.PageHelper;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import me.weix.whatever.entity.Permission;
+import me.weix.whatever.entity.Role;
+import me.weix.whatever.entity.User;
 import me.weix.whatever.mapper.PermissionMapper;
 import me.weix.whatever.mapper.RoleMapper;
 import me.weix.whatever.mapper.UserMapper;
-import me.weix.whatever.pojo.Permission;
-import me.weix.whatever.pojo.Role;
-import me.weix.whatever.pojo.User;
 import me.weix.whatever.service.IUserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ import java.util.List;
 
 
 @Service
-public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements IUserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
     @Resource
     private RoleMapper roleMapper;
@@ -36,6 +37,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Override
     public List<Permission> getPermissionsByUserId(Integer userId) {
 
+        PageHelper.startPage(1, 10);
         List<Permission> permissionList = new ArrayList<Permission>();
         List<Role> roleList = getRolesByUserId(userId);
         for (Role role : roleList) {
@@ -64,10 +66,9 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Transactional
     public String testTransaction() {
 
-        User user = userMapper.selectByPrimaryKey(1);
+        User user = userMapper.selectById(1);
         user.setStatus((user.getStatus() + 1) % 5);
-
-        userMapper.updateByPrimaryKey(user);
+        userMapper.updateById(user);
 
         int i = 3 / 0;
         return  "111111111";

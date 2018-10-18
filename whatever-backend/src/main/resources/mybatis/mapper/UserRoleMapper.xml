@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="me.weix.whatever.mapper.UserRoleMapper" >
-  <resultMap id="BaseResultMap" type="me.weix.whatever.pojo.UserRole" >
-    <id column="user_id" property="userId" jdbcType="INTEGER" />
-    <id column="role_id" property="roleId" jdbcType="INTEGER" />
+  <resultMap id="BaseResultMap" type="me.weix.whatever.entity.UserRole" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
     <result column="create_by" property="createBy" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_by" property="updateBy" jdbcType="INTEGER" />
@@ -14,128 +15,12 @@
   <sql id="Base_Column_List" >
     user_id, role_id, create_by, create_time, update_by, update_time, status, deleted
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="me.weix.whatever.pojo.UserRoleKey" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_user_role
-    where user_id = #{userId,jdbcType=INTEGER}
-      and role_id = #{roleId,jdbcType=INTEGER} and deleted = 0
+
+  <select id="getUserRoles" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM t_user_role
+    WHERE user_id = #{userId, jdbcType=INTEGER} AND status = 1 AND deleted = 0
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="me.weix.whatever.pojo.UserRoleKey" >
-    delete from t_user_role
-    where user_id = #{userId,jdbcType=INTEGER}
-      and role_id = #{roleId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="me.weix.whatever.pojo.UserRole" >
-    insert into t_user_role (user_id, role_id, create_by, 
-      create_time, update_by, update_time, 
-      status, deleted)
-    values (#{userId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{createBy,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{status,jdbcType=TINYINT}, #{deleted,jdbcType=TINYINT})
-  </insert>
-  <insert id="insertSelective" parameterType="me.weix.whatever.pojo.UserRole" >
-    insert into t_user_role
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="roleId != null" >
-        role_id,
-      </if>
-      <if test="createBy != null" >
-        create_by,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="updateBy != null" >
-        update_by,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="deleted != null" >
-        deleted,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
-      </if>
-      <if test="roleId != null" >
-        #{roleId,jdbcType=INTEGER},
-      </if>
-      <if test="createBy != null" >
-        #{createBy,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy != null" >
-        #{updateBy,jdbcType=INTEGER},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=TINYINT},
-      </if>
-      <if test="deleted != null" >
-        #{deleted,jdbcType=TINYINT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="me.weix.whatever.pojo.UserRole" >
-    update t_user_role
-    <set >
-      <if test="createBy != null" >
-        create_by = #{createBy,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateBy != null" >
-        update_by = #{updateBy,jdbcType=INTEGER},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=TINYINT},
-      </if>
-      <if test="deleted != null" >
-        deleted = #{deleted,jdbcType=TINYINT},
-      </if>
-    </set>
-    where user_id = #{userId,jdbcType=INTEGER}
-      and role_id = #{roleId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="me.weix.whatever.pojo.UserRole" >
-    update t_user_role
-    set create_by = #{createBy,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_by = #{updateBy,jdbcType=INTEGER},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=TINYINT},
-      deleted = #{deleted,jdbcType=TINYINT}
-    where user_id = #{userId,jdbcType=INTEGER}
-      and role_id = #{roleId,jdbcType=INTEGER}
-  </update>
-  <update id="deleteLogicById" parameterType="Integer" >
-    update t_user_role set deleted = 1 where id = #{id} 
-  </update>
-  <select id="selectByIds" resultMap="BaseResultMap">
-    select 
-	<include refid="Base_Column_List" />
-	from t_user_role
-	where id in <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
-  </select>
-  <update id="deleteLogicByIds" >
-    update t_user_role set deleted = 1 where id in 
-	<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">#{item}</foreach> 
-  </update>
+
 </mapper>

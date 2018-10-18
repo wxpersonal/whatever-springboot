@@ -1,68 +1,91 @@
 package me.weix.whatever.config;
 
-import com.alibaba.fastjson.serializer.JSONSerializableSerializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.bind.RelaxedPropertyResolver;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cache.annotation.CachingConfigurerSupport;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.EnvironmentAware;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Sets;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.data.redis.cache.RedisCacheManager;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import redis.clients.jedis.JedisPoolConfig;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import javax.annotation.Resource;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2017/7/4.
  */
 
 @Configuration
-@ConfigurationProperties(prefix = "redis")
-public class RedisConfig implements EnvironmentAware {
+@AutoConfigureAfter(RedisAutoConfiguration.class)
+public class RedisConfig {
 
-
-    private final Logger log = LoggerFactory.getLogger(JerseyConfig.class);
-
-    private static RelaxedPropertyResolver relaxedPropertyResolver;
-
-    private static final String ENV_REDIS = "redis.";
+    @Resource
+    private LettuceConnectionFactory lettuceConnectionFactory;
 
     @Bean
-    public JedisPoolConfig getRedisConfig() {
-        JedisPoolConfig config = new JedisPoolConfig();
-        config.setMaxIdle(Integer.parseInt(relaxedPropertyResolver.getProperty("pool.max-idle")));
-        config.setMinIdle(Integer.parseInt(relaxedPropertyResolver.getProperty("pool.min-idle")));
-        config.setMaxWaitMillis(Long.parseLong(relaxedPropertyResolver.getProperty("pool.max-wait")));
-        config.setMaxTotal(Integer.parseInt(relaxedPropertyResolver.getProperty("pool.max-active")));
-        return config;
+    public KeyGenerator keyGenerator() {
+
+        return (target, method, params) -> {
+            StringBuffer sb = new StringBuffer();
+            sb.append(target.getClass().getName());
+            sb.append(method.getName());
+            for (Object obj : params) {
+                sb.append(obj.toString());
+            }
+            return sb.toString();
+        };
     }
+
 
     @Bean
-
-    public JedisConnectionFactory getConnectionFactory() {
-        JedisConnectionFactory factory = new JedisConnectionFactory();
-        factory.setHostName(relaxedPropertyResolver.getProperty("host"));
-        factory.setPassword(relaxedPropertyResolver.getProperty("password"));
-        factory.setPort(Integer.parseInt(relaxedPropertyResolver.getProperty("port")));
-        factory.setUsePool(true);
-        JedisPoolConfig config = getRedisConfig();
-        factory.setPoolConfig(config);
-        return factory;
+    public CacheManager cacheManager() {
+        RedisCacheManager.RedisCacheManagerBuilder builder = RedisCacheManager.RedisCacheManagerBuilder
+                .fromConnectionFactory(lettuceConnectionFactory);
+        Set<String> cacheNames = Sets.newHashSet("codeNameCache");
+        builder.initialCacheNames(cacheNames);
+        return builder.build();
     }
 
+
+    /**
+     * RedisTemplate配置
+     *
+     * @param redisConnectionFactory
+     * @return
+     */
     @Bean
-    public RedisTemplate<?, ?> getRedisTemplate() {
-        RedisTemplate<?, ?> template = new StringRedisTemplate(getConnectionFactory());
-        return template;
-    }
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
 
-    @Override
-    public void setEnvironment(Environment environment) {
-        relaxedPropertyResolver = new RelaxedPropertyResolver(environment, ENV_REDIS);
+        /**
+         * 设置序列化
+         */
+        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+        ObjectMapper om = new ObjectMapper();
+        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        jackson2JsonRedisSerializer.setObjectMapper(om);
+        /**
+         * 配置redisTemplate
+         */
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(lettuceConnectionFactory);
+        RedisSerializer stringSerializer = new StringRedisSerializer();
+        redisTemplate.setKeySerializer(stringSerializer);//key序列化
+        redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);//value序列化
+        redisTemplate.setHashKeySerializer(stringSerializer);//Hash key序列化
+        redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);//Hash value序列化
+        redisTemplate.afterPropertiesSet();
+        return redisTemplate;
     }
 }

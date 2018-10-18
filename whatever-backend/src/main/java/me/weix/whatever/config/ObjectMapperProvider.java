@@ -1,13 +1,9 @@
 package me.weix.whatever.config;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
@@ -24,15 +20,21 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
     public ObjectMapper getContext(Class<?> clazz) {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        //设置null转换""
+        /**
+         * 设置null转换""
+         */
         objectMapper.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object>() {
             @Override
-            public void serialize(Object value, JsonGenerator jg, SerializerProvider sp) throws IOException, JsonProcessingException {
+            public void serialize(Object value, JsonGenerator jg, SerializerProvider sp) throws IOException {
                 jg.writeString("");
             }
         });
-        //设置日期转换yyyy-MM-dd HH:mm:ss
-        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+
+        /**
+         * 全局日期转换yyyy-MM-dd HH:mm:ss
+         */
+
+        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
         return objectMapper;
     }
 }

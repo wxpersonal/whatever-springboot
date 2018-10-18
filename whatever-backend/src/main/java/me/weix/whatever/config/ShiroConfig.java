@@ -25,7 +25,8 @@ import java.util.*;
 @Configuration
 public class ShiroConfig {
 
-    @Bean(name = "shiroFilter")
+    @Bean(name = "" +
+            "shiroFilter")
     public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") DefaultWebSecurityManager manager) {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(manager);
@@ -113,7 +114,6 @@ public class ShiroConfig {
      */
     @Bean
     public EhCacheManager ehCacheManager(){
-        //System.out.println("ShiroConfiguration.getEhCacheManager()");
         EhCacheManager cacheManager = new EhCacheManager();
         cacheManager.setCacheManagerConfigFile("classpath:config/ehcache-shiro.xml");
         return cacheManager;

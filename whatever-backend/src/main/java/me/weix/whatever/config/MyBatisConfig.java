@@ -1,12 +1,16 @@
 package me.weix.whatever.config;
 
+import com.baomidou.mybatisplus.entity.GlobalConfiguration;
+import com.baomidou.mybatisplus.mapper.LogicSqlInjector;
+import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.plugins.PerformanceInterceptor;
+import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
 import me.weix.whatever.config.dataSource.DataSourceType;
 import me.weix.whatever.config.dataSource.DynamicDataSource;
 import me.weix.whatever.config.dataSource.DynamicDataSourcePlugin;
+import me.weix.whatever.config.dataSource.DynamicDataSourceTransactionManager;
 import org.apache.ibatis.plugin.Interceptor;
-import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,19 +24,47 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
  * springboot集成mybatis的基本入口 1）创建数据源(如果采用的是默认的tomcat-jdbc数据源，则不需要)
  * 2）创建SqlSessionFactory 3）配置事务管理器，除非需要使用事务，否则不用配置
  */
-@Configuration // 该注解类似于spring配置文件
+@Configuration
 @MapperScan(basePackages = "me.weix.whatever.mapper")
 public class MyBatisConfig {
 
     @Autowired
     private Environment env;
+
+
+    @Bean
+    public GlobalConfiguration globalConfiguration() {
+        GlobalConfiguration conf = new GlobalConfiguration(new LogicSqlInjector());
+        conf.setLogicDeleteValue(env.getProperty("mybatis-plus.global-config.logic-delete-value"));
+        conf.setLogicNotDeleteValue(env.getProperty("mybatis-plus.global-config.logic-not-delete-value"));
+        conf.setIdType(Integer.parseInt(env.getProperty("mybatis-plus.global-config.id-type")));
+        return conf;
+    }
+
+    /**
+     * mybatis-plus SQL执行效率插件【生产环境可以关闭】
+     */
+    @Bean
+    public PerformanceInterceptor performanceInterceptor() {
+        return new PerformanceInterceptor();
+    }
+
+    /**
+     * mybatis-plus分页插件<br>
+     * 文档：http://mp.baomidou.com<br>
+     */
+    @Bean
+    public PaginationInterceptor paginationInterceptor() {
+        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+        paginationInterceptor.setLocalPage(true);
+        return paginationInterceptor;
+    }
 
     /**
      * @Primary 该注解表示在同一个接口有多个实现类可以注入的时候，默认选择哪一个，而不是让@autowire注解报错
@@ -57,15 +89,19 @@ public class MyBatisConfig {
      */
     @Bean
     public SqlSessionFactory sqlSessionFactory(DynamicDataSource dynamicDataSource) throws Exception {
-//        @Qualifier("masterDataSource") DataSource dataSource
-        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(dynamicDataSource);// 指定数据源(这个必须有，否则报错)
-        // 下边两句仅仅用于*.xml文件，如果整个持久层操作不需要使用到xml文件的话（只用注解就可以搞定），则不加
+        MybatisSqlSessionFactoryBean sqlSessionFactoryBean = new MybatisSqlSessionFactoryBean();
 
-
-        sqlSessionFactoryBean.setTypeAliasesPackage(env.getProperty("mybatis.typeAliasesPackage"));// 指定基包
+        /**
+         * 指定数据源
+         */
+        sqlSessionFactoryBean.setDataSource(dynamicDataSource);
+        /**
+         *  下边两句仅仅用于*.xml文件，如果整个持久层操作不需要使用到xml文件的话（只用注解就可以搞定），则不加
+         */
+        sqlSessionFactoryBean.setGlobalConfig(globalConfiguration());
+        sqlSessionFactoryBean.setTypeAliasesPackage(env.getProperty("mybatis-plus.typeAliasesPackage"));
         sqlSessionFactoryBean.setMapperLocations(
-                new PathMatchingResourcePatternResolver().getResources(env.getProperty("mybatis.mapperLocations")));
+                new PathMatchingResourcePatternResolver().getResources(env.getProperty("mybatis-plus.mapper-locations")));
 
         /**
          * 数据源切换
@@ -82,6 +118,6 @@ public class MyBatisConfig {
     //todo 未释放线程资源 treadlocal   可已自定义事务管理器
     @Bean
     public DataSourceTransactionManager transactionManager(DynamicDataSource dynamicDataSource) {
-        return new DataSourceTransactionManager(dynamicDataSource);
+        return new DynamicDataSourceTransactionManager(dynamicDataSource);
     }
 }
