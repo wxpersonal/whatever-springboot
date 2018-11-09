@@ -29,7 +29,9 @@ import java.util.Map;
 /**
  * springboot集成mybatis的基本入口 1）创建数据源(如果采用的是默认的tomcat-jdbc数据源，则不需要)
  * 2）创建SqlSessionFactory 3）配置事务管理器，除非需要使用事务，否则不用配置
+ * @author weix
  */
+
 @Configuration
 @MapperScan(basePackages = "me.weix.whatever.mapper")
 public class MyBatisConfig {
@@ -75,7 +77,7 @@ public class MyBatisConfig {
     public DynamicDataSource dataSource(@Qualifier("writeDataSource") DataSource masterDataSource,
                                          @Qualifier("readDataSource1") DataSource readDataSource1,
                                          @Qualifier("readDataSource2") DataSource readDataSource2) {
-        Map<Object, Object> map = new HashMap<>();
+        Map<Object, Object> map = new HashMap<>(4);
         map.put(DataSourceType.master.getName(), masterDataSource);
         map.put(DataSourceType.slave.getName() + 1, readDataSource1);
         map.put(DataSourceType.slave.getName() + 2, readDataSource2);
@@ -115,7 +117,9 @@ public class MyBatisConfig {
     /**
      * 配置读写库事务管理器
      */
-    //todo 未释放线程资源 treadlocal   可已自定义事务管理器
+    /**
+     *     todo 未释放线程资源 treadlocal   可已自定义事务管理器
+     */
     @Bean
     public DataSourceTransactionManager transactionManager(DynamicDataSource dynamicDataSource) {
         return new DynamicDataSourceTransactionManager(dynamicDataSource);
