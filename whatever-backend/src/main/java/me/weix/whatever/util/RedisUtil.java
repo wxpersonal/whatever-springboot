@@ -4,8 +4,8 @@ package me.weix.whatever.util;
  * Created by wxper on 2017/4/1.
  */
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.redis.core.*;
 
 import java.util.*;
@@ -15,6 +15,8 @@ public class RedisUtil {
 
     private static RedisTemplate<String, Object> redisTemplate = (RedisTemplate<String, Object>) SpringContextUtil.getBean("redisTemplate");
 
+    private static ObjectMapper objectMapper = new ObjectMapper();
+
     /**
      * 缓存基本的对象，Integer、String、实体类等
      *
@@ -22,10 +24,13 @@ public class RedisUtil {
      * @param value 缓存的值
      * @return 缓存的对象
      */
-    public static ValueOperations set(String key, Object value) {
-        ValueOperations<String, Object> operation = redisTemplate.opsForValue();
-        operation.set(key, JSON.toJSONString(value, SerializerFeature.WriteMapNullValue));
-        return operation;
+    public static void set(String key, Object value) {
+        try {
+            ValueOperations<String, Object> operation = redisTemplate.opsForValue();
+            operation.set(key, objectMapper.writeValueAsString(value));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -39,7 +44,11 @@ public class RedisUtil {
      */
     public static ValueOperations set(String key, Object value, long expireTime, TimeUnit timeUnit) {
         ValueOperations<String, Object> operation = redisTemplate.opsForValue();
-        operation.set(key, JSON.toJSONString(value, SerializerFeature.WriteMapNullValue));
+        try {
+            operation.set(key, objectMapper.writeValueAsString(value));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         //缓存失效时间设置
         redisTemplate.expire(key, expireTime, timeUnit);
         return operation;
@@ -68,7 +77,11 @@ public class RedisUtil {
         if (null != dataList) {
             int size = dataList.size();
             for (int i = 0; i < size; i++) {
-                listOperation.rightPush(key, JSON.toJSONString(dataList.get(i), SerializerFeature.WriteMapNullValue));
+                try {
+                    listOperation.rightPush(key, objectMapper.writeValueAsString(dataList.get(i)));
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return listOperation;
@@ -102,7 +115,11 @@ public class RedisUtil {
         BoundSetOperations<String, Object> setOperation = redisTemplate.boundSetOps(key);
         Iterator<Object> it = dataSet.iterator();
         while (it.hasNext()) {
-            setOperation.add(JSON.toJSONString(it.next(), SerializerFeature.WriteMapNullValue));
+            try {
+                setOperation.add(objectMapper.writeValueAsString(it.next()));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
         }
         return setOperation;
     }
@@ -134,8 +151,12 @@ public class RedisUtil {
         HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
         if (null != dataMap) {
             for (Map.Entry<Object, Object> entry : dataMap.entrySet()) {
-                hashOperations.put(key, JSON.toJSONString(entry.getKey(), SerializerFeature.WriteMapNullValue),
-                        JSON.toJSONString(entry.getValue(), SerializerFeature.WriteMapNullValue));
+                try {
+                    hashOperations.put(key, objectMapper.writeValueAsString(entry.getKey()),
+                            objectMapper.writeValueAsString(entry.getValue()));
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return hashOperations;
