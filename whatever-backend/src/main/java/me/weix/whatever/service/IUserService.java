@@ -7,6 +7,9 @@ import me.weix.whatever.entity.User;
 
 import java.util.List;
 
+/**
+ * @author weix
+ */
 public interface IUserService extends IService<User> {
 
     List<Role> getRolesByUserId(Integer userId);

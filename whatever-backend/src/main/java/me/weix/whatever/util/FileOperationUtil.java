@@ -25,8 +25,9 @@ public class FileOperationUtil {
 		FileOutputStream fos = null;
 		InputStream  in= null;
 		
-		if(!f.exists())
+		if(!f.exists()) {
 			f.mkdirs();
+		}
 		if(!file.isEmpty()){
 			try {
 				fos = new FileOutputStream(f.getPath());

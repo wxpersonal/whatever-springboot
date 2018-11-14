@@ -3,18 +3,17 @@ package me.weix.whatever.rest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import me.weix.whatever.entity.Permission;
-import me.weix.whatever.service.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
+/**
+ * @author weix
+ */
 @Api(value="PermissionRest")
 @Path("permission")
 public class PermissionRest {
-
-    @Autowired
-    private IUserService userService;
 
     @ApiOperation(value = "根据id获取permission")
     @GET

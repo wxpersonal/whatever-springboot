@@ -69,8 +69,8 @@ public class MyBatisConfig {
     }
 
     /**
-     * @Primary 该注解表示在同一个接口有多个实现类可以注入的时候，默认选择哪一个，而不是让@autowire注解报错
-     * @Qualifier 根据名称进行注入，通常是在具有相同的多个类型的实例的一个注入（例如有多个DataSource类型的实例）
+     * Primary 该注解表示在同一个接口有多个实现类可以注入的时候，默认选择哪一个，而不是让@autowire注解报错
+     * Qualifier 根据名称进行注入，通常是在具有相同的多个类型的实例的一个注入（例如有多个DataSource类型的实例）
      */
     @Bean
     @Primary
@@ -93,21 +93,17 @@ public class MyBatisConfig {
     public SqlSessionFactory sqlSessionFactory(DynamicDataSource dynamicDataSource) throws Exception {
         MybatisSqlSessionFactoryBean sqlSessionFactoryBean = new MybatisSqlSessionFactoryBean();
 
-        /**
-         * 指定数据源
-         */
+        // 指定数据源
         sqlSessionFactoryBean.setDataSource(dynamicDataSource);
-        /**
-         *  下边两句仅仅用于*.xml文件，如果整个持久层操作不需要使用到xml文件的话（只用注解就可以搞定），则不加
-         */
+
+        // 下边两句仅仅用于*.xml文件，如果整个持久层操作不需要使用到xml文件的话（只用注解就可以搞定），则不加
         sqlSessionFactoryBean.setGlobalConfig(globalConfiguration());
         sqlSessionFactoryBean.setTypeAliasesPackage(env.getProperty("mybatis-plus.typeAliasesPackage"));
         sqlSessionFactoryBean.setMapperLocations(
                 new PathMatchingResourcePatternResolver().getResources(env.getProperty("mybatis-plus.mapper-locations")));
 
-        /**
-         * 数据源切换
-         */
+
+        // 数据源切换
         Integer readSize = Integer.parseInt(env.getProperty("jdbc.readSize"));
         DynamicDataSourcePlugin dynamicDataSourcePlugin = new DynamicDataSourcePlugin(readSize);
         sqlSessionFactoryBean.setPlugins(new Interceptor[] { dynamicDataSourcePlugin });
@@ -116,9 +112,6 @@ public class MyBatisConfig {
 
     /**
      * 配置读写库事务管理器
-     */
-    /**
-     *     todo 未释放线程资源 treadlocal   可已自定义事务管理器
      */
     @Bean
     public DataSourceTransactionManager transactionManager(DynamicDataSource dynamicDataSource) {

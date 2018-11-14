@@ -1,8 +1,3 @@
-/*
-*
-* User.java
-* @date 2018-08-02
-*/
 package me.weix.whatever.entity;
 
 import com.baomidou.mybatisplus.annotations.TableField;
@@ -15,11 +10,13 @@ import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
+/**
+ * @author weix
+ */
 @Data
 @EqualsAndHashCode(callSuper=true)
 @TableName("t_user")
 @ApiModel(value="user对象",description="用户对象user")
-
 public class User extends BaseEntity {
     /**
      * 用户id

@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 
+/**
+ * @author weix
+ */
 @Api(value="redis")
 @Path("redis")
 public class RedisTestRest {
@@ -21,8 +24,6 @@ public class RedisTestRest {
     private IUserService userService;
 
 
-    //@Produces(MediaType.APPLICATION_JSON)
-    //@Consumes(MediaType.APPLICATION_JSON)
     @ApiOperation(value = "取redis")
     @GET
     @Path(value = "{key}")

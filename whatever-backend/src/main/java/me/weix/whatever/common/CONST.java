@@ -10,9 +10,9 @@ public interface CONST {
      * 登录类型
      */
     interface LOGINTYPE {
-        Integer EMAIL = 1;
-        Integer MOBILE = 2;
-        Integer USERNAME = 3;
+        int EMAIL = 1;
+        int MOBILE = 2;
+        int USERNAME = 3;
     }
 
     /**

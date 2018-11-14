@@ -74,9 +74,7 @@ public class DynamicDataSourcePlugin implements Interceptor {
                         if (sql.matches(REGEX)) {
                             dataSourceName = DataSourceType.master.getName();
                         } else {
-                            /**
-                             * 轮询读库
-                             */
+                            // 轮询读库
                             int i = count.getAndAdd(1) % read_dataSource_size;
                             if (count.get() > 10000) {
                                 count.set(0);
