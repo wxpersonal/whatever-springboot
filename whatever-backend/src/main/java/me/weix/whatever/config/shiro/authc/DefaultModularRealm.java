@@ -54,21 +54,17 @@ public class DefaultModularRealm extends ModularRealmAuthenticator {
         Realm realm = null;
         CustomUsernamepasswordToken token = (CustomUsernamepasswordToken) authenticationToken;
 
-        /**
-         * 邮箱登录
-         */
+        // 邮箱登录
         if (token.getLoginType() == CONST.LOGINTYPE.EMAIL) {
             realm = (Realm) this.definedRealms.get("emailRealm");
         }
-        /**
-         * 手机登录
-         */
+
+        // 手机登录
         if (token.getLoginType() == CONST.LOGINTYPE.MOBILE) {
             realm = (Realm) this.definedRealms.get("mobileRealm");
         }
-        /**
-         * 用户名登录
-         */
+
+        // 用户名登录
         if (token.getLoginType() == CONST.LOGINTYPE.USERNAME) {
             realm = (Realm) this.definedRealms.get("usernameRealm");
         }

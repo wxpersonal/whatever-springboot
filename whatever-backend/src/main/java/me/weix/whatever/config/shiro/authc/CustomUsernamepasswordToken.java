@@ -7,7 +7,9 @@ import org.apache.shiro.authc.UsernamePasswordToken;
  */
 public class CustomUsernamepasswordToken extends UsernamePasswordToken {
 
-    //登录类型
+    /**
+     * 登录类型
+     */
     private Integer loginType;
 
     public Integer getLoginType() {

@@ -21,7 +21,9 @@ import javax.sql.DataSource;
 /**
  * springboot集成mybatis的基本入口 1）创建数据源(如果采用的是默认的tomcat-jdbc数据源，则不需要)
  * 2）创建SqlSessionFactory 3）配置事务管理器，除非需要使用事务，否则不用配置
+ * @author weix
  */
+
 @Configuration
 @MapperScan(basePackages = "me.weix.whatever.mapper")
 @Slf4j

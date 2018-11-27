@@ -19,34 +19,28 @@ import java.util.*;
 
 /**
  * @Author: WeiX
- * @Date: 2017/10/23
+ * @Date: 2017-10-23
  * @description :
  */
 @Configuration
 public class ShiroConfig {
 
-    @Bean(name = "" +
-            "shiroFilter")
+    @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") DefaultWebSecurityManager manager) {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(manager);
         //配置访问权限
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        filterChainDefinitionMap.put("/", "anon");                      //表示可以匿名访问
+        //表示可以匿名访问
+        filterChainDefinitionMap.put("/", "anon");
         filterChainDefinitionMap.put("/api/swagger.json", "anon");
-
-
-//        filterChainDefinitionMap.put("/logout*", "anon");
-//        filterChainDefinitionMap.put("/jsp/error.html*", "anon");
-//        filterChainDefinitionMap.put("/jsp/index.html*", "authc");
-//        filterChainDefinitionMap.put("/*", "authc");//表示需要认证才可以访问
-//        filterChainDefinitionMap.put("/**", "authc");//表示需要认证才可以访问
-//        filterChainDefinitionMap.put("/*.*", "authc");
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return bean;
     }
 
-    //配置自定义的权限登录器
+    /**
+     * 配置自定义的权限登录器
+     */
     @Bean(name = "usernameRealm")
     public UsernameRealm usernameRealm() {
         UsernameRealm authRealm = new UsernameRealm();
@@ -83,6 +77,9 @@ public class ShiroConfig {
         return new LifecycleBeanPostProcessor();
     }
 
+    /**
+     * @return DefaultAdvisorAutoProxyCreator
+     */
     @Bean
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
         DefaultAdvisorAutoProxyCreator creator = new DefaultAdvisorAutoProxyCreator();
@@ -90,7 +87,9 @@ public class ShiroConfig {
         return creator;
     }
 
-    //配置核心安全事务管理器
+    /**
+     * 配置核心安全事务管理器
+     */
     @Bean
     public DefaultWebSecurityManager securityManager(@Qualifier("usernameRealm") UsernameRealm usernameRealm,
                                                      @Qualifier("emailRealm") EmailRealm emailRealm,
@@ -110,7 +109,7 @@ public class ShiroConfig {
      * 需要注入对应的其它的实体类中：
      * 1、安全管理器：securityManager
      * 可见securityManager是整个shiro的核心；
-     * @return
+     * @return EhCacheManager
      */
     @Bean
     public EhCacheManager ehCacheManager(){
@@ -119,6 +118,11 @@ public class ShiroConfig {
         return cacheManager;
     }
 
+    /**
+     * authorizationAttributeSourceAdvisor
+     * @param  manager
+     * @return AuthorizationAttributeSourceAdvisor
+     */
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("securityManager") DefaultWebSecurityManager manager) {
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();

@@ -1,8 +1,8 @@
 //
 //package me.weix.whatever.aop;
 //
-//import me.weix.whatever.config.dataSource.DataSourceContextHolder;
-//import me.weix.whatever.config.dataSource.DataSourceType;
+//import me.weix.whatever.config.datasource.DataSourceContextHolder;
+//import me.weix.whatever.config.datasource.DataSourceType;
 //import org.aspectj.lang.ProceedingJoinPoint;
 //import org.aspectj.lang.Signature;
 //import org.aspectj.lang.annotation.Around;

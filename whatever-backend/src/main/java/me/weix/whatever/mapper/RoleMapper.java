@@ -1,8 +1,3 @@
-/*
-*
-* RoleMapper.java
-* @date 2018-08-02
-*/
 package me.weix.whatever.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
@@ -12,13 +7,14 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
-* Created by Mybatis Generator 2018/08/02
-*/
+ * @author weix
+ */
 public interface RoleMapper extends BaseMapper<Role> {
 
     /**
-     * 在下面添加自定义方法
+     *
+     * @param userId
+     * @return
      */
-
     List<Role> getRolesByUserId(@Param("userId") Integer userId);
 }
