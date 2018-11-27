@@ -1,4 +1,4 @@
-package me.weix.whatever.config.dataSource;
+package me.weix.whatever.config.datasource;
 
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 

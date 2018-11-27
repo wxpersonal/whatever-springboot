@@ -1,6 +1,5 @@
-package me.weix.whatever.config.dataSource;
+package me.weix.whatever.config.datasource;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.keygen.SelectKeyGenerator;
 import org.apache.ibatis.mapping.BoundSql;
@@ -11,15 +10,10 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.util.Locale;
-import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -86,7 +80,7 @@ public class DynamicDataSourcePlugin implements Interceptor {
                     dataSourceName = DataSourceType.master.getName();
                 }
                 DataSourceContextHolder.setDataSource(dataSourceName);
-                logger.info("------------------->switch to dataSource :" + dataSourceName);
+                logger.info("------------------->switch to datasource :" + dataSourceName);
             }
 
 

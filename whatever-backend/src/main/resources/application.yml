@@ -81,14 +81,14 @@ spring:
 #swagger:
 #  version: 0.0.1
 #  host:
-#  basePath: /whatever/rest
+#  basePath: /whatever/controller
 #  description: Logic Solutions System Server.
 #  title: System Server
 #  licence:
 #  licenceUrl:
 #  contact:
 #  termsOfServiceUrl:
-#  resourcePackage: me.weix.whatever.rest
+#  resourcePackage: me.weix.whatever.controller
 #
 #file:
 #  #/usr/share/nginx/html/uploads

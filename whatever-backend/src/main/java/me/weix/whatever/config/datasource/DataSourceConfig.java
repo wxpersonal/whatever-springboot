@@ -1,4 +1,4 @@
-package me.weix.whatever.config.dataSource;
+package me.weix.whatever.config.datasource;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import lombok.extern.slf4j.Slf4j;
