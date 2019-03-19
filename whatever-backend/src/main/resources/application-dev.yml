@@ -14,28 +14,31 @@ spring:
 
 
 
-
-jdbc:
-  readSize: 2
-  type: com.alibaba.druid.pool.DruidDataSource
-  write:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
-    databaseId: mysql
-    username: root
-    password: xiang123
-  read1:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
-    databaseId: mysql
-    username: root
-    password: xiang123
-  read2:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true
-    databaseId: mysql
-    username: root
-    password: xiang123
+sharding:
+  jdbc:
+    data-sources:
+      ds_master:
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: xiang123
+      ds_slave_1:
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: xiang123
+      ds_slave_2:
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: xiang123
+    master-slave-rule:
+      name: ds_ms
+      load-balance-algorithm-type: round_robin
+      master-data-source-name: ds_master
+      slave-data-source-names: ds_slave_1,ds_slave_2
+    props:
+      sql.show: true
 
 # MyBatis
 #mybatis:
@@ -73,26 +76,9 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: false
 
-#swagger
-swagger:
-  version: 0.0.1
-  host:
-  basePath: /whatever/rest
-  description: whatever Server
-  title: whatever Server
-  licence:
-  licenceUrl:
-  contact:
-  termsOfServiceUrl:
-  resourcePackage: me.weix.whatever.rest
 
-file:
-  #/usr/share/nginx/html/uploads
-  #D://uploads
-  path:
-    dipositPath: dipositPdf
-    contract_path: contract_pdf
-    local: /usr/share/nginx/html/uploads
-    #如果是本地必须配置本地ip不能使用localhost，他人访问会导致图片查询地址不对从而显示不出。
-    remote: http://192.168.42.77:8080/image
+
+
+
+
 

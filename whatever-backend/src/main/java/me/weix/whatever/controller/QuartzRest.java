@@ -1,4 +1,4 @@
-//package me.weix.whatever.rest;
+//package me.weix.whatever.controller;
 //
 //import io.swagger.annotations.Api;
 //import io.swagger.annotations.ApiOperation;

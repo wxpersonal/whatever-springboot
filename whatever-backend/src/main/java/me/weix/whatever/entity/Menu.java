@@ -1,14 +1,26 @@
+
 package me.weix.whatever.entity;
 
+import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * @author weix
+ * @since 2018-10-09
  */
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+@TableName("t_menu")
 public class Menu extends BaseEntity {
+
+    private static final long serialVersionUID = 1L;
+
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
@@ -35,5 +47,6 @@ public class Menu extends BaseEntity {
      * icon
      */
     private String icon;
+
 
 }

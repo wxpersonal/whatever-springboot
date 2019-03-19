@@ -1,4 +1,4 @@
-package me.weix.whatever.config.dataSource;
+package me.weix.whatever.config.datasource;
 
 /**
  * Created by wxper on 2017/6/24.

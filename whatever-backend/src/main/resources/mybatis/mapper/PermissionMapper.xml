@@ -1,33 +1,32 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="me.weix.whatever.mapper.PermissionMapper" >
-  <resultMap id="BaseResultMap" type="me.weix.whatever.entity.Permission" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="p_id" property="pId" jdbcType="INTEGER" />
-    <result column="system_id" property="systemId" jdbcType="INTEGER" />
-    <result column="code" property="code" jdbcType="VARCHAR" />
-    <result column="desc" property="desc" jdbcType="VARCHAR" />
-    <result column="url" property="url" jdbcType="VARCHAR" />
-    <result column="orders" property="orders" jdbcType="INTEGER" />
-    <result column="create_by" property="createBy" jdbcType="INTEGER" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_by" property="updateBy" jdbcType="INTEGER" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="status" property="status" jdbcType="TINYINT" />
-    <result column="deleted" property="deleted" jdbcType="TINYINT" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, p_id, system_id, code, desc, url, orders, create_by, create_time, update_by, 
-    update_time, status, deleted
-  </sql>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="me.weix.whatever.mapper.PermissionMapper">
 
-  <select id="getPermissionsByRoleId" resultMap="BaseResultMap">
-    SELECT
-    <include refid="Base_Column_List"/>
-    FROM t_permission p
-    LEFT JOIN role_permission rp ON p.id = rp.permission_id
-    WHERE rp.role_id = #{roleId, jdbcType=INTEGER}
-    AND p.status = 1 AND rp.status = 1 AND p.deleted = 0 and rp.deleted = 0
-  </select>
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="me.weix.whatever.entity.Permission">
+            <id column="id" property="id"/>
+            <result column="p_id" property="pId"/>
+            <result column="system_id" property="systemId"/>
+            <result column="code" property="code"/>
+            <result column="desc" property="desc"/>
+            <result column="url" property="url"/>
+            <result column="orders" property="orders"/>
+            <result column="create_by" property="createBy"/>
+            <result column="create_time" property="createTime"/>
+            <result column="update_by" property="updateBy"/>
+            <result column="update_time" property="updateTime"/>
+            <result column="status" property="status"/>
+            <result column="deleted" property="deleted"/>
+        </resultMap>
 
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            id, p_id AS pId, system_id AS systemId, code, desc, url, orders
+            create_by AS createBy,
+            create_time AS createTime,
+            update_by AS updateBy,
+            update_time AS updateTime,
+            status,
+            deleted,
+        </sql>
 </mapper>

@@ -1,6 +1,6 @@
-package me.weix.whatever.config.dataSource;
+package me.weix.whatever.config.datasource;
 
-import org.apache.commons.lang3.StringUtils;
+import com.google.common.base.Strings;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 /**
@@ -12,7 +12,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     @Override
     protected Object determineCurrentLookupKey() {
         String dataSource = DataSourceContextHolder.getDataSource();
-        if(StringUtils.isEmpty(dataSource)) {
+        if(Strings.isNullOrEmpty(dataSource)) {
             DataSourceContextHolder.setDataSource(DataSourceType.master.getName());
         }
         return DataSourceContextHolder.getDataSource();

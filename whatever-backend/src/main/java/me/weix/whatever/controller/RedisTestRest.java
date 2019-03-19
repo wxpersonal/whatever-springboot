@@ -1,20 +1,19 @@
-package me.weix.whatever.rest;
+package me.weix.whatever.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import me.weix.whatever.entity.User;
 import me.weix.whatever.service.IRedisTestService;
 import me.weix.whatever.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.ws.rs.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author weix
  */
-@Api(value="redis")
-@Path("redis")
+@RestController
+@RequestMapping("redis")
 public class RedisTestRest {
 
     @Autowired
@@ -23,18 +22,13 @@ public class RedisTestRest {
     @Autowired
     private IUserService userService;
 
-
-    @ApiOperation(value = "取redis")
-    @GET
-    @Path(value = "{key}")
-    public User get(@ApiParam(value = "redis key") @PathParam("key") String key) {
+    @RequestMapping(value="{key}", method=RequestMethod.GET)
+    public User get(@PathVariable("key") String key) {
         return (User) redisTestService.get(key);
     }
 
-    @ApiOperation(value = "存redis")
-    @POST
-    public void put(@FormParam(value = "111")  String id,
-                    @FormParam(value = "222")  String id1) {
+    @RequestMapping(method=RequestMethod.POST)
+    public void put(String id, String id1) {
         User user = userService.selectById(1);
         redisTestService.put("user" + user.getId(), user);
     }

@@ -1,65 +1,65 @@
 package me.weix.whatever.entity;
 
+import com.baomidou.mybatisplus.enums.IdType;
+import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import me.weix.whatever.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.Date;
+import lombok.experimental.Accessors;
 
 /**
+ * <p>
+ * 用户表
+ * </p>
+ *
  * @author weix
+ * @since 2018-10-09
  */
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 @TableName("t_user")
-@ApiModel(value="user对象",description="用户对象user")
 public class User extends BaseEntity {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 用户id
      */
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
      * 用户名
      */
-
-    @ApiModelProperty(value="用户名",name="username",required = true)
     private String username;
-
 
     /**
      * 密码
      */
-    @ApiModelProperty(value="密码",name="password",required = true)
     private String password;
 
     /**
      * 性别
      */
-    @ApiModelProperty(value="性别",name="gender",required = true)
     private Integer gender;
 
     /**
      * 电话
      */
-    @ApiModelProperty(value="电话",name="mobile")
     private String mobile;
 
     /**
      * 出生时间
      */
-    @ApiModelProperty(value="出生时间",name="birthday",dataType="date", example = "2018-08-29 12:00:00")
-    @JsonFormat(pattern="yyyy-MM-dd")
     private Date birthday;
 
     /**
      * 邮箱
      */
-    @ApiModelProperty(value="邮箱",name="email")
     private String email;
 
     @TableField("address_id")
@@ -70,5 +70,6 @@ public class User extends BaseEntity {
      */
     @TableField("photo_id")
     private Integer photoId;
+
 
 }
