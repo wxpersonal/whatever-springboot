@@ -35,7 +35,7 @@ public class MpGenerator {
         GlobalConfig gc = new GlobalConfig();
         gc.setOutputDir("C://Users//Administrator//Desktop");
         gc.setFileOverride(true);
-        gc.setActiveRecord(true);// 不需要ActiveRecord特性的请改为false
+        gc.setActiveRecord(false);// 不需要ActiveRecord特性的请改为false
         gc.setEnableCache(false);// XML 二级缓存
         gc.setBaseResultMap(true);// XML ResultMap
         gc.setBaseColumnList(true);// XML columList
@@ -73,7 +73,7 @@ public class MpGenerator {
         // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
         strategy.setTablePrefix(new String[] {"t_" });// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-        strategy.setInclude(new String[] { "t_user" }); // 需要生成的表
+        strategy.setInclude(new String[] { "t_user","t_menu","t_permission","t_role","t_role_permission","t_sys_file","t_user_role","t_sys_code" }); // 需要生成的表
 //        strategy.setExclude(new String[]{"test"}); // 排除生成的表
         // 自定义实体父类
         strategy.setSuperEntityClass("me.weix.whatever.entity.BaseEntity");
@@ -95,6 +95,7 @@ public class MpGenerator {
         // strategy.setEntityBuilderModel(true);
         strategy.setEntityLombokModel(true);
         strategy.setLogicDeleteFieldName("deleted");
+
         mpg.setStrategy(strategy);
 
         // 包配置
@@ -113,46 +114,49 @@ public class MpGenerator {
             }
         };
 
-        // 自定义 xxList.jsp 生成
+        String outputDir = gc.getOutputDir();
+        // 自定义 entity 生成
         List<FileOutConfig> focList = new ArrayList<FileOutConfig>();
-//        focList.add(new FileOutConfig("/templates/list.jsp.vm") {
-//            @Override
-//            public String outputFile(TableInfo tableInfo) {
-//                // 自定义输入文件名称
-//                return "C://my_" + tableInfo.getEntityName() + ".jsp";
-//            }
-//        });
-//        cfg.setFileOutConfigList(focList);
-//        mpg.setCfg(cfg);
-
-        // 调整 xml 生成目录演示
-        focList.add(new FileOutConfig("/templates/mapper.xml.vm") {
+        /*focList.add(new FileOutConfig("/templates/entity.java.vm") {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                String outputDir = gc.getOutputDir();
+                return outputDir;
+            }
+        });*/
+
+
+        /*cfg.setFileOutConfigList(focList);
+        mpg.setCfg(cfg);*/
+
+        // 调整 xml 生成目录演示
+        /*focList.add(new FileOutConfig("/templates/mapper.xml.vm") {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+
                 return outputDir + "//xml//" + tableInfo.getEntityName() + ".xml";
             }
-        });
+        });*/
         cfg.setFileOutConfigList(focList);
+
         mpg.setCfg(cfg);
 
         // 关闭默认 xml 生成，调整生成 至 根目录
-        TemplateConfig tc = new TemplateConfig();
+        /*TemplateConfig tc = new TemplateConfig();
         tc.setXml(null);
-        mpg.setTemplate(tc);
+        mpg.setTemplate(tc);*/
 
         // 自定义模板配置，可以 copy 源码 mybatis-plus/src/main/resources/templates 下面内容修改，
         // 放置自己项目的 src/main/resources/templates 目录下, 默认名称一下可以不配置，也可以自定义模板名称
-        // TemplateConfig tc = new TemplateConfig();
+         TemplateConfig tc = new TemplateConfig();
 
-        // tc.setController("...");
-        // tc.setEntity("...");
-        // tc.setMapper("...");
-        // tc.setXml("...");
-        // tc.setService("...");
-        // tc.setServiceImpl("...");
-        // 如上任何一个模块如果设置 空 OR Null 将不生成该模块。
-        // mpg.setTemplate(tc);
+         tc.setController(null);
+         tc.setEntity("/templates/entity.java.vm");
+         tc.setMapper("/templates/mapper.java.vm");
+         tc.setXml("/templates/mapper.xml.vm");
+         tc.setService("/templates/service.java.vm");
+         tc.setServiceImpl("/templates/serviceImpl.java.vm");
+         //如上任何一个模块如果设置 空 OR Null 将不生成该模块。
+         mpg.setTemplate(tc);
 
         // 执行生成
         mpg.execute();

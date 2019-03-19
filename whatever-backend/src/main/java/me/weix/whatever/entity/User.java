@@ -1,30 +1,41 @@
 package me.weix.whatever.entity;
 
+import com.baomidou.mybatisplus.enums.IdType;
+import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import me.weix.whatever.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.Date;
+import lombok.experimental.Accessors;
 
 /**
+ * <p>
+ * 用户表
+ * </p>
+ *
  * @author weix
+ * @since 2018-10-09
  */
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 @TableName("t_user")
 public class User extends BaseEntity {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 用户id
      */
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     /**
      * 用户名
      */
     private String username;
-
 
     /**
      * 密码
@@ -44,7 +55,6 @@ public class User extends BaseEntity {
     /**
      * 出生时间
      */
-    @JsonFormat(pattern="yyyy-MM-dd")
     private Date birthday;
 
     /**
@@ -60,5 +70,6 @@ public class User extends BaseEntity {
      */
     @TableField("photo_id")
     private Integer photoId;
+
 
 }

@@ -11,6 +11,7 @@ import java.util.List;
  * @author weix
  */
 public interface PermissionMapper extends BaseMapper<Permission> {
+
     /**
      * 在下面添加自定义方法
      */
