@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * @author weix
+ */
 @Configuration
 @EnableConfigurationProperties(ShardingMastSlaveConfig.class)
 @ConditionalOnProperty({"sharding.jdbc.data-sources.ds_master.jdbc-url", "sharding.jdbc.master-slave-rule.master-data-source-name"})

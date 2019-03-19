@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * @author weix
+ */
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "sharding.jdbc")
