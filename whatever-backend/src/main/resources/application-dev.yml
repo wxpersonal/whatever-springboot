@@ -12,33 +12,50 @@ spring:
           max-idle: 100 # 连接池中的最大空闲连接
           min-idle: 50 # 连接池中的最小空闲连接
 
+  sharding.jdbc.datasource.ds_master.type=com.zaxxer.hikari.HikariDataSource
+  sharding.jdbc.datasource.ds_master.driver-class-name=com.mysql.jdbc.Driver
+  sharding.jdbc.datasource.ds_master.jdbc-url=jdbc:mysql://localhost:3306/demo_ds_master?serverTimezone=UTC&useSSL=false
+  sharding.jdbc.datasource.ds_master.username=root
+  sharding.jdbc.datasource.ds_master.password=
 
 
 sharding:
   jdbc:
-    data-sources:
+    datasource:
       ds_master:
+        type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
         username: root
         password: xiang123
       ds_slave_1:
+        type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
         username: root
         password: xiang123
       ds_slave_2:
+        type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
         username: root
         password: xiang123
-    master-slave-rule:
-      name: ds_ms
-      load-balance-algorithm-type: round_robin
-      master-data-source-name: ds_master
-      slave-data-source-names: ds_slave_1,ds_slave_2
-    props:
-      sql.show: true
+      names: sharding_datasource
+
+    config:
+      masterslave:
+        config-map:
+        master-data-source-name: ds_master
+        load-balance-algorithm-type: round_robin
+        slave-data-source-names: ds_slave_1,ds_slave_2
+        props:
+          sql.show: true
+      sharding:
+        config-map:
+        binding-tables:
+        tables:
+          t_order.
+
 
 # MyBatis
 #mybatis:

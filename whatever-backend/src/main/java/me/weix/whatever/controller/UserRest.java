@@ -25,7 +25,7 @@ public class UserRest {
      * @param id userId
      * @return me.weix.whatever.entity.User
      */
-    @RequestMapping(value="{id}", method=RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value="{id}", method=RequestMethod.GET)
     public User getUserById(@PathVariable("id") Integer id) {
         System.out.println("11111113333");
         return userService.selectById(id);
@@ -59,6 +59,7 @@ public class UserRest {
      */
     @RequestMapping(value="{id}", method=RequestMethod.DELETE)
     public String delUserById(@PathVariable("id") Integer id) {
+        System.out.println("1111111111111");
         boolean b = userService.deleteById(1);
         return String.valueOf(b);
     }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author weix
  */
 @RestController
-@RequestMapping("user")
+@RequestMapping("permission")
 public class PermissionController {
 
     @RequestMapping(value="{id}", method=RequestMethod.GET)

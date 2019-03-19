@@ -20,7 +20,6 @@ import java.util.Properties;
  */
 @Configuration
 @EnableConfigurationProperties(ShardingMastSlaveConfig.class)
-@ConditionalOnProperty({"sharding.jdbc.data-sources.ds_master.jdbc-url", "sharding.jdbc.master-slave-rule.master-data-source-name"})
 @Slf4j
 public class ShardingConfig {
 
@@ -41,26 +40,4 @@ public class ShardingConfig {
         return dataSource;
     }
 
-
-
-//    private void configDataSource(HikariDataSource hikariDataSource) {
-//        hikariDataSource.setMaxActive(20);
-//        hikariDataSource.setInitialSize(1);
-//        hikariDataSource.setMaxWait(60000);
-//        hikariDataSource.setMinIdle(1);
-//        hikariDataSource.setTimeBetweenEvictionRunsMillis(60000);
-//        hikariDataSource.setMinEvictableIdleTimeMillis(300000);
-//        hikariDataSource.setValidationQuery("select 'x'");
-//        hikariDataSource.setTestWhileIdle(true);
-//        hikariDataSource.setTestOnBorrow(false);
-//        hikariDataSource.setTestOnReturn(false);
-//        hikariDataSource.setPoolPreparedStatements(true);
-//        hikariDataSource.setMaxOpenPreparedStatements(20);
-//        hikariDataSource.setUseGlobalDataSourceStat(true);
-//        try {
-//            hikariDataSource.setFilters("stat,wall,slf4j");
-//        } catch (SQLException e) {
-//            log.error("druid configuration initialization filter", e);
-//        }
-//    }
 }

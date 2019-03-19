@@ -1,0 +1,27 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "me.weix.whatever.config.ShardingMastSlaveConfig",
+      "name": "sharding.jdbc",
+      "type": "me.weix.whatever.config.ShardingMastSlaveConfig"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "me.weix.whatever.config.ShardingMastSlaveConfig",
+      "name": "sharding.jdbc.data-sources",
+      "type": "java.util.Map<java.lang.String,com.zaxxer.hikari.HikariDataSource>"
+    },
+    {
+      "sourceType": "me.weix.whatever.config.ShardingMastSlaveConfig",
+      "name": "sharding.jdbc.master-slave-rule",
+      "type": "io.shardingsphere.core.api.config.MasterSlaveRuleConfiguration"
+    },
+    {
+      "sourceType": "me.weix.whatever.config.ShardingMastSlaveConfig",
+      "name": "sharding.jdbc.props",
+      "type": "java.util.Properties"
+    }
+  ]
+}
