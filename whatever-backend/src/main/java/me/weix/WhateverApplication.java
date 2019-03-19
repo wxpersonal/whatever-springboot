@@ -6,6 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 
+/**
+ * 启动类
+ * @author weix
+ */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, SpringBootConfiguration.class})
 @ServletComponentScan
 public class WhateverApplication {
