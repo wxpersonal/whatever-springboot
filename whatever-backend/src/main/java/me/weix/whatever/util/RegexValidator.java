@@ -3,7 +3,7 @@ package me.weix.whatever.util;
 import java.util.regex.Pattern;
 
 /**
- * Created by Administrator on 2017/6/20.
+ * @author weix
  */
 public class RegexValidator {
 

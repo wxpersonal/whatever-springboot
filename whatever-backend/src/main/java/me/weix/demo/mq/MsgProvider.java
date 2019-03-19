@@ -1,5 +1,5 @@
 package me.weix.demo.mq;/*
-package com.wx.mq;
+package me.weix.demo.mq;
 
 */
 /*
