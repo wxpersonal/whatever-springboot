@@ -13,6 +13,7 @@ import java.text.DecimalFormat;
 
 public class Listener implements MessageListener {
 
+    @Override
     public void onMessage(Message message) {
         try {
             MapMessage map = (MapMessage)message;

@@ -5,6 +5,9 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
 
+/**
+ * @author weix
+ */
 public class Sender {
     private static final int SEND_NUMBER = 5;
 
