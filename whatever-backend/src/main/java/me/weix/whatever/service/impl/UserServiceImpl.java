@@ -37,6 +37,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public List<Permission> getPermissionsByUserId(Integer userId) {
 
+
         PageHelper.startPage(1, 10);
         List<Permission> permissionList = new ArrayList<Permission>();
         List<Role> roleList = getRolesByUserId(userId);

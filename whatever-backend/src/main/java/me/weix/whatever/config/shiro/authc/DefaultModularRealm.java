@@ -1,6 +1,5 @@
 package me.weix.whatever.config.shiro.authc;
 
-import me.weix.whatever.common.CONST;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -55,17 +54,17 @@ public class DefaultModularRealm extends ModularRealmAuthenticator {
         CustomUsernamepasswordToken token = (CustomUsernamepasswordToken) authenticationToken;
 
         // 邮箱登录
-        if (token.getLoginType() == CONST.LOGINTYPE.EMAIL) {
+        if (token.getLoginType() == 1) {
             realm = (Realm) this.definedRealms.get("emailRealm");
         }
 
         // 手机登录
-        if (token.getLoginType() == CONST.LOGINTYPE.MOBILE) {
+        if (token.getLoginType() == 2) {
             realm = (Realm) this.definedRealms.get("mobileRealm");
         }
 
         // 用户名登录
-        if (token.getLoginType() == CONST.LOGINTYPE.USERNAME) {
+        if (token.getLoginType() == 3) {
             realm = (Realm) this.definedRealms.get("usernameRealm");
         }
         return this.doSingleRealmAuthentication(realm, authenticationToken);
