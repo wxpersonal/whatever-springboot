@@ -13,4 +13,10 @@ public class WhateverApplicationTests {
 	public void contextLoads() {
 	}
 
+	public static void main(String[] args) {
+		Long aaa = null;
+		Long bbb = 1L;
+		System.out.println(aaa.compareTo(bbb));
+	}
+
 }
