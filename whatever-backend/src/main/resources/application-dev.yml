@@ -12,90 +12,30 @@ spring:
           max-idle: 100 # 连接池中的最大空闲连接
           min-idle: 50 # 连接池中的最小空闲连接
 
-  sharding.jdbc.datasource.names=ds0,ds1
-
-  sharding.jdbc.datasource.ds0.type=org.apache.commons.dbcp.BasicDataSource
-  sharding.jdbc.datasource.ds0.driver-class-name=com.mysql.jdbc.Driver
-  sharding.jdbc.datasource.ds0.url=jdbc:mysql://localhost:3306/ds0
-  sharding.jdbc.datasource.ds0.username=root
-  sharding.jdbc.datasource.ds0.password=
-
-  sharding.jdbc.datasource.ds1.type=org.apache.commons.dbcp.BasicDataSource
-  sharding.jdbc.datasource.ds1.driver-class-name=com.mysql.jdbc.Driver
-  sharding.jdbc.datasource.ds1.url=jdbc:mysql://localhost:3306/ds1
-  sharding.jdbc.datasource.ds1.username=root
-  sharding.jdbc.datasource.ds1.password=
-
-  sharding.jdbc.config.sharding.tables.t_order.actual-data-nodes=ds$->{0..1}.t_order$->{0..1}
-  sharding.jdbc.config.sharding.tables.t_order.table-strategy.inline.sharding-column=order_id
-  sharding.jdbc.config.sharding.tables.t_order.table-strategy.inline.algorithm-expression=t_order$->{order_id % 2}
-  sharding.jdbc.config.sharding.tables.t_order.key-generator.column=order_id
-  sharding.jdbc.config.sharding.tables.t_order_item.actual-data-nodes=ds$->{0..1}.t_order_item$->{0..1}
-  sharding.jdbc.config.sharding.tables.t_order_item.table-strategy.inline.sharding-column=order_id
-  sharding.jdbc.config.sharding.tables.t_order_item.table-strategy.inline.algorithm-expression=t_order_item$->{order_id % 2}
-  sharding.jdbc.config.sharding.tables.t_order_item.key-generator.column=order_item_id
-  sharding.jdbc.config.sharding.binding-tables=t_order,t_order_item
-  sharding.jdbc.config.sharding.broadcast-tables=t_config
-
-  sharding.jdbc.config.sharding.default-database-strategy.inline.sharding-column=user_id
-  sharding.jdbc.config.sharding.default-database-strategy.inline.algorithm-expression=ds$->{user_id % 2}
 
 sharding:
   jdbc:
     datasource:
-      ds_master:
-        type: com.zaxxer.hikari.HikariDataSource
-        driverClassName: com.mysql.jdbc.Driver
+      ds-master:
+        driver-class-name: com.mysql.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
         username: root
         password: xiang123
-      ds_master1:
-        type: com.zaxxer.hikari.HikariDataSource
-        driverClassName: com.mysql.jdbc.Driver
+      ds-master1:
+        driver-class-name: com.mysql.jdbc.Driver
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever1?setUnicode=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: xiang123
+      ds-slave-1:
+        driver-class-name: com.mysql.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
         username: root
         password: xiang123
-      ds_slave_1:
-        type: com.zaxxer.hikari.HikariDataSource
-        driverClassName: com.mysql.jdbc.Driver
+      ds-slave_2:
+        driver-class-name: com.mysql.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
         username: root
         password: xiang123
-      ds_slave_2:
-        type: com.zaxxer.hikari.HikariDataSource
-        driverClassName: com.mysql.jdbc.Driver
-        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
-        username: root
-        password: xiang123
-      names: sharding_datasource
-
-    config:
-      masterslave:
-        config-map:
-        master-data-source-name: ds_master
-        load-balance-algorithm-type: round_robin
-        slave-data-source-names: ds_slave_1,ds_slave_2
-        props:
-          sql.show: true
-      sharding:
-        config-map:
-        binding-tables:
-        tables:
-          t_order:
-            actual-data-nodes:
-            table-strategy:
-              inline:
-                sharding-column: order_id
-                algorithm-expression: t_order$->{order_id % 2}
-            key-generator:
-              column: order_id
-          t_order_item:
-            actualDataNodes: ds${0..1}.t_order_item${0..1}
-            tableStrategy:
-              inline:
-                shardingColumn: order_id
-                algorithmExpression: t_order_item${order_id % 2}
-        default-data-source-name: master
 
 
 

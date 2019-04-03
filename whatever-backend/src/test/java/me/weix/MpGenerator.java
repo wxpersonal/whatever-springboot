@@ -73,7 +73,7 @@ public class MpGenerator {
         // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
         strategy.setTablePrefix(new String[] {"t_" });// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-        strategy.setInclude(new String[] { "t_user","t_menu","t_permission","t_role","t_role_permission","t_sys_file","t_user_role","t_sys_code" }); // 需要生成的表
+        strategy.setInclude(new String[] { "t_order_item_1","t_order_1" }); // 需要生成的表
 //        strategy.setExclude(new String[]{"test"}); // 排除生成的表
         // 自定义实体父类
         strategy.setSuperEntityClass("me.weix.whatever.entity.BaseEntity");
