@@ -1,8 +1,5 @@
 package me.weix.demo.rpc;
 
-/**
- * Created by Administrator on 2017/8/12.
- */
 
 import java.io.*;
 import java.lang.reflect.InvocationHandler;
@@ -11,6 +8,9 @@ import java.lang.reflect.Proxy;
 import java.net.Socket;
 
 
+/**
+ * @author weix
+ */
 public class RpcClient {
 
     /**
@@ -52,16 +52,16 @@ public class RpcClient {
                         is.close() ;
                     }
                     if(os != null){
-                        is.close() ;
+                        os.close() ;
                     }
                     if(oi != null){
-                        is.close() ;
+                        oi.close() ;
                     }
                     if(oo != null){
-                        is.close() ;
+                        oo.close() ;
                     }
                     if(socket != null){
-                        is.close() ;
+                        socket.close() ;
                     }
                 }
             }

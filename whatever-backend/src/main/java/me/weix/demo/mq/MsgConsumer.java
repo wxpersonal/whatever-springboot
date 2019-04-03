@@ -1,15 +1,16 @@
 package me.weix.demo.mq;
 
-/*
- * @Author: Wells.Wei
- * @Date: 2017/5/10
- * @Description:
- */
+
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
 
+/**
+ * @Author: Wells.Wei
+ * @Date: 2017/5/10
+ * @Description:
+ */
 public class MsgConsumer {
 
     private static String brokerURL = "tcp://localhost:61616";

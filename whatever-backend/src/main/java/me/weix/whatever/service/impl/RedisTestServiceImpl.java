@@ -12,6 +12,7 @@ public class RedisTestServiceImpl implements IRedisTestService {
     @Resource(name = "redisTemplate")
     private ValueOperations valueOperations;
 
+
     @Override
     public void put(String key, Object value) {
 //        valueOperations.getOperations()

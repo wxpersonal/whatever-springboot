@@ -51,8 +51,9 @@ public class Receiver {
             e.printStackTrace();
         } finally {
             try {
-                if (null != connection)
+                if (null != connection) {
                     connection.close();
+                }
             } catch (Throwable ignore) {
             }
         }

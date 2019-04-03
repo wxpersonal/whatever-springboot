@@ -2,7 +2,7 @@ package me.weix.whatever.config.shiro.session;/*
 package me.weix.whatever.config.shiro.session;
 
 
-import com.wx.util.RedisUtil;
+import me.weix.demo.util.RedisUtil;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.ValidatingSession;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;

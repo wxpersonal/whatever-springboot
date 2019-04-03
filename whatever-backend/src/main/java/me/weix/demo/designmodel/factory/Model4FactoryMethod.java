@@ -1,7 +1,7 @@
 package me.weix.demo.designmodel.factory;
 
-import com.wx.designmodel.factory.model.Model;
-import com.wx.designmodel.factory.model.Model4;
+import me.weix.demo.designmodel.factory.model.Model;
+import me.weix.demo.designmodel.factory.model.Model4;
 
 /**
  * @Author: Wells.Wei

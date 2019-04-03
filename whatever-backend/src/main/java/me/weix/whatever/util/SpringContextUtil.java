@@ -8,16 +8,20 @@ import java.util.Map;
 
 /**
  * 资源文件读取工具
+ * @author weix
  */
 public class SpringContextUtil implements ApplicationContextAware {
 
 	private static ApplicationContext context = null;
 
-	//获取上下文
+	/**
+	 * 获取上下文
+	 */
 	public static ApplicationContext getApplicationContext(ApplicationContext applicationContext) {
 		return applicationContext;
 	}
 
+	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		context = applicationContext;
 	}

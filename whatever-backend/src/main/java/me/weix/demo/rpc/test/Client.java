@@ -1,7 +1,7 @@
 package me.weix.demo.rpc.test;
 
-import com.wx.rpc.RpcClient;
-import com.wx.rpc.test.service.ITestServcie;
+import me.weix.demo.rpc.RpcClient;
+import me.weix.demo.rpc.test.service.ITestServcie;
 
 /**
  * Created by Administrator on 2017/8/12.
