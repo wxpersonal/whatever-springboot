@@ -29,9 +29,13 @@
     #if(${baseColumnList})
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-            ${table.fieldNames}
+            ${table.fieldNames},
         #foreach($field in ${table.commonFields})
-              #if(${field.name} == ${field.propertyName})            ${field.name}#else            ${field.name} AS ${field.propertyName}#end,
+        #if($foreach.count == 1)            ${field.name},#end
+        #if($foreach.count != $!{table.commonFields.size()} && $foreach.count != 1) ${field.name},#end
+        #if($foreach.count == $!{table.commonFields.size()})
+ ${field.name}
+        #end
         #end
         </sql>
     #end

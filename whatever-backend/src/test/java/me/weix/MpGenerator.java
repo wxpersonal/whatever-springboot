@@ -4,14 +4,11 @@ import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,7 +30,7 @@ public class MpGenerator {
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir("C://Users//Administrator//Desktop");
+        gc.setOutputDir("/Users/admin/Desktop");
         gc.setFileOverride(true);
         gc.setActiveRecord(false);// 不需要ActiveRecord特性的请改为false
         gc.setEnableCache(false);// XML 二级缓存
@@ -73,7 +70,7 @@ public class MpGenerator {
         // strategy.setCapitalMode(true);// 全局大写命名 ORACLE 注意
         strategy.setTablePrefix(new String[] {"t_" });// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-        strategy.setInclude(new String[] { "t_user","t_menu","t_permission","t_role","t_role_permission","t_sys_file","t_user_role","t_sys_code" }); // 需要生成的表
+        strategy.setInclude(new String[] { "t_user","t_user_copy1","t_menu","t_permission","t_role","t_role_permission","t_sys_file","t_user_role","t_sys_code" }); // 需要生成的表
 //        strategy.setExclude(new String[]{"test"}); // 排除生成的表
         // 自定义实体父类
         strategy.setSuperEntityClass("me.weix.whatever.entity.BaseEntity");
@@ -113,30 +110,6 @@ public class MpGenerator {
                 this.setMap(map);
             }
         };
-
-        String outputDir = gc.getOutputDir();
-        // 自定义 entity 生成
-        List<FileOutConfig> focList = new ArrayList<FileOutConfig>();
-        /*focList.add(new FileOutConfig("/templates/entity.java.vm") {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-                return outputDir;
-            }
-        });*/
-
-
-        /*cfg.setFileOutConfigList(focList);
-        mpg.setCfg(cfg);*/
-
-        // 调整 xml 生成目录演示
-        /*focList.add(new FileOutConfig("/templates/mapper.xml.vm") {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-
-                return outputDir + "//xml//" + tableInfo.getEntityName() + ".xml";
-            }
-        });*/
-        cfg.setFileOutConfigList(focList);
 
         mpg.setCfg(cfg);
 
