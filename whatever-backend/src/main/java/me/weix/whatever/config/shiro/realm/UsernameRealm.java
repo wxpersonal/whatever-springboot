@@ -29,6 +29,11 @@ public class UsernameRealm extends AuthorizingRealm {
     @Lazy
     private IUserService userService;
 
+    /**
+     * 权限认证
+     * @param principalCollection
+     * @return
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
 
@@ -37,14 +42,14 @@ public class UsernameRealm extends AuthorizingRealm {
 
         //获取用户所有角色
         List<Role> roleList = userService.getRolesByUserId(user.getId());
-        Set<String> roles = new HashSet<String>();
+        Set<String> roles = new HashSet<>();
         for (Role r : roleList) {
             roles.add(r.getCode());
         }
 
         //获取用户所有权限
         List<Permission> permissionList = userService.getPermissionsByUserId(user.getId());
-        Set<String> permissions = new HashSet<String>();
+        Set<String> permissions = new HashSet<>();
         for (Permission p : permissionList) {
             permissions.add(p.getCode());
         }
@@ -55,11 +60,18 @@ public class UsernameRealm extends AuthorizingRealm {
         return simpleAuthorizationInfo;
     }
 
+    /**
+     * 登录认证
+     * @param authenticationToken
+     * @return
+     * @throws AuthenticationException
+     */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 
         String principal = (String) authenticationToken.getPrincipal();
         String credential = new String((char[])authenticationToken.getCredentials());
+        // TODO 登录校验
         return new SimpleAuthenticationInfo(principal, credential, this.getName());
     }
 }

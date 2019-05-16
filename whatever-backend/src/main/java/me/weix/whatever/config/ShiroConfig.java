@@ -1,11 +1,8 @@
 package me.weix.whatever.config;
 
 import me.weix.whatever.config.shiro.authc.DefaultModularRealm;
-import me.weix.whatever.config.shiro.realm.EmailRealm;
-import me.weix.whatever.config.shiro.realm.MobileRealm;
 import me.weix.whatever.config.shiro.realm.UsernameRealm;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
-import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -95,12 +92,7 @@ public class ShiroConfig {
                                                      @Qualifier("emailRealm") EmailRealm emailRealm,
                                                      @Qualifier("mobileRealm") MobileRealm mobileRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        // 设置realm.
-        List<Realm> realms = new ArrayList<>();
-        realms.add(usernameRealm);
-        realms.add(emailRealm);
-        realms.add(mobileRealm);
-        securityManager.setRealms(realms);
+        securityManager.setRealm(usernameRealm);
         return securityManager;
     }
 

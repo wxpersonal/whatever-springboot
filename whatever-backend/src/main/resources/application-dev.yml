@@ -40,12 +40,6 @@ sharding:
     props:
       sql.show: true
 
-# MyBatis
-#mybatis:
-#  typeAliasesPackage: me.weix.whatever.entity
-#  mapperLocations: classpath:/mybatis/mapper/**/*.xml
-# configLocation: classpath:/mybatis-config.xml
-
 mybatis-plus:
   mapper-locations: classpath:mybatis/mapper/**/*.xml
   #实体扫描，多个package用逗号或者分号分隔

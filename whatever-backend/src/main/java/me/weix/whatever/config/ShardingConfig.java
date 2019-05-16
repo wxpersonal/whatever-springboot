@@ -33,6 +33,7 @@ public class ShardingConfig {
         Map<String, DataSource> dataSourceMap = new HashMap<>();
 
 
+
         dataSourceMap.putAll(shardingMastSlaveConfig.getDataSources());
 
         Properties properties = new Properties();
