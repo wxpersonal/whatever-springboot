@@ -6,11 +6,12 @@
         <resultMap id="BaseResultMap" type="me.weix.whatever.entity.Permission">
             <id column="id" property="id"/>
             <result column="p_id" property="pId"/>
-            <result column="system_id" property="systemId"/>
-            <result column="code" property="code"/>
+            <result column="name" property="name"/>
             <result column="desc" property="desc"/>
             <result column="url" property="url"/>
-            <result column="orders" property="orders"/>
+            <result column="sort_no" property="sortNo"/>
+            <result column="type" property="type"/>
+            <result column="icon" property="icon"/>
             <result column="create_by" property="createBy"/>
             <result column="create_time" property="createTime"/>
             <result column="update_by" property="updateBy"/>
@@ -21,12 +22,7 @@
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-            id, p_id AS pId, system_id AS systemId, code, desc, url, orders
-            create_by AS createBy,
-            create_time AS createTime,
-            update_by AS updateBy,
-            update_time AS updateTime,
-            status,
-            deleted,
+            id, p_id AS pId, name, desc, url, sort_no AS sortNo, type, icon,
+            create_by, create_time, update_by, update_time, status, deleted
         </sql>
 </mapper>

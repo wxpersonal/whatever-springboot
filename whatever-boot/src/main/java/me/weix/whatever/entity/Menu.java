@@ -1,16 +1,21 @@
-
 package me.weix.whatever.entity;
 
-import com.baomidou.mybatisplus.enums.IdType;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import me.weix.whatever.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
+ * <p>
+ * 
+ * </p>
+ *
  * @author weix
- * @since 2018-10-09
+ * @since 2019-05-17
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -34,7 +39,7 @@ public class Menu extends BaseEntity {
     private String name;
 
     /**
-     * 菜单类型  0菜单实例(默认),1菜单分组
+     * 菜单类型  0 叶  1 非叶菜单
      */
     private Integer kind;
 
@@ -48,5 +53,20 @@ public class Menu extends BaseEntity {
      */
     private String icon;
 
+    /**
+     * 菜单排序号
+     */
+    @TableField("sort_no")
+    private Integer sortNo;
+
+    /**
+     * 菜单层级
+     */
+    private Integer level;
+
+    /**
+     * 备注
+     */
+    private String desc;
 
 }

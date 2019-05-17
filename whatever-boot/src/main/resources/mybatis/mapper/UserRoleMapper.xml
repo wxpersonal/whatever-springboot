@@ -17,12 +17,7 @@
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-            id, user_id AS userId, role_id AS roleId
-            create_by AS createBy,
-            create_time AS createTime,
-            update_by AS updateBy,
-            update_time AS updateTime,
-            status,
-            deleted,
+            id, user_id AS userId, role_id AS roleId,
+            create_by, create_time, update_by, update_time, status, deleted
         </sql>
 </mapper>

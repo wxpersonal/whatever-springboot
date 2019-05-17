@@ -1,14 +1,19 @@
 package me.weix.whatever.service;
 
-import com.baomidou.mybatisplus.service.IService;
 import me.weix.whatever.entity.Permission;
 import me.weix.whatever.entity.Role;
 import me.weix.whatever.entity.User;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
 
 /**
+ * <p>
+ * 用户表 服务类
+ * </p>
+ *
  * @author weix
+ * @since 2019-05-17
  */
 public interface IUserService extends IService<User> {
 
@@ -23,5 +28,7 @@ public interface IUserService extends IService<User> {
     User getUserByUsername(String username);
 
     String testTransaction();
+
+
 
 }

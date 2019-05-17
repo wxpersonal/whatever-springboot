@@ -28,7 +28,7 @@ public class UserRest {
     @RequestMapping(value="{id}", method=RequestMethod.GET, produces = "application/json")
     public User getUserById(@PathVariable("id") Integer id) {
         System.out.println("11111113333");
-        return userService.selectById(id);
+        return userService.getById(id);
     }
 
     /**
@@ -39,7 +39,7 @@ public class UserRest {
     @RequestMapping(method=RequestMethod.POST)
     public boolean addUser(User u) {
         System.out.printf(u.getEmail());
-        return userService.insert(u);
+        return userService.save(u);
     }
 
     /**
@@ -59,7 +59,7 @@ public class UserRest {
      */
     @RequestMapping(value="{id}", method=RequestMethod.DELETE)
     public String delUserById(@PathVariable("id") Integer id) {
-        boolean b = userService.deleteById(1);
+        boolean b = userService.removeById(1);
         return String.valueOf(b);
     }
 }

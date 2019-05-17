@@ -10,6 +10,10 @@
             <result column="kind" property="kind"/>
             <result column="url" property="url"/>
             <result column="icon" property="icon"/>
+            <result column="sort_no" property="sortNo"/>
+            <result column="level" property="level"/>
+            <result column="desc" property="desc"/>
+            <result column="leaf_flag" property="leafFlag"/>
             <result column="create_by" property="createBy"/>
             <result column="create_time" property="createTime"/>
             <result column="update_by" property="updateBy"/>
@@ -20,12 +24,7 @@
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-            id, pid, name, kind, url, icon
-            create_by AS createBy,
-            create_time AS createTime,
-            update_by AS updateBy,
-            update_time AS updateTime,
-            status,
-            deleted,
+            id, pid, name, kind, url, icon, sort_no AS sortNo, level, desc, leaf_flag AS leafFlag,
+            create_by, create_time, update_by, update_time, status, deleted
         </sql>
 </mapper>

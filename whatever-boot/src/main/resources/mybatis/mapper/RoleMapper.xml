@@ -18,12 +18,7 @@
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-            id, code, name, desc
-            create_by AS createBy,
-            create_time AS createTime,
-            update_by AS updateBy,
-            update_time AS updateTime,
-            status,
-            deleted,
+            id, code, name, desc,
+            create_by, create_time, update_by, update_time, status, deleted
         </sql>
 </mapper>

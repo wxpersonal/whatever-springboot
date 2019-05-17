@@ -1,9 +1,9 @@
 package me.weix.whatever.entity;
 
-import com.baomidou.mybatisplus.enums.IdType;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import me.weix.whatever.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -15,7 +15,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author weix
- * @since 2018-10-09
+ * @since 2019-05-17
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -31,16 +31,30 @@ public class Permission extends BaseEntity {
     @TableField("p_id")
     private Integer pId;
 
-    @TableField("system_id")
-    private Integer systemId;
+    private String name;
 
-    private String code;
-
+    /**
+     * 权限描述
+     */
     private String desc;
 
     private String url;
 
-    private Integer orders;
+    /**
+     * 排序
+     */
+    @TableField("sort_no")
+    private Integer sortNo;
+
+    /**
+     * 类型   0：目录   1：菜单   2：按钮
+     */
+    private Integer type;
+
+    /**
+     * 图标
+     */
+    private String icon;
 
 
 }

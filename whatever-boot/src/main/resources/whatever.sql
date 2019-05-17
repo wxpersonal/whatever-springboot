@@ -28,11 +28,15 @@ CREATE TABLE `t_menu` (
                         `kind` int(11) NOT NULL DEFAULT '0' COMMENT '菜单类型  0菜单实例(默认),1菜单分组',
                         `url` varchar(500) DEFAULT NULL COMMENT 'url',
                         `icon` varchar(500) DEFAULT NULL COMMENT 'icon',
+                        `sort_no` int(11) DEFAULT NULL COMMENT '菜单排序号',
+                        `level` int(11) DEFAULT NULL COMMENT '菜单层级',
+                        `desc` varchar(255) DEFAULT NULL COMMENT '备注',
+                        `leaf_flag` tinyint(4) DEFAULT NULL COMMENT '是否是叶子结点',
                         `create_by` int(11) DEFAULT NULL,
                         `create_time` datetime DEFAULT NULL,
                         `update_by` int(11) DEFAULT NULL,
                         `update_time` datetime DEFAULT NULL,
-                        `status` tinyint(4) DEFAULT '1',
+                        `status` tinyint(4) DEFAULT '1' COMMENT '菜单状态',
                         `deleted` tinyint(4) DEFAULT '0',
                         PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -115,11 +119,12 @@ DROP TABLE IF EXISTS `t_permission`;
 CREATE TABLE `t_permission` (
                               `id` int(11) NOT NULL AUTO_INCREMENT,
                               `p_id` int(11) DEFAULT '0',
-                              `system_id` int(11) DEFAULT '0',
-                              `code` varchar(50) NOT NULL,
-                              `desc` varchar(1000) DEFAULT NULL,
-                              `url` varchar(500) DEFAULT NULL,
-                              `orders` int(11) DEFAULT '0',
+                              `name` varchar(50) NOT NULL,
+                              `desc` varchar(1000) DEFAULT NULL comment '权限描述',
+                              `url` varchar(500) DEFAULT NULL comment '',
+                              `sort_no` int(11) DEFAULT '0' '排序',
+                              `type` int(1) DEFAULT NULL COMMENT '类型   0：目录   1：菜单   2：按钮',
+                              `icon` varchar(50) DEFAULT NULL COMMENT '图标',
                               `create_by` int(11) DEFAULT '0',
                               `create_time` datetime DEFAULT NULL,
                               `update_by` int(11) DEFAULT '0',
@@ -129,12 +134,6 @@ CREATE TABLE `t_permission` (
                               PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of t_permission
--- ----------------------------
-BEGIN;
-INSERT INTO `t_permission` VALUES (1, 0, 1, 'whatever', '系统管理', 'whatever', 1, 0, '2017-06-20 00:00:00', 0, '2017-06-20 00:00:00', 1, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_role
@@ -152,7 +151,7 @@ CREATE TABLE `t_role` (
                         `status` tinyint(4) DEFAULT '1',
                         `deleted` tinyint(4) DEFAULT '0',
                         PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_role
@@ -167,6 +166,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_role_permission`;
 CREATE TABLE `t_role_permission` (
+                                   `id` int(11) NOT NULL AUTO_INCREMENT,
                                    `role_id` int(11) NOT NULL,
                                    `permission_id` int(11) NOT NULL,
                                    `create_by` int(11) DEFAULT '0',
@@ -175,25 +175,21 @@ CREATE TABLE `t_role_permission` (
                                    `update_time` datetime DEFAULT NULL,
                                    `status` tinyint(4) DEFAULT '1',
                                    `deleted` tinyint(4) DEFAULT '0',
-                                   PRIMARY KEY (`role_id`,`permission_id`)
+                                   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of t_role_permission
--- ----------------------------
-BEGIN;
-INSERT INTO `t_role_permission` VALUES (1, 1, 0, '2017-06-20 00:00:00', 0, '2017-06-20 00:00:00', 1, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_sys_code
 -- ----------------------------
-DROP TABLE IF EXISTS `t_sys_code`;
+DROP TABLE IF EXISTS `t_sys_dic`;
 CREATE TABLE `t_sys_code` (
-                            `code` varchar(50) NOT NULL,
-                            `p_code` varchar(50) DEFAULT NULL,
-                            `name` varchar(50) DEFAULT NULL,
+                            `id` bigint(20) NOT NULL,
+                            `p_id` varchar(50) DEFAULT NULL,
+                            `name` varchar(50) DEFAULT NULL COMMENT '字典名称',
+                            `code` varchar(255) DEFAULT NULL COMMENT '字典的编码',
                             `desc` varchar(1000) DEFAULT NULL,
+                            `sort_no` int(11) default '0' COMMENT '排序字段',
                             `create_by` int(11) DEFAULT '0',
                             `create_time` datetime DEFAULT NULL,
                             `updateBy` int(11) DEFAULT '0',
@@ -270,6 +266,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `t_user_role`;
 CREATE TABLE `t_user_role` (
+                             `id` int(20) NOT NULL COMMENT '主键',
                              `user_id` int(11) NOT NULL COMMENT '用户id',
                              `role_id` int(11) NOT NULL COMMENT '角色code',
                              `create_by` int(11) DEFAULT '0',
@@ -278,7 +275,7 @@ CREATE TABLE `t_user_role` (
                              `update_time` datetime DEFAULT NULL,
                              `status` tinyint(4) DEFAULT '1',
                              `deleted` tinyint(4) DEFAULT '0',
-                             PRIMARY KEY (`user_id`,`role_id`)
+                             PRIMARY KEY ('id')
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 SET FOREIGN_KEY_CHECKS = 1;

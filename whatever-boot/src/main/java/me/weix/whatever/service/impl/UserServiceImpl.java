@@ -1,7 +1,5 @@
 package me.weix.whatever.service.impl;
 
-import com.baomidou.mybatisplus.plugins.pagination.PageHelper;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import me.weix.whatever.entity.Permission;
 import me.weix.whatever.entity.Role;
 import me.weix.whatever.entity.User;
@@ -9,6 +7,7 @@ import me.weix.whatever.mapper.PermissionMapper;
 import me.weix.whatever.mapper.RoleMapper;
 import me.weix.whatever.mapper.UserMapper;
 import me.weix.whatever.service.IUserService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +15,14 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * <p>
+ * 用户表 服务实现类
+ * </p>
+ *
+ * @author weix
+ * @since 2019-05-17
+ */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
@@ -31,35 +37,34 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public List<Role> getRolesByUserId(Integer userId) {
-        return roleMapper.getRolesByUserId(userId);
+        return null;
     }
 
     @Override
     public List<Permission> getPermissionsByUserId(Integer userId) {
 
-        PageHelper.startPage(1, 10);
-        List<Permission> permissionList = new ArrayList<Permission>();
-        List<Role> roleList = getRolesByUserId(userId);
-        for (Role role : roleList) {
-            List<Permission> permissions = permissionMapper.getPermissionsByRoleId(role.getId());
-            permissionList.addAll(permissions);
-        }
-        return permissionList;
+//        List<Permission> permissionList = new ArrayList<>();
+//        List<Role> roleList = getRolesByUserId(userId);
+//        for (Role role : roleList) {
+//            List<Permission> permissions = permissionMapper.getPermissionsByRoleId(role.getId());
+//            permissionList.addAll(permissions);
+//        }
+        return null;
     }
 
     @Override
     public User getUserByEmail(String email) {
-        return userMapper.getUserByEmail(email);
+        return null;
     }
 
     @Override
     public User getUserByMobile(String mobile) {
-        return userMapper.getUserByMobile(mobile);
+        return null;
     }
 
     @Override
     public User getUserByUsername(String username) {
-        return userMapper.getUserByUsername(username);
+        return null;
     }
 
     @Override
@@ -74,4 +79,5 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return  "111111111";
 
     }
+
 }

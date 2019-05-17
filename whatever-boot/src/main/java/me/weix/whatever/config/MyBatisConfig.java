@@ -1,10 +1,9 @@
 package me.weix.whatever.config;
 
-import com.baomidou.mybatisplus.entity.GlobalConfiguration;
-import com.baomidou.mybatisplus.mapper.LogicSqlInjector;
-import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
-import com.baomidou.mybatisplus.plugins.PerformanceInterceptor;
-import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
+import com.baomidou.mybatisplus.core.config.GlobalConfig;
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.annotation.MapperScan;
@@ -32,14 +31,14 @@ public class MyBatisConfig {
     @Autowired
     private Environment env;
 
-    @Bean
-    public GlobalConfiguration globalConfiguration() {
-        GlobalConfiguration conf = new GlobalConfiguration(new LogicSqlInjector());
-        conf.setLogicDeleteValue(env.getProperty("mybatis-plus.global-config.logic-delete-value"));
-        conf.setLogicNotDeleteValue(env.getProperty("mybatis-plus.global-config.logic-not-delete-value"));
-        conf.setIdType(Integer.parseInt(env.getProperty("mybatis-plus.global-config.id-type")));
-        return conf;
-    }
+//    @Bean
+//    public GlobalConfig globalConfiguration() {
+//        GlobalConfig conf = new GlobalConfig();
+//        conf.setLogicDeleteValue(env.getProperty("mybatis-plus.global-config.logic-delete-value"));
+//        conf.setLogicNotDeleteValue(env.getProperty("mybatis-plus.global-config.logic-not-delete-value"));
+//        conf.setIdType(Integer.parseInt(env.getProperty("mybatis-plus.global-config.id-type")));
+//        return conf;
+//    }
 
     /**
      * mybatis-plus SQL执行效率插件【生产环境可以关闭】
@@ -56,7 +55,8 @@ public class MyBatisConfig {
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-        paginationInterceptor.setLocalPage(true);
+        paginationInterceptor.setDialectType("mysql");
+
         return paginationInterceptor;
     }
 
@@ -64,23 +64,20 @@ public class MyBatisConfig {
     /**
      * 根据数据源创建SqlSessionFactory
      */
-    @Bean
-    public SqlSessionFactory sqlSessionFactory( DataSource dataSource) throws Exception {
-        MybatisSqlSessionFactoryBean sqlSessionFactoryBean = new MybatisSqlSessionFactoryBean();
-
-        /**
-         * 指定数据源
-         */
-        sqlSessionFactoryBean.setDataSource(dataSource);
-        /**
-         *  下边两句仅仅用于*.xml文件，如果整个持久层操作不需要使用到xml文件的话（只用注解就可以搞定），则不加
-         */
-        sqlSessionFactoryBean.setGlobalConfig(globalConfiguration());
-        sqlSessionFactoryBean.setTypeAliasesPackage(env.getProperty("mybatis-plus.typeAliasesPackage"));
-        sqlSessionFactoryBean.setMapperLocations(
-                new PathMatchingResourcePatternResolver().getResources(env.getProperty("mybatis-plus.mapper-locations")));
-        return sqlSessionFactoryBean.getObject();
-    }
+//    @Bean
+//    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
+//        MybatisSqlSessionFactoryBean sqlSessionFactoryBean = new MybatisSqlSessionFactoryBean();
+//
+//        // 指定数据源
+//        sqlSessionFactoryBean.setDataSource(dataSource);
+//
+//        // 下边两句仅仅用于*.xml文件，如果整个持久层操作不需要使用到xml文件的话（只用注解就可以搞定），则不加
+//        sqlSessionFactoryBean.setGlobalConfig(globalConfiguration());
+//        sqlSessionFactoryBean.setTypeAliasesPackage(env.getProperty("mybatis-plus.typeAliasesPackage"));
+//        sqlSessionFactoryBean.setMapperLocations(
+//                new PathMatchingResourcePatternResolver().getResources(env.getProperty("mybatis-plus.mapper-locations")));
+//        return sqlSessionFactoryBean.getObject();
+//    }
 
 
 }
