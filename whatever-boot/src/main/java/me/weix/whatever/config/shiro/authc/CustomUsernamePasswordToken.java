@@ -3,9 +3,9 @@ package me.weix.whatever.config.shiro.authc;
 import org.apache.shiro.authc.UsernamePasswordToken;
 
 /**
- * Created by Administrator on 2017/6/20.
+ * @author weix
  */
-public class CustomUsernamepasswordToken extends UsernamePasswordToken {
+public class CustomUsernamePasswordToken extends UsernamePasswordToken {
 
     /**
      * 登录类型
@@ -20,12 +20,12 @@ public class CustomUsernamepasswordToken extends UsernamePasswordToken {
         this.loginType = loginType;
     }
 
-    public CustomUsernamepasswordToken(String username, String password, Integer loginType) {
+    public CustomUsernamePasswordToken(String username, String password, Integer loginType) {
         super(username, password);
         this.loginType = loginType;
     }
 
-    public CustomUsernamepasswordToken(String username, String password, boolean rememberMe, String host, Integer loginType) {
+    public CustomUsernamePasswordToken(String username, String password, boolean rememberMe, String host, Integer loginType) {
         super(username, password, rememberMe, host);
         this.loginType = loginType;
     }

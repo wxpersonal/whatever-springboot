@@ -1,6 +1,6 @@
 package me.weix.whatever.config.shiro.filter;
 
-import me.weix.whatever.config.shiro.authc.CustomUsernamepasswordToken;
+import me.weix.whatever.config.shiro.authc.CustomUsernamePasswordToken;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
@@ -33,11 +33,11 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
 
     private AuthenticationToken createToken(String username, String password, boolean rememberMe, String host, Integer loginType) {
 
-        return new CustomUsernamepasswordToken(username, password, rememberMe, host, loginType);
+        return new CustomUsernamePasswordToken(username, password, rememberMe, host, loginType);
     }
 
     private AuthenticationToken createToken(String username, String password, Integer loginType) {
-        return new CustomUsernamepasswordToken(username, password, loginType);
+        return new CustomUsernamePasswordToken(username, password, loginType);
     }
 
     private String getLoginType(ServletRequest request) {

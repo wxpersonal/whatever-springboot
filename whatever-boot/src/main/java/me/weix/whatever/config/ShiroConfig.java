@@ -1,14 +1,23 @@
 package me.weix.whatever.config;
 
-import me.weix.whatever.config.shiro.authc.DefaultModularRealm;
+import me.weix.whatever.config.shiro.authc.CustomerDefaultModularRealm;
+import me.weix.whatever.config.shiro.realm.EmailRealm;
+import me.weix.whatever.config.shiro.realm.MobileRealm;
 import me.weix.whatever.config.shiro.realm.UsernameRealm;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.Cookie;
+import org.apache.shiro.web.servlet.ShiroHttpSession;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.apache.shiro.web.session.mgt.ServletContainerSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -57,16 +66,16 @@ public class ShiroConfig {
     }
 
     @Bean(name = "defaultModularRealm")
-    public DefaultModularRealm defaultModularRealm(@Qualifier("usernameRealm") UsernameRealm usernameRealm,
-                                                   @Qualifier("emailRealm") EmailRealm emailRealm,
-                                                   @Qualifier("mobileRealm") MobileRealm mobileRealm) {
-        DefaultModularRealm defaultModularRealm = new DefaultModularRealm();
+    public CustomerDefaultModularRealm defaultModularRealm(@Qualifier("usernameRealm") UsernameRealm usernameRealm,
+                                                           @Qualifier("emailRealm") EmailRealm emailRealm,
+                                                           @Qualifier("mobileRealm") MobileRealm mobileRealm) {
+        CustomerDefaultModularRealm customerDefaultModularRealm = new CustomerDefaultModularRealm();
         Map<String, Object> definedRealms = new HashMap<>();
         definedRealms.put("usernameRealm", usernameRealm);
         definedRealms.put("emailRealm", emailRealm);
         definedRealms.put("mobileRealm", mobileRealm);
-        defaultModularRealm.setDefinedRealms(definedRealms);
-        return defaultModularRealm;
+        customerDefaultModularRealm.setDefinedRealms(definedRealms);
+        return customerDefaultModularRealm;
     }
 
     @Bean
@@ -103,7 +112,7 @@ public class ShiroConfig {
      * 可见securityManager是整个shiro的核心；
      * @return EhCacheManager
      */
-    @Bean
+    @Bean(name = "ehCacheManager")
     public EhCacheManager ehCacheManager(){
         EhCacheManager cacheManager = new EhCacheManager();
         cacheManager.setCacheManagerConfigFile("classpath:config/ehcache-shiro.xml");
@@ -121,5 +130,32 @@ public class ShiroConfig {
         advisor.setSecurityManager(manager);
         manager.setCacheManager(ehCacheManager());
         return advisor;
+    }
+
+    /**
+     * spring session管理器（多机环境）
+     */
+    /*@Bean
+    @ConditionalOnProperty(prefix = "guns", name = "spring-session-open", havingValue = "true")
+    public ServletContainerSessionManager servletContainerSessionManager() {
+        return new ServletContainerSessionManager();
+    }*/
+
+    /**
+     * session管理器
+     */
+    @Bean
+    public DefaultWebSessionManager defaultWebSessionManager(@Qualifier("ehCacheManager") EhCacheManager cacheManager) {
+        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        sessionManager.setCacheManager(cacheManager);
+        sessionManager.setSessionValidationInterval(5 * 60 * 1000);
+        sessionManager.setGlobalSessionTimeout(10 * 60 * 1000);
+        sessionManager.setDeleteInvalidSessions(true);
+        sessionManager.setSessionValidationSchedulerEnabled(true);
+        Cookie cookie = new SimpleCookie(ShiroHttpSession.DEFAULT_SESSION_ID_NAME);
+        cookie.setName("shiroCookie");
+        cookie.setHttpOnly(true);
+        sessionManager.setSessionIdCookie(cookie);
+        return sessionManager;
     }
 }
