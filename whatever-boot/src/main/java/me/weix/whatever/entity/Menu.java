@@ -9,11 +9,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
- * <p>
- * 
- * </p>
- *
  * @author weix
  * @since 2019-05-17
  */
@@ -68,5 +66,7 @@ public class Menu extends BaseEntity {
      * 备注
      */
     private String desc;
+
+    private List<Menu> children;
 
 }

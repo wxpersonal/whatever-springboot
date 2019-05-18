@@ -1,8 +1,10 @@
 package me.weix.whatever.model;
 
 import lombok.Data;
+import me.weix.whatever.entity.Menu;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -58,6 +60,11 @@ public class MenuDto implements Serializable {
      * 备注
      */
     private String desc;
+
+    /**
+     * 子菜单
+     */
+    private List<MenuDto> children;
 
 
 }

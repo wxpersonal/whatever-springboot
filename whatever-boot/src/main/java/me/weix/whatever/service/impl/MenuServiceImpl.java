@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
 import me.weix.whatever.common.enums.ExceptionRemindMsg;
 import me.weix.whatever.common.enums.MenuKindEnum;
 import me.weix.whatever.common.enums.StatusEnum;
@@ -18,11 +19,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -35,8 +35,6 @@ import java.util.Map;
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IMenuService {
 
-    @Resource
-    private MenuMapper menuMapper;
 
     @Resource
     private RoleMenuMapper roleMenuMapper;
@@ -51,7 +49,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         //判断是否已经存在该菜单
         QueryWrapper<Menu> condition = new QueryWrapper<>();
         condition.eq("pid", menuDto.getPid()).eq("name", menuDto.getName());
-        Integer count = menuMapper.selectCount(condition);
+        Integer count = baseMapper.selectCount(condition);
 
         if (null != count && count.intValue() > 0) {
             throw new RuntimeException("该菜单已存在");
@@ -97,7 +95,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         }
 
         //删除菜单
-        menuMapper.deleteById(menuId);
+        baseMapper.deleteById(menuId);
 
         //删除关联信息
         QueryWrapper<RoleMenu> condition = new QueryWrapper<>();
@@ -105,14 +103,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         roleMenuMapper.delete(condition);
     }
 
-
-    /**
-     * 根据条件查询菜单
-     *
-     * @return
-     * @date 2017年2月12日 下午9:14:34
-     */
-    public IPage listMenus(String menuName, ) {
+    @Override
+    public IPage listMenus(String menuName) {
 
         QueryWrapper<Menu> condition = new QueryWrapper<>();
         condition.like("name", menuName);
@@ -121,144 +113,43 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         return pageInfo;
     }
 
-    /**
-     * 根据条件查询菜单
-     *
-     * @return
-     * @date 2017年2月12日 下午9:14:34
-     */
-    public List<Long> getMenuIdsByRoleId(Long roleId) {
-        return this.baseMapper.getMenuIdsByRoleId(roleId);
-    }
-
-    /**
-     * 获取菜单列表树
-     *
-     * @return
-     * @date 2017年2月19日 下午1:33:51
-     */
-    public List<ZTreeNode> menuTreeList() {
-        return this.baseMapper.menuTreeList();
-    }
-
-    /**
-     * 获取菜单列表树
-     *
-     * @return
-     * @date 2017年2月19日 下午1:33:51
-     */
-    public List<ZTreeNode> menuTreeListByMenuIds(List<Long> menuIds) {
-        return this.baseMapper.menuTreeListByMenuIds(menuIds);
-    }
-
-    /**
-     * 删除menu关联的relation
-     *
-     * @param menuId
-     * @return
-     * @date 2017年2月19日 下午4:10:59
-     */
     public int deleteRelationByMenu(Long menuId) {
-        return this.baseMapper.deleteRelationByMenu(menuId);
+        //删除关联信息
+        QueryWrapper<RoleMenu> condition = new QueryWrapper<>();
+        condition.eq("menu_id", menuId);
+        return roleMenuMapper.delete(condition);
     }
 
-    /**
-     * 获取资源url通过角色id
-     *
-     * @param roleId
-     * @return
-     * @date 2017年2月19日 下午7:12:38
-     */
-    public List<String> getResUrlsByRoleId(Long roleId) {
-        return this.baseMapper.getResUrlsByRoleId(roleId);
-    }
-
-    /**
-     * 根据角色获取菜单
-     *
-     * @param roleIds
-     * @return
-     * @date 2017年2月19日 下午10:35:40
-     */
-    public List<MenuNode> getMenusByRoleIds(List<Long> roleIds) {
-        List<MenuNode> menus = this.baseMapper.getMenusByRoleIds(roleIds);
-
-        //给所有的菜单url加上ctxPath
-        for (MenuNode menuItem : menus) {
-            menuItem.setUrl(ConfigListener.getConf().get("contextPath") + menuItem.getUrl());
-        }
-
+    public List<Menu> getMenusByRoleIds(List<Integer> roleIds) {
+        List<Menu> menus = baseMapper.getMenusByRoleIds(roleIds);
+        //查子菜单
+        getChildren(menus);
         return menus;
     }
 
-    /**
-     * 根据code查询菜单
-     *
-     * @author fengshuonan
-     * @Date 2018/12/20 21:54
-     */
-    public Menu selectByCode(String code) {
-        Menu menu = new Menu();
-        menu.setCode(code);
-        QueryWrapper<Menu> queryWrapper = new QueryWrapper<>(menu);
-        return this.baseMapper.selectOne(queryWrapper);
-    }
+    private List<Menu> getChildren(List<Menu> menus){
 
-    /**
-     * 根据请求的父级菜单编号设置pcode和层级
-     *
-     * @author fengshuonan
-     * @Date 2018/12/23 5:54 PM
-     */
-    public Menu menuSetPcode(MenuDto menuParam) {
-
-        Menu resultMenu = new Menu();
-        BeanUtil.copyProperties(menuParam, resultMenu);
-
-        if (ToolUtil.isEmpty(menuParam.getPid()) || menuParam.getPid().equals(0L)) {
-            resultMenu.setPcode("0");
-            resultMenu.setPcodes("[0],");
-            resultMenu.setLevels(1);
-        } else {
-            Long pid = menuParam.getPid();
-            Menu pMenu = this.getById(pid);
-            Integer pLevels = pMenu.getLevels();
-            resultMenu.setPcode(pMenu.getCode());
-
-            //如果编号和父编号一致会导致无限递归
-            if (menuParam.getCode().equals(menuParam.getPcode())) {
-                throw new ServiceException(BizExceptionEnum.MENU_PCODE_COINCIDENCE);
+        List<Integer> ids = Lists.newArrayList();
+        for (Menu menu : menus) {
+            ids.add(menu.getId());
+        }
+        QueryWrapper<Menu> wrapper = new QueryWrapper();
+        wrapper.in("pid", ids);
+        List<Menu> subNodes = baseMapper.selectList(wrapper);
+        if(CollectionUtils.isEmpty(subNodes)) {
+            return null;
+        }
+        for (Menu menu : menus) {
+            List<Menu> children = Lists.newArrayList();
+            for (Menu subNode : subNodes) {
+                if(subNode.getPid().intValue() == menu.getId().intValue()) {
+                    children.add(subNode);
+                }
             }
-
-            resultMenu.setLevels(pLevels + 1);
-            resultMenu.setPcodes(pMenu.getPcodes() + "[" + pMenu.getCode() + "],");
+            menu.setChildren(children);
         }
-
-        return resultMenu;
+        getChildren(subNodes);
+        return menus;
     }
 
-    /**
-     * 获取菜单树形列表
-     *
-     * @author fengshuonan
-     * @Date 2019/2/23 22:02
-     */
-    public List<Map<String, Object>> selectMenuTree(String condition, String level) {
-        List<Map<String, Object>> maps = this.baseMapper.selectMenuTree(condition, level);
-
-        if (maps == null) {
-            maps = new ArrayList<>();
-        }
-
-        //创建根节点
-        Menu menu = new Menu();
-        menu.setMenuId(-1L);
-        menu.setName("根节点");
-        menu.setCode("0");
-        menu.setPcode("-2");
-
-        maps.add(BeanUtil.beanToMap(menu));
-
-        return maps;
-    }
 }
