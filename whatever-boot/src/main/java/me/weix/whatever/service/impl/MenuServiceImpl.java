@@ -90,7 +90,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     public void delMenu(Long menuId) {
 
         Menu menu = this.getById(menuId);
-        if (menu.getKind().intValue() == MenuKindEnum.NOT_LEAF.getCode()) {
+        if (menu.getKind().intValue() == MenuKindEnum.NODE.getCode()) {
             throw new RuntimeException("只能删除叶子叶子菜单");
         }
 

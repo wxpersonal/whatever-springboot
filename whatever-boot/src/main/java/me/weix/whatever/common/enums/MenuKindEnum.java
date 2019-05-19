@@ -11,20 +11,22 @@ import lombok.Getter;
 public enum MenuKindEnum {
 
     /**
-     * 非叶子菜单
+     * 普通菜单
      */
-    LEAF(0, "叶子菜单"),
+    NODE(0, "普通菜单"),
 
     /**
-     * 叶子菜单，无子菜单
+     * 叶子菜单
      */
-    NOT_LEAF(1, "非叶子菜单");
+    LEAF(1, "叶子菜单");
 
-    Integer code;
-    String message;
 
-    MenuKindEnum(Integer code, String message) {
-        this.code = code;
-        this.message = message;
+
+        Integer code;
+        String message;
+
+        MenuKindEnum(Integer code, String message) {
+            this.code = code;
+            this.message = message;
     }
 }

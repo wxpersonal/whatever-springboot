@@ -6,6 +6,7 @@ import me.weix.whatever.entity.User;
 import me.weix.whatever.mapper.PermissionMapper;
 import me.weix.whatever.mapper.RoleMapper;
 import me.weix.whatever.mapper.UserMapper;
+import me.weix.whatever.model.UserDto;
 import me.weix.whatever.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -32,8 +33,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Resource
     private PermissionMapper permissionMapper;
 
-    @Resource
-    private UserMapper userMapper;
 
     @Override
     public List<Role> getRolesByUserId(Integer userId) {
@@ -65,6 +64,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public User getUserByUsername(String username) {
         return null;
+    }
+
+    @Override
+    public void addUser(UserDto userDto) {
+
+    }
+
+    @Override
+    public void updateUser(UserDto user) {
+
+    }
+
+    @Override
+    public void deleteUser(Long userId) {
+
+    }
+
+    @Override
+    public void changePwd(String oldPassword, String newPassword) {
+
     }
 
     @Override
