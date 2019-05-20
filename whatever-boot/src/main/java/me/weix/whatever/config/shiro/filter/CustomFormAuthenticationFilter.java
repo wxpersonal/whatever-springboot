@@ -2,6 +2,7 @@ package me.weix.whatever.config.shiro.filter;
 
 import me.weix.whatever.config.shiro.authc.CustomUsernamePasswordToken;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.apache.shiro.web.util.WebUtils;
 
@@ -25,6 +26,13 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
         return createToken(username, password, request, response, loginType);
     }
 
+    @Override
+    protected boolean onLoginSuccess(AuthenticationToken token, Subject subject, ServletRequest request, ServletResponse response) throws Exception {
+
+        // todo 将用户公司等信息保存到session
+        return super.onLoginSuccess(token, subject, request, response);
+    }
+
     private AuthenticationToken createToken(String username, String password, ServletRequest request, ServletResponse response, Integer loginType) {
         boolean rememberMe = isRememberMe(request);
         String host = getHost(request);
@@ -43,5 +51,6 @@ public class CustomFormAuthenticationFilter extends FormAuthenticationFilter {
     private String getLoginType(ServletRequest request) {
         return WebUtils.getCleanParam(request, "loginType");
     }
+
 
 }

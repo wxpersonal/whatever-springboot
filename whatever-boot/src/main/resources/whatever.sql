@@ -236,8 +236,9 @@ CREATE TABLE `t_sys_file` (
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user` (
                         `id` int(20) NOT NULL COMMENT '用户id',
-                        `username` varchar(50) DEFAULT NULL COMMENT '用户名',
+                        `account` varchar(50) DEFAULT NULL COMMENT '用户名',
                         `password` varchar(50) DEFAULT NULL COMMENT '密码',
+                        `name` varchar(50) DEFAULT NULL COMMENT '姓名',
                         `gender` int(20) DEFAULT '0' COMMENT '性别',
                         `mobile` varchar(50) DEFAULT NULL COMMENT '电话',
                         `birthday` datetime DEFAULT NULL COMMENT '出生时间',

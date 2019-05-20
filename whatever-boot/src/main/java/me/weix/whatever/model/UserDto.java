@@ -23,25 +23,58 @@ import java.util.Date;
 /**
  * 用户传输bean
  *
- * @author stylefeng
- * @Date 2017/5/5 22:40
+ * @author weix
  */
 @Data
 public class UserDto {
 
-    private Long userId;
-    private String account;
-    private String password;
-    private String name;
+    /**
+     * id
+     */
+    private Integer id;
 
+    /**
+     * 用户名
+     */
+    private String account;
+
+    /**
+     * 密码
+     */
+    private String password;
+
+    /**
+     * 加密盐
+     */
+    private String salt;
+
+    /**
+     * 姓名
+     */
+    private String username;
+
+    /**
+     * 性别
+     */
+    private Integer gender;
+
+    /**
+     * 电话
+     */
+    private String mobile;
+
+    /**
+     * 出生时间
+     */
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
-    private String sex;
+
+    /**
+     * 邮箱
+     */
     private String email;
-    private String phone;
-    private String roleId;
-    private Long deptId;
+
     private String status;
-    private String avatar;
+
 
 }

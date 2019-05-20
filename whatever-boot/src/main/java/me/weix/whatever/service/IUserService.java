@@ -1,12 +1,8 @@
 package me.weix.whatever.service;
 
-import me.weix.whatever.entity.Permission;
-import me.weix.whatever.entity.Role;
-import me.weix.whatever.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import me.weix.whatever.entity.User;
 import me.weix.whatever.model.UserDto;
-
-import java.util.List;
 
 /**
  * <p>
@@ -18,23 +14,58 @@ import java.util.List;
  */
 public interface IUserService extends IService<User> {
 
-    List<Role> getRolesByUserId(Integer userId);
-
-    List<Permission> getPermissionsByUserId(Integer userId);
-
+    /**
+     * getUserByEmail
+     * @param email
+     * @return
+     */
     User getUserByEmail(String email);
 
+    /**
+     * getUserByMobile
+     * @param mobile
+     * @return
+     */
     User getUserByMobile(String mobile);
 
-    User getUserByUsername(String username);
+    /**
+     * getUserByAccount
+     * @param account
+     * @return
+     */
+    User getUserByAccount(String account);
 
+    /**
+     * 添加用户
+     * @param userDto
+     */
     void addUser(UserDto userDto);
 
-    void updateUser(UserDto user);
+    /**
+     * 更新用户
+     * @param userDto
+     */
+    void updateUser(UserDto userDto);
 
-    void deleteUser(Long userId);
+    /**
+     * 删除用户
+     * @param id
+     */
+    void deleteUser(Integer id);
 
+    /**
+     * 修改密码
+     * @param oldPassword
+     * @param newPassword
+     */
     void changePwd(String oldPassword, String newPassword);
+
+    /**
+     * 重置密码
+     * @param userId
+     * @param newPassword
+     */
+    void resetPwd(Integer userId, String newPassword);
 
     String testTransaction();
 

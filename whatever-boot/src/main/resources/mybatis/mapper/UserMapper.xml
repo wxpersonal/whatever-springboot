@@ -5,8 +5,10 @@
         <!-- 通用查询映射结果 -->
         <resultMap id="BaseResultMap" type="me.weix.whatever.entity.User">
             <id column="id" property="id"/>
-            <result column="username" property="username"/>
+            <result column="account" property="account"/>
             <result column="password" property="password"/>
+            <result column="salt" property="salt"/>
+            <result column="username" property="username"/>
             <result column="gender" property="gender"/>
             <result column="mobile" property="mobile"/>
             <result column="birthday" property="birthday"/>
@@ -23,7 +25,7 @@
 
         <!-- 通用查询结果列 -->
         <sql id="Base_Column_List">
-            id, username, password, gender, mobile, birthday, email, address_id AS addressId, photo_id AS photoId,
+            id, account, password, salt, username, gender, mobile, birthday, email, address_id AS addressId, photo_id AS photoId,
             create_by, create_time, update_by, update_time, status, deleted
         </sql>
 </mapper>

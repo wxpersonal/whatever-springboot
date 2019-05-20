@@ -10,10 +10,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * <p>
- * 
- * </p>
- *
  * @author weix
  * @since 2019-05-17
  */
@@ -48,8 +44,6 @@ public class SysDic extends BaseEntity {
      */
     @TableField("sort_no")
     private Integer sortNo;
-
-    private Integer updateBy;
 
 
 }

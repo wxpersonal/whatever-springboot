@@ -2,7 +2,11 @@ package me.weix.whatever.config.mp;
 
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import lombok.Data;
+import lombok.Getter;
+import me.weix.whatever.common.model.UserInfo;
 import org.apache.ibatis.reflection.MetaObject;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -14,85 +18,51 @@ import java.util.Date;
  */
 @Component
 public class CustomerMetaObjectHandler implements MetaObjectHandler {
+
+    /**
+     * 公共字段
+     */
+    private static final String DELETED    = "deleted";
+    private static final String STATUS     = "status";
+    private static final String CREATEBY   = "createBy";
+    private static final String CREATETIME = "createTime";
+    private static final String UPDATEBY   = "updateBy";
+    private static final String UPDATETIME = "updateTime";
+
     @Override
     public void insertFill(MetaObject metaObject) {
-        Object delFlag = getFieldValByName(getDeleteFlagFieldName(), metaObject);
+        Object delFlag = getFieldValByName(DELETED, metaObject);
+        // 删除标识 默认 0
         if (delFlag == null) {
-            setFieldValByName(getDeleteFlagFieldName(), getDefaultDelFlagValue(), metaObject);
+            setFieldValByName(DELETED, 0, metaObject);
         }
 
-        Object createTime = getFieldValByName(getCreateTimeFieldName(), metaObject);
+        Object status = getFieldValByName(STATUS, metaObject);
+        // 状态标识 默认 1 有效
+        if (status == null) {
+            setFieldValByName(STATUS, 1, metaObject);
+        }
+        // 创建时间 默认当前时间
+        Object createTime = getFieldValByName(CREATETIME, metaObject);
         if (createTime == null) {
-            setFieldValByName(getCreateTimeFieldName(), new Date(), metaObject);
+            setFieldValByName(CREATETIME, new Date(), metaObject);
         }
-
-        Object createUser = getFieldValByName(getCreateUserFieldName(), metaObject);
-        if (createUser == null) {
-            // todo 获取当前登录用户
-            Object accountId = getUserUniqueId();
-            setFieldValByName(getCreateUserFieldName(), accountId, metaObject);
-        }
+        // 创建人 当前登录人
+        fillDefaultUser(metaObject, CREATEBY);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        setFieldValByName(getUpdateTimeFieldName(), new Date(), metaObject);
+        setFieldValByName(UPDATETIME, new Date(), metaObject);
+        fillDefaultUser(metaObject, UPDATEBY);
+    }
 
-        Object updateUser = getFieldValByName(getUpdateUserFieldName(), metaObject);
+    private void fillDefaultUser(MetaObject metaObject, String updateby) {
+        Object updateUser = getFieldValByName(updateby, metaObject);
         if (updateUser == null) {
-
-            // todo 获取当前登录用户
-            Object accountId = getUserUniqueId();
-            setFieldValByName(getUpdateUserFieldName(), accountId, metaObject);
+            UserInfo userInfo = (UserInfo) SecurityUtils.getSubject().getSession().getAttribute("userInfo");
+            setFieldValByName(updateby, userInfo.getUser().getId(), metaObject);
         }
     }
 
-    /**
-     * 获取逻辑删除字段的名称（非数据库中字段名称）
-     */
-    protected String getDeleteFlagFieldName() {
-        return "deleted";
-    }
-
-    /**
-     * 获取逻辑删除字段的默认值
-     */
-    protected Object getDefaultDelFlagValue() {
-        return "0";
-    }
-
-    /**
-     * 获取创建时间字段的名称（非数据库中字段名称）
-     */
-    protected String getCreateTimeFieldName() {
-        return "createTime";
-    }
-
-    /**
-     * 获取创建用户字段的名称（非数据库中字段名称）
-     */
-    protected String getCreateUserFieldName() {
-        return "createBy";
-    }
-
-    /**
-     * 获取更新时间字段的名称（非数据库中字段名称）
-     */
-    protected String getUpdateTimeFieldName() {
-        return "updateTime";
-    }
-
-    /**
-     * 获取更新用户字段的名称（非数据库中字段名称）
-     */
-    protected String getUpdateUserFieldName() {
-        return "updateBy";
-    }
-
-    /**
-     * 获取用户唯一id（注意默认获取的用户唯一id为空，如果想填写则需要继承本类）
-     */
-    protected Object getUserUniqueId() {
-        return "";
-    }
 }

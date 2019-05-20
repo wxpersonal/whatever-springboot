@@ -3,8 +3,7 @@ package me.weix.whatever.config;
 import me.weix.whatever.config.shiro.authc.CustomerDefaultModularRealm;
 import me.weix.whatever.config.shiro.realm.EmailRealm;
 import me.weix.whatever.config.shiro.realm.MobileRealm;
-import me.weix.whatever.config.shiro.realm.UsernameRealm;
-import org.apache.shiro.cache.CacheManager;
+import me.weix.whatever.config.shiro.realm.AccountRealm;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -14,10 +13,8 @@ import org.apache.shiro.web.servlet.Cookie;
 import org.apache.shiro.web.servlet.ShiroHttpSession;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
-import org.apache.shiro.web.session.mgt.ServletContainerSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -48,8 +45,8 @@ public class ShiroConfig {
      * 配置自定义的权限登录器
      */
     @Bean(name = "usernameRealm")
-    public UsernameRealm usernameRealm() {
-        UsernameRealm authRealm = new UsernameRealm();
+    public AccountRealm usernameRealm() {
+        AccountRealm authRealm = new AccountRealm();
         return authRealm;
     }
 
@@ -66,12 +63,12 @@ public class ShiroConfig {
     }
 
     @Bean(name = "defaultModularRealm")
-    public CustomerDefaultModularRealm defaultModularRealm(@Qualifier("usernameRealm") UsernameRealm usernameRealm,
+    public CustomerDefaultModularRealm defaultModularRealm(@Qualifier("usernameRealm") AccountRealm accountRealm,
                                                            @Qualifier("emailRealm") EmailRealm emailRealm,
                                                            @Qualifier("mobileRealm") MobileRealm mobileRealm) {
         CustomerDefaultModularRealm customerDefaultModularRealm = new CustomerDefaultModularRealm();
         Map<String, Object> definedRealms = new HashMap<>();
-        definedRealms.put("usernameRealm", usernameRealm);
+        definedRealms.put("usernameRealm", accountRealm);
         definedRealms.put("emailRealm", emailRealm);
         definedRealms.put("mobileRealm", mobileRealm);
         customerDefaultModularRealm.setDefinedRealms(definedRealms);
@@ -97,11 +94,11 @@ public class ShiroConfig {
      * 配置核心安全事务管理器
      */
     @Bean
-    public DefaultWebSecurityManager securityManager(@Qualifier("usernameRealm") UsernameRealm usernameRealm,
+    public DefaultWebSecurityManager securityManager(@Qualifier("usernameRealm") AccountRealm accountRealm,
                                                      @Qualifier("emailRealm") EmailRealm emailRealm,
                                                      @Qualifier("mobileRealm") MobileRealm mobileRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(usernameRealm);
+        securityManager.setRealm(accountRealm);
         return securityManager;
     }
 

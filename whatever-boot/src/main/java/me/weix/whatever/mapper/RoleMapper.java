@@ -3,6 +3,8 @@ package me.weix.whatever.mapper;
 import me.weix.whatever.entity.Role;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -13,4 +15,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface RoleMapper extends BaseMapper<Role> {
 
+    /**
+     * 取用户role
+     * @param userId
+     * @return
+     */
+    List<Role> getRolesByUserId(Integer userId);
 }
