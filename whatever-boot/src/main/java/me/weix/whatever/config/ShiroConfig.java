@@ -1,6 +1,7 @@
 package me.weix.whatever.config;
 
 import me.weix.whatever.config.shiro.authc.CustomerDefaultModularRealm;
+import me.weix.whatever.config.shiro.filter.CustomFormAuthenticationFilter;
 import me.weix.whatever.config.shiro.realm.EmailRealm;
 import me.weix.whatever.config.shiro.realm.MobileRealm;
 import me.weix.whatever.config.shiro.realm.AccountRealm;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
 import java.util.*;
 
 /**
@@ -32,12 +34,16 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") DefaultWebSecurityManager manager) {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(manager);
+        Map<String, Filter> filters = bean.getFilters();
+        filters.put("authc", new CustomFormAuthenticationFilter());
+
         //配置访问权限
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         //表示可以匿名访问
         filterChainDefinitionMap.put("/", "anon");
         filterChainDefinitionMap.put("/api/swagger.json", "anon");
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+
         return bean;
     }
 
@@ -94,9 +100,7 @@ public class ShiroConfig {
      * 配置核心安全事务管理器
      */
     @Bean
-    public DefaultWebSecurityManager securityManager(@Qualifier("usernameRealm") AccountRealm accountRealm,
-                                                     @Qualifier("emailRealm") EmailRealm emailRealm,
-                                                     @Qualifier("mobileRealm") MobileRealm mobileRealm) {
+    public DefaultWebSecurityManager securityManager(@Qualifier("usernameRealm") AccountRealm accountRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(accountRealm);
         return securityManager;
