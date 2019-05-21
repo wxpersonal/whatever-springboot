@@ -251,10 +251,8 @@ CREATE TABLE `t_user` (
 -- Records of t_user
 -- ----------------------------
 BEGIN;
-BEGIN;
 INSERT INTO `t_user` VALUES (1, 'admin', '1d6b1208c7d151d335790276a18e3d99', 'q6taw', '超级管理员', 0, '18205256689', '2017-06-16 00:00:00', 'wxpersonal@163.com', 0, 0, 0, '2017-06-16 00:00:00', 0, '2017-06-16 00:00:00', 1, 0);
 INSERT INTO `t_user` VALUES (2, 'weix', '1d6b1208c7d151d335790276a18e3d99', 'q6taw', '魏祥',0, '18205256689', '2017-06-20 00:00:00', 'wxpersonal@163.com', 0, 0, 0, '2017-06-20 00:00:00', 0, '2017-06-20 00:00:00', 1, 0);
-COMMIT;
 COMMIT;
 
 -- ----------------------------
@@ -271,7 +269,7 @@ CREATE TABLE `t_user_role` (
                              `update_time` datetime DEFAULT NULL,
                              `status` tinyint(4) DEFAULT '1',
                              `deleted` tinyint(4) DEFAULT '0',
-                             PRIMARY KEY ('id')
+                             PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 SET FOREIGN_KEY_CHECKS = 1;
