@@ -122,8 +122,8 @@ CREATE TABLE `t_permission` (
                               `name` varchar(50) NOT NULL,
                               `desc` varchar(1000) DEFAULT NULL comment '权限描述',
                               `url` varchar(500) DEFAULT NULL comment '',
-                              `sort_no` int(11) DEFAULT '0' '排序',
-                              `type` int(1) DEFAULT NULL COMMENT '类型   0：目录   1：菜单   2：按钮',
+                              `sort_no` int(11) DEFAULT '0' comment '排序',
+                              `type` tinyint(4) DEFAULT NULL COMMENT '类型   0：目录   1：菜单   2：按钮',
                               `icon` varchar(50) DEFAULT NULL COMMENT '图标',
                               `create_by` int(11) DEFAULT '0',
                               `create_time` datetime DEFAULT NULL,
@@ -132,7 +132,7 @@ CREATE TABLE `t_permission` (
                               `status` tinyint(4) DEFAULT '1',
                               `deleted` tinyint(4) DEFAULT '0',
                               PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 
 -- ----------------------------
@@ -183,7 +183,7 @@ CREATE TABLE `t_role_permission` (
 -- Table structure for t_sys_code
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sys_dic`;
-CREATE TABLE `t_sys_code` (
+CREATE TABLE `t_sys_dic` (
                             `id` bigint(20) NOT NULL,
                             `p_id` varchar(50) DEFAULT NULL,
                             `name` varchar(50) DEFAULT NULL COMMENT '字典名称',
@@ -198,14 +198,6 @@ CREATE TABLE `t_sys_code` (
                             `deleted` tinyint(4) DEFAULT '0',
                             PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_sys_code
--- ----------------------------
-BEGIN;
-INSERT INTO `t_sys_code` VALUES ('_PERMISSiON', NULL, '权限', NULL, 0, '2017-06-20 00:00:00', 0, '2017-06-20 00:00:00', 1, 0);
-INSERT INTO `t_sys_code` VALUES ('_ROLE', NULL, '角色', NULL, 0, '2017-06-20 00:00:00', 0, '2017-06-20 00:00:00', 1, 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for t_sys_file
@@ -259,8 +251,10 @@ CREATE TABLE `t_user` (
 -- Records of t_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `t_user` VALUES (1, 'admin', 'abc123', 0, '18205256689', '2017-06-16 00:00:00', 'wxpersonal@163.com', 0, 0, 0, '2017-06-16 00:00:00', 0, '2017-06-16 00:00:00', 1, 0);
-INSERT INTO `t_user` VALUES (2, 'weix', 'xiang123', 0, '18205256689', '2017-06-20 00:00:00', 'wxpersonal@163.com', 0, 0, 0, '2017-06-20 00:00:00', 0, '2017-06-20 00:00:00', 1, 0);
+BEGIN;
+INSERT INTO `t_user` VALUES (1, 'admin', '1d6b1208c7d151d335790276a18e3d99', 'q6taw', '超级管理员', 0, '18205256689', '2017-06-16 00:00:00', 'wxpersonal@163.com', 0, 0, 0, '2017-06-16 00:00:00', 0, '2017-06-16 00:00:00', 1, 0);
+INSERT INTO `t_user` VALUES (2, 'weix', '1d6b1208c7d151d335790276a18e3d99', 'q6taw', '魏祥',0, '18205256689', '2017-06-20 00:00:00', 'wxpersonal@163.com', 0, 0, 0, '2017-06-20 00:00:00', 0, '2017-06-20 00:00:00', 1, 0);
+COMMIT;
 COMMIT;
 
 -- ----------------------------
