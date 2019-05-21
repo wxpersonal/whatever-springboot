@@ -23,7 +23,7 @@
     </sql>
 
     <select id="getRolesByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        select
+        select r.*
         from t_role r
         left join t_user_role ur on ur.role_id = r.id
         where ur.user_id = #{userId}

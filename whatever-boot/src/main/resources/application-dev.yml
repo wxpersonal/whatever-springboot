@@ -18,17 +18,17 @@ sharding:
   jdbc:
     data-sources:
       ds_master:
-        driver-class-name: com.mysql.jdbc.Driver
+        driver-class-name: com.mysql.cj.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
         username: root
         password: xiang123
       ds_slave_1:
-        driver-class-name: com.mysql.jdbc.Driver
+        driver-class-name: com.mysql.cj.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
         username: root
         password: xiang123
       ds_slave_2:
-        driver-class-name: com.mysql.jdbc.Driver
+        driver-class-name: com.mysql.cj.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
         username: root
         password: xiang123
@@ -63,7 +63,6 @@ mybatis-plus:
     logic-not-delete-value: 0
 #    sql-injector: com.baomidou.mybatisplus.core.mapper.LogicSqlInjector
     #自定义填充策略接口实现
-    meta-object-handler: com.baomidou.springboot.xxx
     #自定义SQL注入器
     #sql-injector: com.baomidou.springboot.xxx
   configuration:

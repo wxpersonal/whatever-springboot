@@ -1,13 +1,20 @@
 package me.weix.whatever.controller;
 
 import me.weix.whatever.entity.User;
+import me.weix.whatever.model.UserDto;
 import me.weix.whatever.service.IUserService;
+import me.weix.whatever.util.SessionUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.util.Random;
 
 
 /**
@@ -26,8 +33,17 @@ public class UserRest {
      * @return me.weix.whatever.entity.User
      */
     @RequestMapping(value="{id}", method=RequestMethod.GET, produces = "application/json")
+    @Transactional
     public User getUserById(@PathVariable("id") Integer id) {
         System.out.println("11111113333");
+
+
+        User byId = userService.getById(id);
+        Random random = new Random();
+        byId.setName("weix" + random.nextInt());
+        userService.updateById(byId);
+        int i = 1 / 0;
+
         return userService.getById(id);
     }
 
@@ -61,5 +77,27 @@ public class UserRest {
     public String delUserById(@PathVariable("id") Integer id) {
         boolean b = userService.removeById(1);
         return String.valueOf(b);
+    }
+
+    @RequestMapping(value="login", method=RequestMethod.POST)
+    public String login(@RequestBody User user){
+//        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+//        servletRequestAttributes.getRequest();
+        UsernamePasswordToken token = new UsernamePasswordToken("admin", "111111".toCharArray());
+        Subject subject = SecurityUtils.getSubject();
+        subject.login(token);
+
+        boolean admin = subject.hasRole("admin");
+
+        return admin+"";
+    }
+
+    @RequestMapping(value="logout", method=RequestMethod.POST)
+    public String logout() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+
+
+        return "ok";
     }
 }

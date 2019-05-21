@@ -16,7 +16,6 @@ import java.util.Date;
  * create at:  2019-05-17
  * @description: 字段填充器
  */
-@Component
 public class CustomerMetaObjectHandler implements MetaObjectHandler {
 
     /**

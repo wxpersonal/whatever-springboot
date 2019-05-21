@@ -34,14 +34,19 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") DefaultWebSecurityManager manager) {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(manager);
+        bean.setLoginUrl("/user/login");
+        bean.setSuccessUrl("/");
         Map<String, Filter> filters = bean.getFilters();
-        filters.put("authc", new CustomFormAuthenticationFilter());
+        filters.put("authc", customFormAuthenticationFilter());
 
         //配置访问权限
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         //表示可以匿名访问
         filterChainDefinitionMap.put("/", "anon");
-        filterChainDefinitionMap.put("/api/swagger.json", "anon");
+//        filterChainDefinitionMap.put("/api/swagger.json", "anon");
+//        filterChainDefinitionMap.put("/user/logout", "logout");
+        filterChainDefinitionMap.put("/user/login", "authc");
+
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
         return bean;
@@ -50,7 +55,18 @@ public class ShiroConfig {
     /**
      * 配置自定义的权限登录器
      */
-    @Bean(name = "usernameRealm")
+    @Bean(name = "customFormAuthenticationFilter")
+    public CustomFormAuthenticationFilter customFormAuthenticationFilter() {
+        CustomFormAuthenticationFilter filter = new CustomFormAuthenticationFilter();
+        filter.setLoginUrl("/user/login");
+
+        return filter;
+    }
+
+    /**
+     * 配置自定义的权限登录器
+     */
+    @Bean(name = "accountRealm")
     public AccountRealm usernameRealm() {
         AccountRealm authRealm = new AccountRealm();
         return authRealm;
@@ -69,7 +85,7 @@ public class ShiroConfig {
     }
 
     @Bean(name = "defaultModularRealm")
-    public CustomerDefaultModularRealm defaultModularRealm(@Qualifier("usernameRealm") AccountRealm accountRealm,
+    public CustomerDefaultModularRealm defaultModularRealm(@Qualifier("accountRealm") AccountRealm accountRealm,
                                                            @Qualifier("emailRealm") EmailRealm emailRealm,
                                                            @Qualifier("mobileRealm") MobileRealm mobileRealm) {
         CustomerDefaultModularRealm customerDefaultModularRealm = new CustomerDefaultModularRealm();
@@ -100,7 +116,7 @@ public class ShiroConfig {
      * 配置核心安全事务管理器
      */
     @Bean
-    public DefaultWebSecurityManager securityManager(@Qualifier("usernameRealm") AccountRealm accountRealm) {
+    public DefaultWebSecurityManager securityManager(@Qualifier("accountRealm") AccountRealm accountRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(accountRealm);
         return securityManager;

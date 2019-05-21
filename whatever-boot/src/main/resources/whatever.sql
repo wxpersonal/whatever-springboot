@@ -238,6 +238,7 @@ CREATE TABLE `t_user` (
                         `id` int(20) NOT NULL COMMENT '用户id',
                         `account` varchar(50) DEFAULT NULL COMMENT '用户名',
                         `password` varchar(50) DEFAULT NULL COMMENT '密码',
+                        `salt` varchar(50) NOT NULL COMMENT '加密盐',
                         `name` varchar(50) DEFAULT NULL COMMENT '姓名',
                         `gender` int(20) DEFAULT '0' COMMENT '性别',
                         `mobile` varchar(50) DEFAULT NULL COMMENT '电话',

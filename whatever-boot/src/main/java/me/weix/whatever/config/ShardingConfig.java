@@ -32,10 +32,7 @@ public class ShardingConfig {
     public DataSource dataSource() throws SQLException{
         Map<String, DataSource> dataSourceMap = new HashMap<>();
 
-
-
         dataSourceMap.putAll(shardingMastSlaveConfig.getDataSources());
-
         Properties properties = new Properties();
         DataSource dataSource = MasterSlaveDataSourceFactory.createDataSource(dataSourceMap, shardingMastSlaveConfig.getMasterSlaveRule(), new HashMap<>(), shardingMastSlaveConfig.getProps());
         log.info("masterSlaveDataSource config complete");
