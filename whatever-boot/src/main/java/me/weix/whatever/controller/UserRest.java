@@ -79,25 +79,4 @@ public class UserRest {
         return String.valueOf(b);
     }
 
-    @RequestMapping(value="login", method=RequestMethod.POST)
-    public String login(@RequestBody User user){
-//        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-//        servletRequestAttributes.getRequest();
-        UsernamePasswordToken token = new UsernamePasswordToken("admin", "111111".toCharArray());
-        Subject subject = SecurityUtils.getSubject();
-        subject.login(token);
-
-        boolean admin = subject.hasRole("admin");
-
-        return admin+"";
-    }
-
-    @RequestMapping(value="logout", method=RequestMethod.POST)
-    public String logout() {
-        Subject subject = SecurityUtils.getSubject();
-        subject.logout();
-
-
-        return "ok";
-    }
 }
