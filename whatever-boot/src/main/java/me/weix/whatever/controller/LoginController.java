@@ -25,7 +25,8 @@ public class LoginController {
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
         boolean admin = subject.hasRole("admin");
-
+        subject.getPrincipal();
+        subject.hasRole()
         return admin+"";
     }
 
@@ -35,6 +36,9 @@ public class LoginController {
         subject.logout();
 
 
+
         return "ok";
     }
+
+
 }

@@ -1,10 +1,9 @@
 package me.weix.whatever.config;
 
 import me.weix.whatever.config.shiro.authc.CustomerDefaultModularRealm;
-import me.weix.whatever.config.shiro.filter.CustomFormAuthenticationFilter;
+import me.weix.whatever.config.shiro.realm.AccountRealm;
 import me.weix.whatever.config.shiro.realm.EmailRealm;
 import me.weix.whatever.config.shiro.realm.MobileRealm;
-import me.weix.whatever.config.shiro.realm.AccountRealm;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -16,12 +15,13 @@ import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.Filter;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @Author: WeiX
@@ -38,7 +38,7 @@ public class ShiroConfig {
         bean.setLoginUrl("/user/login");
         bean.setSuccessUrl("/");
         Map<String, Filter> filters = bean.getFilters();
-        filters.put("authc", customFormAuthenticationFilter());
+//        filters.put("authc", customFormAuthenticationFilter());
 
         //配置访问权限
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
@@ -46,31 +46,12 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/", "anon");
 //        filterChainDefinitionMap.put("/api/swagger.json", "anon");
 //        filterChainDefinitionMap.put("/user/logout", "logout");
-        filterChainDefinitionMap.put("/user/login", "authc");
+//        filterChainDefinitionMap.put("/user/login", "authc");
 
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
         return bean;
     }
-
-    @Bean
-    public FilterRegistrationBean registration(CustomFormAuthenticationFilter filter) {
-        FilterRegistrationBean registration = new FilterRegistrationBean(filter);
-        registration.setEnabled(false);
-        return registration;
-    }
-
-    /**
-     * 配置自定义的权限登录器
-     */
-    @Bean(name = "customFormAuthenticationFilter")
-    public CustomFormAuthenticationFilter customFormAuthenticationFilter() {
-        CustomFormAuthenticationFilter filter = new CustomFormAuthenticationFilter();
-        filter.setLoginUrl("/user/login");
-
-        return filter;
-    }
-
     /**
      * 配置自定义的权限登录器
      */
