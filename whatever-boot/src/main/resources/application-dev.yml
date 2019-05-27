@@ -16,29 +16,64 @@ spring:
 
 sharding:
   jdbc:
-    data-sources:
-      ds_master:
+    datasource:
+      names: ds-master,ds-slave-1,ds-slave-2
+      ds-master:
+        type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
         username: root
         password: xiang123
-      ds_slave_1:
+      ds_slave-1:
+        type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
         username: root
         password: xiang123
-      ds_slave_2:
+      ds-slave-2:
+        type: com.zaxxer.hikari.HikariDataSource
         driver-class-name: com.mysql.cj.jdbc.Driver
         jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
         username: root
         password: xiang123
-    master-slave-rule:
-      name: ds_ms
-      load-balance-algorithm-type: round_robin
-      master-data-source-name: ds_master
-      slave-data-source-names: ds_slave_1,ds_slave_2
-    props:
-      sql.show: true
+    config:
+      masterslave:
+        name: ds-ms
+        load-balance-algorithm-type: round_robin
+        slave-data-source-names: ds-slave-1,ds-slave-2
+        master-data-source-name: ds-master
+        props:
+          sql.show: false
+
+
+#sharding:
+#  jdbc:
+#    data-source:
+#      ds_master:
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
+#        username: root
+#        password: xiang123
+#      ds_slave_1:
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
+#        username: root
+#        password: xiang123
+#      ds_slave_2:
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
+#        username: root
+#        password: xiang123
+#    props:
+#      sql.show: true
+#    config:
+#      masterslave:
+#        name: ds_ms
+#        load-balance-algorithm-type: round_robin
+#        master-data-source-name: ds_master
+#        slave-data-source-names: ds_slave_1,ds_slave_2
+#        props:
+#          sql.show: true
 
 mybatis-plus:
   mapper-locations: classpath:mybatis/mapper/**/*.xml

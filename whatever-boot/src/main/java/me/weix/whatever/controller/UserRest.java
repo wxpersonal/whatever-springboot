@@ -42,8 +42,6 @@ public class UserRest {
         Random random = new Random();
         byId.setName("weix" + random.nextInt());
         userService.updateById(byId);
-        int i = 1 / 0;
-
         return userService.getById(id);
     }
 
