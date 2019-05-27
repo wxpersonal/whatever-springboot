@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
  * @author weix
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-//@Import(value = { SpringBootConfiguration.class })
+@Import(value = { SpringBootConfiguration.class })
 public class WhateverApplication {
 
     public static void main(String[] args) {

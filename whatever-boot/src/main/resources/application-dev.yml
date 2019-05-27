@@ -14,24 +14,24 @@ spring:
   shardingsphere:
     datasource:
       names: ds-master,ds-slave-1,ds-slave-2
-        ds-master:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
-          username: root
-          password: xiang123
-        ds_slave-1:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
-          username: root
-          password: xiang123
-        ds-slave-2:
-          type: com.zaxxer.hikari.HikariDataSource
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
-          username: root
-          password: xiang123
+      ds-master:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: xiang123
+      ds_slave-1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: xiang123
+      ds-slave-2:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
+        username: root
+        password: xiang123
     masterslave:
       name: ds-ms
       load-balance-algorithm-type: round_robin
