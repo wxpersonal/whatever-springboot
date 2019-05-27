@@ -1,6 +1,6 @@
 package me.weix;
 
-import io.shardingsphere.jdbc.spring.boot.SpringBootConfiguration;
+import org.apache.shardingsphere.shardingjdbc.spring.boot.SpringBootConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
  * @author weix
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-@Import(value = { SpringBootConfiguration.class })
+//@Import(value = { SpringBootConfiguration.class })
 public class WhateverApplication {
 
     public static void main(String[] args) {

@@ -78,7 +78,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             updateById(initUser(userDto));
             // 其他情况只可以修改自己
         } else {
-            UserDto user = SessionUtil.getUser();
+            User user = SessionUtil.getUser();
             if (user.getId().equals(userDto.getId())) {
                 this.updateById(initUser(userDto));
             } else {
@@ -103,7 +103,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public void changePwd(String oldPassword, String newPassword) {
-        UserDto user = SessionUtil.getUser();
+        User user = SessionUtil.getUser();
         User u = baseMapper.selectById(user.getId());
         String oldMD5 = MD5Util.md5(oldPassword, user.getSalt());
         if (user.getPassword().equals(oldMD5)) {

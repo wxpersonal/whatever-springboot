@@ -11,39 +11,67 @@ spring:
           max-active:  100 # 连接池最大连接数（使用负值表示没有限制）
           max-idle: 100 # 连接池中的最大空闲连接
           min-idle: 50 # 连接池中的最小空闲连接
-
-
-
-sharding:
-  jdbc:
+  shardingsphere:
     datasource:
       names: ds-master,ds-slave-1,ds-slave-2
-      ds-master:
-        type: com.zaxxer.hikari.HikariDataSource
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
-        username: root
-        password: xiang123
-      ds_slave-1:
-        type: com.zaxxer.hikari.HikariDataSource
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
-        username: root
-        password: xiang123
-      ds-slave-2:
-        type: com.zaxxer.hikari.HikariDataSource
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
-        username: root
-        password: xiang123
-    config:
-      masterslave:
-        name: ds-ms
-        load-balance-algorithm-type: round_robin
-        slave-data-source-names: ds-slave-1,ds-slave-2
-        master-data-source-name: ds-master
-        props:
-          sql.show: false
+        ds-master:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
+          username: root
+          password: xiang123
+        ds_slave-1:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
+          username: root
+          password: xiang123
+        ds-slave-2:
+          type: com.zaxxer.hikari.HikariDataSource
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
+          username: root
+          password: xiang123
+    masterslave:
+      name: ds-ms
+      load-balance-algorithm-type: round_robin
+      master-data-source-name: ds-master
+      slave-data-source-names: ds-slave-1,ds-slave-2
+    props:
+      sql.show: false
+
+
+
+#sharding:
+#  jdbc:
+#    datasource:
+#      names: ds-master,ds-slave-1,ds-slave-2
+#      ds-master:
+#        type: com.zaxxer.hikari.HikariDataSource
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
+#        username: root
+#        password: xiang123
+#      ds_slave-1:
+#        type: com.zaxxer.hikari.HikariDataSource
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
+#        username: root
+#        password: xiang123
+#      ds-slave-2:
+#        type: com.zaxxer.hikari.HikariDataSource
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        jdbc-url: jdbc:mysql://127.0.0.1:3306/whatever?setUnicode=true&characterEncoding=UTF-8&useSSL=true
+#        username: root
+#        password: xiang123
+#    config:
+#      masterslave:
+#        name: ds-ms
+#        load-balance-algorithm-type: round_robin
+#        slave-data-source-names: ds-slave-1,ds-slave-2
+#        master-data-source-name: ds-master
+#        props:
+#          sql.show: false
 
 
 #sharding:

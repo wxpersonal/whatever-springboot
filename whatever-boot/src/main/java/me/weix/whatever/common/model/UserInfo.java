@@ -1,7 +1,7 @@
 package me.weix.whatever.common.model;
 
 import lombok.Data;
-import me.weix.whatever.model.UserDto;
+import me.weix.whatever.entity.User;
 
 /**
  * @author : weixiang
@@ -11,7 +11,7 @@ import me.weix.whatever.model.UserDto;
 @Data
 public class UserInfo {
 
-    private UserDto user;
+    private User user;
 
 
 }
