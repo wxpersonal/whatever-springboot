@@ -1,4 +1,4 @@
-package me.weix.whatever.entity;
+package me.weix.whatever.core.base;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;

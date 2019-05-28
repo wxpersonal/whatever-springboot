@@ -74,7 +74,7 @@ public class MpGenerator {
 //        strategy.setInclude(new String[] { "t_sys_dic" }); // 需要生成的表
 //        strategy.setExclude(new String[]{"test"}); // 排除生成的表
         // 自定义实体父类
-        strategy.setSuperEntityClass("me.weix.whatever.entity.BaseEntity");
+        strategy.setSuperEntityClass("me.weix.whatever.core.base.BaseEntity");
         // 自定义实体，公共字段
          strategy.setSuperEntityColumns(new String[] { "create_by", "create_time", "update_by",  "update_time","status","deleted"});
         // 自定义 mapper 父类

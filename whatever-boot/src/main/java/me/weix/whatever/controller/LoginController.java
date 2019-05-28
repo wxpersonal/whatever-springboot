@@ -32,9 +32,6 @@ public class LoginController {
     public String logout() {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
-
-
-
         return "ok";
     }
 

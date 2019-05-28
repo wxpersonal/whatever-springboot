@@ -7,12 +7,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import me.weix.whatever.core.base.BaseEntity;
 
 /**
- * <p>
- * 
- * </p>
- *
  * @author weix
  * @since 2019-05-17
  */
