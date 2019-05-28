@@ -14,7 +14,7 @@ import me.weix.whatever.mapper.MenuMapper;
 import me.weix.whatever.mapper.RoleMenuMapper;
 import me.weix.whatever.model.MenuDto;
 import me.weix.whatever.service.IMenuService;
-import me.weix.whatever.util.ValidateUtil;
+import me.weix.whatever.common.util.ValidateUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,4 +1,4 @@
-package me.weix.whatever.util;
+package me.weix.whatever.common.util;
 
 import me.weix.whatever.common.enums.BizExceptionEnum;
 import org.apache.shiro.crypto.hash.Md5Hash;

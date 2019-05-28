@@ -1,18 +1,10 @@
 package me.weix.whatever.controller;
 
 import me.weix.whatever.entity.User;
-import me.weix.whatever.model.UserDto;
 import me.weix.whatever.service.IUserService;
-import me.weix.whatever.util.SessionUtil;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Random;
 
