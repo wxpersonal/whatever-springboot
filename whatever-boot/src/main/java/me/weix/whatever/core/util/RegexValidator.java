@@ -1,4 +1,4 @@
-package me.weix.whatever.common.util;
+package me.weix.whatever.core.util;
 
 import java.util.regex.Pattern;
 

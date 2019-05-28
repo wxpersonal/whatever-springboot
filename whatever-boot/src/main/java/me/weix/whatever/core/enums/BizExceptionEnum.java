@@ -1,4 +1,4 @@
-package me.weix.whatever.common.enums;
+package me.weix.whatever.core.enums;
 
 public enum BizExceptionEnum {
 

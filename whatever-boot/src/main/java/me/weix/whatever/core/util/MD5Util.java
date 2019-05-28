@@ -1,6 +1,6 @@
-package me.weix.whatever.common.util;
+package me.weix.whatever.core.util;
 
-import me.weix.whatever.common.enums.BizExceptionEnum;
+import me.weix.whatever.core.enums.BizExceptionEnum;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;

@@ -2,12 +2,9 @@ package me.weix.whatever.config.mp;
 
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import lombok.Data;
-import lombok.Getter;
-import me.weix.whatever.common.model.UserInfo;
+import me.weix.whatever.core.model.UserInfo;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.shiro.SecurityUtils;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 

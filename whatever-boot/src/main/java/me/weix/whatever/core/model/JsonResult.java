@@ -1,4 +1,4 @@
-package me.weix.whatever.common.model;
+package me.weix.whatever.core.model;
 
 import lombok.Data;
 

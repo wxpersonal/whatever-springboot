@@ -55,7 +55,7 @@
 ////        try {
 ////            hikariDataSource.setFilters("stat,wall,slf4j");
 ////        } catch (SQLException e) {
-////            log.error("druid configuration initialization filter", e);
+////            log.error("druid configuration initialization xss", e);
 ////        }
 ////    }
 //}

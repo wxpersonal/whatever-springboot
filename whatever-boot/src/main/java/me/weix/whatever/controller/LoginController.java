@@ -1,7 +1,6 @@
 package me.weix.whatever.controller;
 
-import me.weix.whatever.common.model.LoginDto;
-import me.weix.whatever.entity.User;
+import me.weix.whatever.core.model.LoginDto;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;

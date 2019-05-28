@@ -1,6 +1,6 @@
-package me.weix.whatever.common.util;
+package me.weix.whatever.core.util;
 
-import me.weix.whatever.common.model.UserInfo;
+import me.weix.whatever.core.model.UserInfo;
 import me.weix.whatever.entity.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
