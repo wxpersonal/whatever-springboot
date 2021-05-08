@@ -23,7 +23,7 @@
 		<java.version>1.8</java.version>
 
         <!-- 统一各种jar包的版本，方便管理 -->
-        <shiro.version>1.3.2</shiro.version>
+        <shiro.version>1.6.0</shiro.version>
         <shardingsphere.version>3.0.0.M3</shardingsphere.version>
 	</properties>
 
